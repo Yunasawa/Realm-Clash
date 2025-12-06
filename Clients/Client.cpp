@@ -1,28 +1,35 @@
-// #include "Views/LobbyView.h"
+#include "Views/LobbyView.h"
+#include "../Cores/Models/Lobby.hpp"
 #include "../Cores/Networks/MessageHandler.hpp"
 #include "../Cores/CoreFunction.hpp" 
 #include "../Cores/CoreIncluding.hpp" 
 #include "../Cores/CoreDefinition.hpp"
 #include "ClientDeclaration.hpp"
 
-struct MessageData
+vector<UIRoom> ConvertLobbyRooms(const Lobby& lobby) 
 {
-    string text;
-    string time;
-};
+    vector<UIRoom> ui;
+    ui.reserve(lobby.Rooms.size());
 
-void to_json(json& j, const MessageData& m)
-{
-    j = json{
-        {"text", m.text},
-        {"time", m.time}
-    };
-}
+    // Sort rooms by ID ascending
+    vector<pair<int, Room>> sortedRooms(lobby.Rooms.begin(), lobby.Rooms.end());
+    sort(sortedRooms.begin(), sortedRooms.end(),
+         [](auto& a, auto& b){ return a.first < b.first; });
 
-void from_json(const json& j, MessageData& m)
-{
-    m.text = j.at("text").get<string>();
-    m.time = j.at("time").get<string>();
+    for (const auto& pair : sortedRooms) {
+        const Room& r = pair.second;
+
+        UIRoom u;
+        u.id = r.ID;
+        u.name = r.Name;
+        u.current = r.Members.size();
+        u.max = 15;
+        u.inMatch = r.InMatch;
+
+        ui.push_back(u);
+    }
+
+    return ui;
 }
 
 void ReceiveThread(int clientFD)
@@ -30,30 +37,46 @@ void ReceiveThread(int clientFD)
     while (true)
     {
         string msg = ReceiveMessage(clientFD);
-        if (msg.empty()) {
-    cout << "[ReceiveThread] Connection closed or failed recv()" << endl;
-    break;
-}
+        if (msg.empty()) break;
 
-        cout << msg << endl;
+        if (atoi(msg.c_str()) == NETWORK_CONNECTED)
+        {
+            Lobby lobby;
+            string playerName = to_string(clientFD);
+
+            int myFD = 999;
+            // Add some sample rooms
+            CreateRoom(lobby, myFD, "RoomA");
+            CreateRoom(lobby, myFD, "RoomB");
+            CreateRoom(lobby, myFD, "RoomC");
+            CreateRoom(lobby, myFD, "RoomD");
+            CreateRoom(lobby, myFD, "RoomE");
+            CreateRoom(lobby, myFD, "RoomF");
+            CreateRoom(lobby, myFD, "RoomG");
+
+            int page = 0;
+
+            vector<UIRoom> rooms = ConvertLobbyRooms(lobby);
+            int totalPages = ((int)rooms.size() + 14)/15;
+
+            DrawUI(rooms, playerName, page, totalPages);
+        }
     }
 }
 
-int main(int argc, char *argv[])
+int main()
 {
-    ClientFD = socket(AF_INET, SOCK_STREAM, 0);
+    int ClientFD = socket(AF_INET, SOCK_STREAM, 0);
     if (ClientFD < 0) 
     { 
         perror("socket"); 
         return 0; 
     }
 
-    string ip = argv[1];
-
     sockaddr_in serv = {};
     serv.sin_family = AF_INET;
     serv.sin_port = htons(SERVER_PORT);
-    inet_pton(AF_INET, ip.c_str(), &serv.sin_addr);
+    inet_pton(AF_INET, CLIENT_IP, &serv.sin_addr);
 
     if (connect(ClientFD, (sockaddr*)&serv, sizeof(serv)) < 0)
     {
@@ -65,7 +88,6 @@ int main(int argc, char *argv[])
 
     while (true)
     {
-        cout << "Enter message: ";
         string msg;
         getline(cin, msg);
 

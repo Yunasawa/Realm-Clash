@@ -8,8 +8,10 @@
 
 void HandleClient(int clientFD)
 {
-    lock_guard<mutex> lock(ClientsMutex);
-    Clients.push_back(clientFD);
+    {
+        lock_guard<mutex> lock(ClientsMutex);
+        Clients.push_back(clientFD);
+    }
 
     SendMessage(clientFD, to_string(NETWORK_CONNECTED));
 
@@ -18,7 +20,7 @@ void HandleClient(int clientFD)
         string msg = ReceiveMessage(clientFD);
         if (msg.empty()) break;
 
-        cout << "[Client " << clientFD << "] raw: " << msg << endl;
+        cout << "\033[33m■\033[0m [Client " << clientFD << "]: " << msg << endl;
 
         BroadcastMessage(msg, clientFD);
     }
@@ -29,12 +31,12 @@ void HandleClient(int clientFD)
     }
 
     close(clientFD);
-    cout << "[Client " << clientFD << "] disconnected.\n";
+    cout << "\033[31m●\033[0m Client " << clientFD << " disconnected.\n";
 }
 
 int main()
 {
-    ServerFD = CreateSocket();
+    int ServerFD = CreateSocket();
 
     while (true)
     {
