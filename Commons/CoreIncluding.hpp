@@ -14,6 +14,7 @@
 #include <iomanip>
 #include <unordered_map>
 #include <cstdlib>
+#include <fstream>
 #include "Plugins/Nlohmann Json/json.hpp"
 
 using namespace std;

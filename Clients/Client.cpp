@@ -1,35 +1,43 @@
 #include "Views/LobbyView.h"
-#include "../Cores/Models/Lobby.hpp"
+#include "../Cores/Models/Lobby2.hpp"
 #include "../Cores/Networks/MessageHandler.hpp"
 #include "../Cores/CoreFunction.hpp" 
 #include "../Cores/CoreIncluding.hpp" 
 #include "../Cores/CoreDefinition.hpp"
 #include "ClientDeclaration.hpp"
 
-vector<UIRoom> ConvertLobbyRooms(const Lobby& lobby) 
+// vector<UIRoom> ConvertLobbyRooms(const Lobby& lobby) 
+// {
+//     vector<UIRoom> ui;
+//     ui.reserve(lobby.Rooms.size());
+
+//     // Sort rooms by ID ascending
+//     vector<pair<int, Room>> sortedRooms(lobby.Rooms.begin(), lobby.Rooms.end());
+//     sort(sortedRooms.begin(), sortedRooms.end(),
+//          [](auto& a, auto& b){ return a.first < b.first; });
+
+//     for (const auto& pair : sortedRooms) {
+//         const Room& r = pair.second;
+
+//         UIRoom u;
+//         u.id = r.ID;
+//         u.name = r.Name;
+//         u.current = r.Members.size();
+//         u.max = 15;
+//         u.inMatch = r.InMatch;
+
+//         ui.push_back(u);
+//     }
+
+//     return ui;
+// }
+
+void PrintRoomList(const vector<MyUIRoom>& rooms) 
 {
-    vector<UIRoom> ui;
-    ui.reserve(lobby.Rooms.size());
-
-    // Sort rooms by ID ascending
-    vector<pair<int, Room>> sortedRooms(lobby.Rooms.begin(), lobby.Rooms.end());
-    sort(sortedRooms.begin(), sortedRooms.end(),
-         [](auto& a, auto& b){ return a.first < b.first; });
-
-    for (const auto& pair : sortedRooms) {
-        const Room& r = pair.second;
-
-        UIRoom u;
-        u.id = r.ID;
-        u.name = r.Name;
-        u.current = r.Members.size();
-        u.max = 15;
-        u.inMatch = r.InMatch;
-
-        ui.push_back(u);
+    for (const auto& room : rooms) 
+    {
+        cout << room.ID << " " << room.Name << " - " << room.Host << endl;
     }
-
-    return ui;
 }
 
 void ReceiveThread(int clientFD)
@@ -39,17 +47,41 @@ void ReceiveThread(int clientFD)
         string msg = ReceiveMessage(clientFD);
         if (msg.empty()) break;
 
-        auto [code, data] = HandleResponse(msg);
+        auto split = SplitMessage(msg);
+        auto code = atoi(split[0].c_str());
 
-        if (code == NETWORK_CONNECTED)
+        if (code == RS_NETWORK_CONNECTED)
         {
-            ClientFD = atoi(data.c_str());
-            cout << data << endl;
+            // ClientFD = atoi(data.c_str());
+            cout << "Connect to server successfully!" << endl;
         }
-        else if (code == 1)
+        else if (code == RS_SIGN_UP_S)
         {
-            cout << data << endl;
+            cout << "Sign up successfully" << endl;
         }
+        else if (code == RS_SIGN_UP_F_ACCOUNT_EXISTED)
+        {
+            cout << "Sign up failed: Account existed" << endl;
+        }
+        else if (code == RS_LOG_IN_S)
+        {
+            cout << "Log in successfully" << endl;
+        }
+        else if (code == RS_LOG_IN_F_WRONG_PASSWORD)
+        {
+            cout << "Log in failed: Wrong password" << endl;
+        }
+        else if (code == RS_LOG_IN_F_ACCOUNT_NOT_EXISTED)
+        {
+            cout << "Log in failed: Account not existed" << endl;
+        }
+        // else if (code == RS_UPDATE_ROOM_LIST)
+        // { 
+        //     ClearScreen();
+
+        //     auto rooms = DeserializeLobby(data);
+        //     PrintRoomList(rooms);            
+        // }
 
         // if (atoi(msg.c_str()) == NETWORK_CONNECTED)
         // {
@@ -104,32 +136,12 @@ int main()
 
     while (true)
     {
-        string msg;
-        getline(cin, msg);
+        string command, message;
+        getline(cin, command);
 
-        if (msg == "/quit") break;
+        if (command == "/quit") break;
 
-        if (msg.rfind("MESSAGE ", 0) == 0)
-        {
-            string text = msg.substr(8);
-
-            MessageData data;
-            data.text = text;
-
-            // generate time
-            time_t now = time(nullptr);
-            data.time = ctime(&now);
-            if (!data.time.empty() && data.time.back() == '\n')
-                data.time.pop_back();
-
-            json j = data;
-
-            SendMessage(clientFD, "MESSAGE " + j.dump());
-        }
-        else
-        {
-            SendMessage(clientFD, msg);
-        }
+        SendMessage(clientFD, command);
     }
 
     close(clientFD);

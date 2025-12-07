@@ -4,14 +4,18 @@ LDFLAGS = -pthread
 
 SERVER_SRC = Servers/Server.cpp
 CLIENT_SRC = Clients/Client.cpp
+RESET_SRC = Functions/ResetData.cpp
 
-all: server client
+all: server client reset
 
 server: $(SERVER_SRC)
 	$(CXX) $(CXXFLAGS) $(SERVER_SRC) -o server $(LDFLAGS)
 
 client: $(CLIENT_SRC)
 	$(CXX) $(CXXFLAGS) $(CLIENT_SRC) -o client $(LDFLAGS)
+
+reset: $(RESET_SRC)
+	$(CXX) $(CXXFLAGS) $(RESET_SRC) -o reset $(LDFLAGS)
 
 clean: 
 	rm -f server client
