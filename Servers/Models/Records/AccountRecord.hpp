@@ -6,7 +6,7 @@ struct AccountRecord
     string Email;
     string Password;
 
-    static AccountRecord Deserialize(const std::string& msg)
+    static AccountRecord Deserialize(const string& msg)
     {
         json j = json::parse(msg);
 

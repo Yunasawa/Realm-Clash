@@ -20,24 +20,26 @@ bool SendMessage(int clientFD, const string &msg)
 
 string ReceiveMessage(int clientFD)
 {
-    string data;
-    char c;
+    static thread_local string buffer;
+    char temp[1024];
+
     while (true)
     {
-        ssize_t n = recv(clientFD, &c, 1, 0);
-        
-        if (n <= 0) 
+        size_t pos = buffer.find("\r\n");
+        if (pos != string::npos)
+        {
+            string line = buffer.substr(0, pos);
+            buffer.erase(0, pos + 2);
+            return line;
+        }
+
+        ssize_t n = recv(clientFD, temp, sizeof(temp), 0);
+        if (n <= 0)
         {
             return "";
         }
 
-        data.push_back(c);
-
-        if (data.size() >= 2 && data[data.size()-2] == '\r' && data[data.size()-1] == '\n')
-        {
-            data.resize(data.size()-2); 
-            return data;
-        }
+        buffer.append(temp, n);
     }
 }
 

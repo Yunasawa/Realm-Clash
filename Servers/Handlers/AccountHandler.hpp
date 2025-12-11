@@ -30,9 +30,9 @@ void HandleSignUp(int clientFD, string data)
             {
                 .ID = accountID,
                 .Name = accountName,
-                .FD = clientFD
             };
             Accounts[acc.ID] = acc;
+            Clients[clientFD] = acc.ID;
             SendMessage(clientFD, string(RS_SIGN_UP_S) + " " + acc.Serialize());
 
             stringstream ss;
@@ -70,10 +70,9 @@ void HandleLogIn(int clientFD, string data)
                 {
                     .ID = id,
                     .Name = name,
-                    .FD = clientFD
                 };
                 Accounts[acc.ID] = acc;
-
+                Clients[clientFD] = acc.ID;
                 SendMessage(clientFD, string(RS_LOG_IN_S) + " " + acc.Serialize());
             }
             else

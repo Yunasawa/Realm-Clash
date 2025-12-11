@@ -6,9 +6,8 @@ struct AccountEntity
     int ID;
     string Name;
 
-    int FD;
-    int RoomID;
-    bool IsHost;
+    bool IsTeamLeader;
+    bool IsRoomLeader;
 
     string Serialize() const
     {

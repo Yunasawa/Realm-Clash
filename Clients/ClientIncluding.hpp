@@ -1,11 +1,15 @@
 #ifndef CLIENT_INCLUDING
 #define CLIENT_INCLUDING
 
-#include "Models/Entities/AccountEntity.hpp"
 #include "Models/Records/AccountRecord.hpp"
+#include "Models/Records/LobbyRecord.hpp"
+
+#include "Models/Entities/AccountEntity.hpp"
+#include "Models/Entities/LobbyEntity.hpp"
 
 int CurrentPhase = 0;
 AccountRecord Account;
+LobbyRecord Lobby;
 
 #include "Views/LobbyView.hpp"
 #include "Views/WelcomeView.hpp"

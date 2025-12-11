@@ -29,33 +29,16 @@ void ReceiveThread(int clientFD)
         auto split = SplitBySpace(msg);
         auto code = split[0];
 
-        if (code == RS_NETWORK_CONNECTED ||
-            code == RS_SIGN_UP_F_ACCOUNT_EXISTED ||
-            code == RS_LOG_IN_F_WRONG_PASSWORD ||
-            code == RS_LOG_IN_F_ACCOUNT_NOT_EXISTED ||
-            code == RS_LOG_IN_F_ACCOUNT_HAS_BEEN_USED)
-        {
-            ShowWelcomeView(code);
-        }
-        else if (code == RS_SIGN_UP_S ||
-            code == RS_LOG_IN_S)
-        {
-            Account = AccountRecord::Deserialize(split[1]);
-            CurrentPhase = PHASE_LOBBY;
-
-            ShowLobbyView();
-
-            SendMessage(clientFD, string(RQ_UPDATE_LOBBY));
-
-        }
+        HandleWelcomeResponse(clientFD, code, split);
+        HandleLobbyResponse(clientFD, code, split);
     }
 }
 
-int main()
+int main(int argc, char *argv[])
 {
     ClearScreen();
 
-    int clientFD = CreateSocket();
+    int clientFD = CreateSocket((argc > 1) ? argv[1] : CLIENT_IP);
 
     thread(ReceiveThread, clientFD).detach();
 
@@ -66,7 +49,7 @@ int main()
 
         auto split = SplitBySpace(command);
         
-        CallPhase(CurrentPhase, clientFD, split);
+        CallPhase(CurrentPhase / 100, clientFD, split);
     }
 
     close(clientFD);

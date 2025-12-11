@@ -53,15 +53,15 @@ int AcceptClient(int serverFD)
     return clientFD;
 }
 
-// void BroadcastMessage(const string &msg, int senderFD, bool ignoreSender)
-// {
-//     lock_guard<mutex> lock(ClientsMutex);
-//     for (int fd : Clients)
-//     {
-//         if (fd != senderFD || ignoreSender)
-//         {
-//             SendMessage(fd, msg);
-//         }
-//     }
-// }
+void BroadcastMessage(int senderFD, const string &msg, bool includeSender)
+{
+    lock_guard<mutex> lock(ClientsMutex);
+    for (const auto& client : Clients)
+    {
+        if (client.first != senderFD || includeSender)
+        {
+            SendMessage(client.first, msg);
+        }
+    }
+}
 #endif

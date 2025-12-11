@@ -3,7 +3,6 @@
 #include "../Commons/CoreFunction.hpp"
 #include "../Commons/Networks/MessageHandler.hpp"
 #include "../Commons/Models/Lobby2.hpp"
-#include "ServerNetwork.hpp"
 #include "ServerDefinition.hpp"
 #include "ServerIncluding.hpp"
 
@@ -38,6 +37,10 @@ void HandleClient(int clientFD)
         {
             HandleUpdateLobby(clientFD);
         }
+        else if (code == RQ_JOIN_TEAM)
+        {
+            HandleJoinTeam(clientFD, parts[1]);
+        }
     }
 
     {
@@ -50,6 +53,14 @@ void HandleClient(int clientFD)
 
 int main()
 {
+    // Accounts.clear();
+
+    // Accounts[1] = AccountEntity{1, "U0000001", false, false};
+    // Accounts[2] = AccountEntity{2, "U0000002", true, false};
+    // Accounts[3] = AccountEntity{3, "U0000003", true, true};
+    // Accounts[4] = AccountEntity{4, "U0000004", true, false};
+    // Accounts[5] = AccountEntity{5, "U0000005", false, false};
+
     ClearScreen();
 
     int serverFD = CreateSocket();

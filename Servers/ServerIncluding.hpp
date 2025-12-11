@@ -1,14 +1,18 @@
 #ifndef SERVER_INCLUDING
 #define SERVER_INCLUDING
 
-#include "Models/Entities/AccountEntity.hpp"
-#include "Models/Entities/LobbyEntity.hpp"
+mutex ClientsMutex;
+unordered_map<int, int> Clients;
+int RoomLeader = 0;
 
+#include "ServerNetwork.hpp"
+
+#include "Models/Entities/AccountEntity.hpp"
 #include "Models/Records/AccountRecord.hpp"
 
-mutex ClientsMutex;
 unordered_map<int, AccountEntity> Accounts;
-unordered_map<int, RoomEntity> Rooms;
+
+#include "Models/Entities/LobbyEntity.hpp"
 
 #include "Handlers/AccountHandler.hpp"
 #include "Handlers/LobbyHandler.hpp"

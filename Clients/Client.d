@@ -10,8 +10,10 @@ Clients/Client.o: Clients/Client.cpp Clients/../Commons/Models/Lobby2.hpp \
  Clients/../Commons/CommonDefinition.hpp \
  Clients/../Commons/Definitions/TextStyle.hpp Clients/ClientNetwork.hpp \
  Clients/ClientDefinition.hpp Clients/ClientIncluding.hpp \
+ Clients/Models/Records/AccountRecord.hpp \
+ Clients/Models/Records/LobbyRecord.hpp \
  Clients/Models/Entities/AccountEntity.hpp \
- Clients/Models/Records/AccountRecord.hpp Clients/Views/LobbyView.hpp \
+ Clients/Models/Entities/LobbyEntity.hpp Clients/Views/LobbyView.hpp \
  Clients/Views/WelcomeView.hpp Clients/Handlers/Phases/PhaseWelcome.hpp \
  Clients/Handlers/Phases/PhaseLobby.hpp
 
@@ -43,9 +45,13 @@ Clients/ClientDefinition.hpp:
 
 Clients/ClientIncluding.hpp:
 
+Clients/Models/Records/AccountRecord.hpp:
+
+Clients/Models/Records/LobbyRecord.hpp:
+
 Clients/Models/Entities/AccountEntity.hpp:
 
-Clients/Models/Records/AccountRecord.hpp:
+Clients/Models/Entities/LobbyEntity.hpp:
 
 Clients/Views/LobbyView.hpp:
 
