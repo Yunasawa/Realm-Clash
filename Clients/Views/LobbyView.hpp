@@ -89,8 +89,12 @@ string GetLog(string code)
     {
 		return FG_RED "Join team failed: Team is full!";
     }
+    else if (code == RS_UPDATE_JOIN_REQUEST)
+    {
+        return LOG_NONE;
+    }
 
-    return FG_GREEN "";
+    return Log;
 }
 
 string GetOption()
@@ -143,7 +147,7 @@ string GetSubLog()
     else
     {
         string text = to_string(JoinRequestAmount) + " pending joining request(s).";
-        return "┃ " + text + string(86 - text.length(), ' ') + "┃";
+        return "┃ " + text + string(67 - text.length(), ' ') + "┃\n";
     }
 }
 
@@ -151,7 +155,7 @@ void ShowLobbyView(string code)
 {
     ClearScreen();
 
-    auto log = GetLog(code);
+    Log = GetLog(code);
 
     cout << MakeTitle(Account.Name) << "\n";
     cout <<
@@ -164,8 +168,8 @@ void ShowLobbyView(string code)
     "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
         << GetOption() <<
     "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
+    "┃ " << BOLD << Log << RESET << string(72 - Log.length(), ' ') << "┃\n"
         << GetSubLog() <<
-    "┃ " << BOLD << log << RESET << string(72 - log.length(), ' ') << "┃\n"
     "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
 }
 

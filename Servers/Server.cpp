@@ -32,6 +32,7 @@ void HandleClient(int clientFD)
         lock_guard<mutex> lock(ClientsMutex);
     }
 
+    HandleExitPhase(clientFD);
     close(clientFD);
     cout << FG_RED "●" RESET " Client " << clientFD << " disconnected.\n";
 }

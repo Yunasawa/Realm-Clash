@@ -1,6 +1,18 @@
 #ifndef SERVER_MODEL_ENTITY_ACCOUNT
 #define SERVER_MODEL_ENTITY_ACCOUNT
 
+struct SessionEntity
+{
+    atomic<bool> Counting = { false };
+    chrono::steady_clock::time_point StartTime;
+
+    void Initialize()
+    {
+        Counting.store(false);
+		StartTime = chrono::steady_clock::now();
+    }
+};
+
 struct AccountEntity
 {
     int ID;

@@ -2,6 +2,7 @@
 #define SERVER_INCLUDING
 
 mutex ClientsMutex;
+mutex SessionsMutex;
 ofstream LogFile;
 
 unordered_map<int, int> Clients; // Map clientFD to accountID
@@ -26,12 +27,16 @@ int GetValueByKey(unordered_map<int,int>& m, int v)
 #include "Models/Records/AccountRecord.hpp"
 
 unordered_map<int, AccountEntity> Accounts; // Map accountID to AccountEntity
+unordered_map<int, SessionEntity> Sessions; // Map accountID to SessionEntity
 
 #include "Models/Entities/LobbyEntity.hpp"
+
+LobbyEntity Lobby;
 
 #include "Handlers/Handlers/AccountHandler.hpp"
 #include "Handlers/Handlers/LobbyHandler.hpp"
 
+#include "Handlers/Phases/ExitPhase.hpp"
 #include "Handlers/Phases/WelcomePhase.hpp"
 #include "Handlers/Phases/LobbyPhase.hpp"
 

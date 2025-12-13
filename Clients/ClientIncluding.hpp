@@ -11,6 +11,7 @@ int CurrentPhase = 0;
 AccountRecord Account;
 LobbyRecord Lobby;
 int JoinRequestAmount = 0;
+string Log = FG_GREEN "";
 
 #include "Views/LobbyView.hpp"
 #include "Views/WelcomeView.hpp"

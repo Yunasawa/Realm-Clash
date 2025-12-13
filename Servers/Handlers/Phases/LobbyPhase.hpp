@@ -13,6 +13,7 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& pa
     {
         if (account.Team != 0) return;
 
+        WriteLog(LogType::Request, clientFD, "JOIN_TEAM " + parts[1]);
         HandleJoinTeam(clientFD, parts[1]);
     }
     else if (code == RQ_CANCEL_JOINING)
@@ -23,12 +24,14 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& pa
     {
 		if (account.IsTeamLeader == false) return;
 
+        WriteLog(LogType::Request, clientFD, "ADD_MEMBER " + parts[1]);
         HandleAddMember(clientFD, parts[1]);
     }
     else if (code == RQ_EXIT_TEAM)
     {
 		if (account.Team == 0) return;
 
+        WriteLog(LogType::Request, clientFD, "EXIT_TEAM");
         HandleExitTeam(clientFD);
     }
 }

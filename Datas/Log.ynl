@@ -1,1 +1,10 @@
-13/12/2025 12:54:57 | FD:  6 | ❓ | SIGN_UP {"Email":"i","Password":"k"}
+13/12/2025 18:48:38 |   6 | ❓ | LOG_IN {"Email":"a","Password":"b"}
+13/12/2025 18:48:38 |   6 | ➕ | LOG_IN_S {"ID":1,"Name":"U0000001"}
+13/12/2025 18:48:40 |   5 | ❓ | LOG_IN {"Email":"b","Password":"c"}
+13/12/2025 18:48:40 |   5 | ➕ | LOG_IN_S {"ID":2,"Name":"U0000002"}
+13/12/2025 18:48:40 |   5 | ❓ | JOIN_TEAM 1
+13/12/2025 18:48:40 |   5 | ➕ | JOIN_TEAM_S {"Teams":[{"Members":[{"ID":2,"IsRoomLeader":true,"IsTeamLeader":true,"Name":"U0000002"},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]},{"Members":[{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]},{"Members":[{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]},{"Members":[{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]},{"Members":[{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]}]}
+13/12/2025 18:48:42 |   6 | ❓ | JOIN_TEAM 1
+13/12/2025 18:48:42 |   5 | ➕ | UPDATE_JOIN_REQUEST 1
+13/12/2025 18:48:47 |   6 | ➕ | EXIT_TEAM_S
+13/12/2025 18:48:48 |   5 | ➕ | EXIT_TEAM_S

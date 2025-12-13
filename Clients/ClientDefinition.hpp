@@ -1,6 +1,8 @@
 #ifndef CLIENT_DEFINITION
 #define CLIENT_DECLARATION
 
+#define LOG_NONE							FG_GREEN ""
+
 // Client phases
 #define PHASE_WELCOME                       000
 

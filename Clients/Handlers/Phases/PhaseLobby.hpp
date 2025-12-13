@@ -176,11 +176,16 @@ void HandleLobbyResponse(int clientFD, const string& code, vector<string> split)
     else if (code == RS_UPDATE_JOIN_REQUEST)
     {
         JoinRequestAmount = stoi(split[1]);
-        cout << "Join request: " << JoinRequestAmount << endl;
+
+        ShowLobbyView(code);
     }
     else if (code == RS_JOIN_TEAM_F_TEAM_FULL)
     {
 		ShowLobbyView(code);
+    }
+    else if (code == RS_UPDATE_PENDING_JOIN)
+    {
+		cout << "Pending joining: " << split[1] << endl;
     }
 }
 

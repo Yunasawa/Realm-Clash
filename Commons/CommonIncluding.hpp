@@ -16,6 +16,8 @@
 #include <cstdlib>
 #include <fstream>
 #include <chrono>
+#include <atomic>
+#include <functional>
 #include "Plugins/Nlohmann Json/json.hpp"
 
 #include "Definitions/TextStyle.hpp"

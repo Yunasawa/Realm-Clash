@@ -49,7 +49,7 @@ inline void WriteLog(LogType type, int clientFD, const std::string& log)
     }
 
     LogFile << Now()
-        << " | FD:" << std::setw(3) << clientFD
+        << " | " << std::setw(3) << clientFD
         << " | " << LogPrefix(type)
         << " | " << log
         << '\n';

@@ -16,6 +16,7 @@ Servers/Server.o: Servers/Server.cpp \
  Servers/Models/Entities/LobbyEntity.hpp \
  Servers/Handlers/Handlers/AccountHandler.hpp \
  Servers/Handlers/Handlers/LobbyHandler.hpp \
+ Servers/Handlers/Phases/ExitPhase.hpp \
  Servers/Handlers/Phases/WelcomePhase.hpp \
  Servers/Handlers/Phases/LobbyPhase.hpp
 Servers/../Commons/CommonDefinition.hpp:
@@ -37,5 +38,6 @@ Servers/Models/Records/AccountRecord.hpp:
 Servers/Models/Entities/LobbyEntity.hpp:
 Servers/Handlers/Handlers/AccountHandler.hpp:
 Servers/Handlers/Handlers/LobbyHandler.hpp:
+Servers/Handlers/Phases/ExitPhase.hpp:
 Servers/Handlers/Phases/WelcomePhase.hpp:
 Servers/Handlers/Phases/LobbyPhase.hpp:

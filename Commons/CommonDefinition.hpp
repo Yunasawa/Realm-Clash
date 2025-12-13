@@ -64,6 +64,7 @@
 #define RS_UPDATE_ROOM_LIST                     "810"
 #define RS_UPDATE_TEAM_ROLE                     "811"
 #define RS_UPDATE_JOIN_REQUEST					"812"
+#define RS_UPDATE_PENDING_JOIN					"813"
 
 #define RS_NETWORK_CONNECTED                    "910"
 
