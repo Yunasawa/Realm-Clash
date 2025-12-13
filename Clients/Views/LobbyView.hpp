@@ -81,6 +81,10 @@ string GetLog(string code)
     {
         return FG_GREEN "You joined the team!";
     }
+    else if (code == RS_ADD_MEMBER_S)
+    {
+        return FG_GREEN "Added member to the team!";
+    }
 
     return FG_GREEN "";
 }
@@ -135,15 +139,15 @@ void ShowLobbyView(string code)
     cout <<
     "┣━ LOBBY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
     // "┃                                                                    ┃\n"
-    "┃ " << FG_RED     << "● 1" << RESET << MakeTeamLine(Lobby.Teams[0]) <<
+    "┃ " << GetTeamColor(1) << "●" << RESET << " 1" << MakeTeamLine(Lobby.Teams[0]) <<
     "┃--------------------------------------------------------------------┃\n"
-    "┃ " << FG_GREEN   << "● 2" << RESET << MakeTeamLine(Lobby.Teams[1]) <<
+    "┃ " << GetTeamColor(2) << "●" << RESET << " 2" << MakeTeamLine(Lobby.Teams[1]) <<
     "┃--------------------------------------------------------------------┃\n"
-    "┃ " << FG_YELLOW  << "● 3" << RESET << MakeTeamLine(Lobby.Teams[2]) <<
+    "┃ " << GetTeamColor(3) << "●" << RESET << " 3" << MakeTeamLine(Lobby.Teams[2]) <<
     "┃--------------------------------------------------------------------┃\n"
-    "┃ " << FG_BLUE    << "● 4" << RESET << MakeTeamLine(Lobby.Teams[3]) <<
+    "┃ " << GetTeamColor(4) << "●" << RESET << " 4" << MakeTeamLine(Lobby.Teams[3]) <<
     "┃--------------------------------------------------------------------┃\n"
-    "┃ " << FG_MAGENTA << "● 5" << RESET << MakeTeamLine(Lobby.Teams[4]) <<
+    "┃ " << GetTeamColor(5) << "●" << RESET << " 5" << MakeTeamLine(Lobby.Teams[4]) <<
     // "┃                                                                    ┃\n"
     GetOption() <<
     "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"

@@ -25,22 +25,8 @@ void HandleClient(int clientFD)
         string code = parts[0];
         string response = msg;
 
-        if (code == RQ_SIGN_UP)
-        {
-            HandleSignUp(clientFD, parts[1]);
-        }
-        else if (code == RQ_LOG_IN)
-        {
-            HandleLogIn(clientFD, parts[1]);
-        }
-        else if (code == RQ_UPDATE_LOBBY)
-        {
-            HandleUpdateLobby(clientFD);
-        }
-        else if (code == RQ_JOIN_TEAM)
-        {
-            HandleJoinTeam(clientFD, parts[1]);
-        }
+        HandleWelcomePhase(clientFD, code, parts);
+        HandleLobbyPhase(clientFD, code, parts);
     }
 
     {

@@ -9,8 +9,12 @@
 #define RQ_LOG_IN                               "LOG_IN"
 #define RQ_UPDATE_LOBBY                         "UPDATE_LOBBY"
 #define RQ_JOIN_TEAM                            "JOIN_TEAM"
+#define RQ_ADD_MEMBER                           "ADD_MEMBER"
+#define RQ_INVITE_MEMBER                        "INVITE_MEMBER"
+#define RQ_EXIT_TEAM                            "EXIT_TEAM"
+#define RQ_KICK_MEMBER                          "KICK_MEMBER"
+#define RQ_START_GAME                           "START_GAME"
 #define RQ_ACCEPT_PARTICIPATION                 "ACCEPT_PARTICIPATION"
-#define RQ_EXIT_ROOM                            "EXIT_ROOM"
 #define RQ_REQUEST_SPOT                         "REQUEST_SPOT"
 #define RQ_ANSWER_SPOT                          "ANSWER_SPOT"
 #define RQ_REQUEST_CASTLE                       "REQUEST_CASTLE"
@@ -29,10 +33,13 @@
 #define RS_LOG_IN_F_ACCOUNT_HAS_BEEN_USED       "104"
 
 #define RS_JOIN_TEAM_S                          "210"
-#define RS_JOIN_TEAM_F_ROOM_FULL                "201"
+#define RS_JOIN_TEAM_F_TEAM_FULL                "201"
 #define RS_JOIN_TEAM_F_SAME_NAME                "202"
 #define RS_EXIT_TEAM_S                          "212"
 #define RS_EXIT_TEAN_F_MATCH_STARTED            "203"
+#define RS_ADD_MEMBER_S                         "213"
+#define RS_ADD_MEMBER_F_NOT_FOUND               "204"
+#define RS_ADD_MEMBER_F_TEAM_FULL               "205"
 
 #define RS_REQUEST_QUESTION_S                   "310"
 #define RS_REQUEST_QUESTION_F_SLOT_OCCUPIED     "301"
@@ -52,6 +59,7 @@
 #define RS_ATTACK_CASTLE_F_INSUFFICIENT_POWER   "701"
 
 #define RS_UPDATE_ROOM_LIST                     "810"
+#define RS_UPDATE_TEAM_ROLE                     "811"
 #define RS_UPDATE_STATS_RESOURCE                "820"
 #define RS_UPDATE_STATS_TEAM                    "821"
 
@@ -62,6 +70,5 @@
 #define CS_LOG_IN_F_ACCOUNT_NOT_EXISTED         "Log in failed: Account not existed"
 #define CS_LOG_IN_F_WRONG_PASSWORD              "Log in failed: Wrong password"
 #define CS_LOG_IN_F_ACCOUNT_HAS_BEEN_USED       "Log in failed: Account has been used"
-
 
 #endif

@@ -22,4 +22,18 @@
 using namespace std;
 using json = nlohmann::json;
 
+string GetTeamColor(int team)
+{
+    switch (team)
+    {
+        case 1: return FG_RED;
+        case 2: return FG_GREEN;
+        case 3: return FG_YELLOW;
+        case 4: return FG_BLUE;
+        case 5: return FG_MAGENTA;
+    }
+
+    return "";
+}
+
 #endif

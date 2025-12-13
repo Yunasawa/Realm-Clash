@@ -5,6 +5,17 @@ struct TeamEntity
 {
     array<int, 3> Members;
 
+    int CountFreeSlot()
+    {
+        int counter = 3;
+        for (int i = 0; i < 3; i++)
+        {
+            if (Members[i] != 0) counter--;
+        }
+
+        return counter;
+    }
+
     int AssignFreeSlot(int account)
     {
         for (int i = 0; i < 3; i++)
@@ -63,6 +74,20 @@ struct LobbyEntity
         }
 
         return j.dump();
+    }
+
+    void RemoveMember(int teamIndex, int account)
+    {
+        auto& mem = Teams[teamIndex].Members;
+
+        bool isRoomLeader = Accounts[account].IsRoomLeader;
+        bool isTeamLeader = Accounts[account].IsTeamLeader;
+
+        // Remove account
+        auto endIt = remove(mem.begin(), mem.end(), account);
+
+        // Fill tails with 0
+        fill(endIt, mem.end(), 0);
     }
 };
 

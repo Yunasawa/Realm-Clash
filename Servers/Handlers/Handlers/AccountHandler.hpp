@@ -8,6 +8,11 @@ string ToUID(int num)
     return ss.str();
 }
 
+int ToID(const string& s)
+{
+    return stoi(s.substr(1));
+}
+
 void HandleSignUp(int clientFD, string data)
 {
     AccountRecord account = AccountRecord::Deserialize(data);
