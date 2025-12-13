@@ -5,13 +5,13 @@
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ U0000001 ━┓
 ┣━ LOBBY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃ ● 1 |                    |                    |                    ┃
-┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃--------------------------------------------------------------------┃
 ┃ ● 2 |                    |                    |                    ┃
-┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃--------------------------------------------------------------------┃
 ┃ ● 3 |                    |                    |                    ┃
-┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃--------------------------------------------------------------------┃
 ┃ ● 4 |                    |                    |                    ┃
-┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃--------------------------------------------------------------------┃
 ┃ ● 5 |                    |                    |                    ┃
 ┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃ • 1 <teamID>: Create/Join team                                     ┃
@@ -85,48 +85,66 @@ string GetLog(string code)
     {
         return FG_GREEN "Added member to the team!";
     }
+    else if (code == RS_JOIN_TEAM_F_TEAM_FULL)
+    {
+		return FG_RED "Join team failed: Team is full!";
+    }
 
     return FG_GREEN "";
 }
 
 string GetOption()
 {
-    if (CurrentPhase == PHASE_LOBBY_JOINING)
+    if (CurrentPhase == PHASE_LOBBY_JOINING_READY)
     {
         return 
-        "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
         "┃ • 1 <teamID>: Create/Join team                                     ┃\n";
+    }
+    else if (CurrentPhase == PHASE_LOBBY_JOINING_PENDING)
+    {
+        return
+        "┃ • 1: Cancel joining request                                        ┃\n";
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINED_MEMBER)
     {
         return 
-        "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
         "┃ • 1 <member>: Invite to team     | • 2: Exit team                  ┃\n";    
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINED_RTLEADER)
     {
         return 
-        "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
         "┃ • 1 <member>: Add to team        | • 2: Exit team                  ┃\n"   
         "┃ • 3 <id>: Accept join request    | • 4 <member>: Kick member       ┃\n"   
-        "┃ • 5: Start game                                                    ┃\n";   
+        "┃ • 5: Remove team                 | • 6: Start game                 ┃\n";   
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINED_TLEADER)
     {
         return 
-        "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
         "┃ • 1 <member>: Add to team        | • 2: Exit team                  ┃\n"   
-        "┃ • 3 <id>: Accept join request    | • 4 <member>: Kick member       ┃\n"; 
+        "┃ • 3 <id>: Accept join request    | • 4 <member>: Kick member       ┃\n"
+        "┃ • 5: Remove team                                                   ┃\n";   
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINED_RLEADER)
     {
         return 
-        "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
         "┃ • 1 <member>: Invite to team     | • 2: Exit team                  ┃\n"   
         "┃ • 3: Start game                                                    ┃\n"; 
     }
 
     return "";
+}
+
+string GetSubLog()
+{
+    if (JoinRequestAmount == 0)
+    {
+        return "";
+    }
+    else
+    {
+        string text = to_string(JoinRequestAmount) + " pending joining request(s).";
+        return "┃ " + text + string(86 - text.length(), ' ') + "┃";
+    }
 }
 
 void ShowLobbyView(string code)
@@ -138,19 +156,15 @@ void ShowLobbyView(string code)
     cout << MakeTitle(Account.Name) << "\n";
     cout <<
     "┣━ LOBBY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
-    // "┃                                                                    ┃\n"
-    "┃ " << GetTeamColor(1) << "●" << RESET << " 1" << MakeTeamLine(Lobby.Teams[0]) <<
-    "┃--------------------------------------------------------------------┃\n"
-    "┃ " << GetTeamColor(2) << "●" << RESET << " 2" << MakeTeamLine(Lobby.Teams[1]) <<
-    "┃--------------------------------------------------------------------┃\n"
-    "┃ " << GetTeamColor(3) << "●" << RESET << " 3" << MakeTeamLine(Lobby.Teams[2]) <<
-    "┃--------------------------------------------------------------------┃\n"
-    "┃ " << GetTeamColor(4) << "●" << RESET << " 4" << MakeTeamLine(Lobby.Teams[3]) <<
-    "┃--------------------------------------------------------------------┃\n"
-    "┃ " << GetTeamColor(5) << "●" << RESET << " 5" << MakeTeamLine(Lobby.Teams[4]) <<
-    // "┃                                                                    ┃\n"
-    GetOption() <<
+    "┃ " << GetTeamColor(1) << SQUARE << RESET << " 1" << MakeTeamLine(Lobby.Teams[0]) <<
+    "┃ " << GetTeamColor(2) << SQUARE << RESET << " 2" << MakeTeamLine(Lobby.Teams[1]) <<
+    "┃ " << GetTeamColor(3) << SQUARE << RESET << " 3" << MakeTeamLine(Lobby.Teams[2]) <<
+    "┃ " << GetTeamColor(4) << SQUARE << RESET << " 4" << MakeTeamLine(Lobby.Teams[3]) <<
+    "┃ " << GetTeamColor(5) << SQUARE << RESET << " 5" << MakeTeamLine(Lobby.Teams[4]) <<
+    "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
+        << GetOption() <<
     "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
+        << GetSubLog() <<
     "┃ " << BOLD << log << RESET << string(72 - log.length(), ' ') << "┃\n"
     "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
 }

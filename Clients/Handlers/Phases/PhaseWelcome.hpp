@@ -32,7 +32,7 @@ void HandleWelcomeResponse(int clientFD, const string& code, vector<string> spli
              code == RS_LOG_IN_S)
     {
         Account = AccountRecord::Deserialize(split[1]);
-        CurrentPhase = PHASE_LOBBY_JOINING;
+        CurrentPhase = PHASE_LOBBY_JOINING_READY;
 
         ShowLobbyView(code);
         SendMessage(clientFD, string(RQ_UPDATE_LOBBY));

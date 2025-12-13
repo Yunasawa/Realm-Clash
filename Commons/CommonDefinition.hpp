@@ -2,19 +2,22 @@
 #define CORE_DEFINITION
 
 #define SERVER_PORT                             5874
-#define CLIENT_IP                               "127.0.0.1"
+#define CLIENT_IP                               "192.168.10.1" //"127.0.0.1"
 
 // Client request protocols
 #define RQ_SIGN_UP                              "SIGN_UP"
 #define RQ_LOG_IN                               "LOG_IN"
+
 #define RQ_UPDATE_LOBBY                         "UPDATE_LOBBY"
 #define RQ_JOIN_TEAM                            "JOIN_TEAM"
+#define RQ_CANCEL_JOINING                       "CANCEL_JOINING"
+#define RQ_ACCEPT_PARTICIPATION                 "ACCEPT_PARTICIPATION"
 #define RQ_ADD_MEMBER                           "ADD_MEMBER"
 #define RQ_INVITE_MEMBER                        "INVITE_MEMBER"
 #define RQ_EXIT_TEAM                            "EXIT_TEAM"
 #define RQ_KICK_MEMBER                          "KICK_MEMBER"
+
 #define RQ_START_GAME                           "START_GAME"
-#define RQ_ACCEPT_PARTICIPATION                 "ACCEPT_PARTICIPATION"
 #define RQ_REQUEST_SPOT                         "REQUEST_SPOT"
 #define RQ_ANSWER_SPOT                          "ANSWER_SPOT"
 #define RQ_REQUEST_CASTLE                       "REQUEST_CASTLE"
@@ -60,8 +63,7 @@
 
 #define RS_UPDATE_ROOM_LIST                     "810"
 #define RS_UPDATE_TEAM_ROLE                     "811"
-#define RS_UPDATE_STATS_RESOURCE                "820"
-#define RS_UPDATE_STATS_TEAM                    "821"
+#define RS_UPDATE_JOIN_REQUEST					"812"
 
 #define RS_NETWORK_CONNECTED                    "910"
 

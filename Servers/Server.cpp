@@ -3,7 +3,6 @@
 #include "../Commons/CoreFunction.hpp"
 #include "../Commons/Networks/MessageHandler.hpp"
 #include "../Commons/Models/Lobby2.hpp"
-#include "ServerDefinition.hpp"
 #include "ServerIncluding.hpp"
 
 void HandleClient(int clientFD)
@@ -39,15 +38,19 @@ void HandleClient(int clientFD)
 
 int main()
 {
-    // Accounts.clear();
+    //Accounts[1] = AccountEntity{1, "U0000001", 1, 0, true, true };
+    //Accounts[2] = AccountEntity{2, "U0000002", 1, 0, false, false };
+    //Accounts[3] = AccountEntity{3, "U0000003", 1, 0, false, false };
 
-    // Accounts[1] = AccountEntity{1, "U0000001", false, false};
-    // Accounts[2] = AccountEntity{2, "U0000002", true, false};
-    // Accounts[3] = AccountEntity{3, "U0000003", true, true};
-    // Accounts[4] = AccountEntity{4, "U0000004", true, false};
-    // Accounts[5] = AccountEntity{5, "U0000005", false, false};
+    //Lobby.Teams[0].Members = { 1, 2, 3 };
 
     ClearScreen();
+
+    LogFile.open(LOG_PATH, std::ios::out | std::ios::trunc);
+    if (!LogFile)
+    {
+        cout << "Failed to open " << LOG_PATH << endl;
+    }
 
     int serverFD = CreateSocket();
 
@@ -62,6 +65,7 @@ int main()
         thread(HandleClient, clientFD).detach();
     }
 
+    LogFile.close();
     close(serverFD);
     return 1;
 }

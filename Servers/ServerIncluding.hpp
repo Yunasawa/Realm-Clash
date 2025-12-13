@@ -2,7 +2,10 @@
 #define SERVER_INCLUDING
 
 mutex ClientsMutex;
-unordered_map<int, int> Clients;
+ofstream LogFile;
+
+unordered_map<int, int> Clients; // Map clientFD to accountID
+vector<int> JoinedMembers; // List of accountIDs to determine the order of members joined to game
 int RoomLeader = 0;
 
 int GetValueByKey(unordered_map<int,int>& m, int v)
@@ -14,12 +17,15 @@ int GetValueByKey(unordered_map<int,int>& m, int v)
     return -1;
 }
 
+#include "ServerDefinition.hpp"
 #include "ServerNetwork.hpp"
+
+#include "Utilities/ServerLogger.hpp"
 
 #include "Models/Entities/AccountEntity.hpp"
 #include "Models/Records/AccountRecord.hpp"
 
-unordered_map<int, AccountEntity> Accounts;
+unordered_map<int, AccountEntity> Accounts; // Map accountID to AccountEntity
 
 #include "Models/Entities/LobbyEntity.hpp"
 

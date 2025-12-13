@@ -15,6 +15,7 @@
 #include <unordered_map>
 #include <cstdlib>
 #include <fstream>
+#include <chrono>
 #include "Plugins/Nlohmann Json/json.hpp"
 
 #include "Definitions/TextStyle.hpp"

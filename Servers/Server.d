@@ -9,8 +9,9 @@ Servers/Server.o: Servers/Server.cpp \
  Servers/../Commons/Networks/../CommonIncluding.hpp \
  Servers/../Commons/Models/Lobby2.hpp \
  Servers/../Commons/Models/../CommonIncluding.hpp \
- Servers/ServerDefinition.hpp Servers/ServerIncluding.hpp \
- Servers/ServerNetwork.hpp Servers/Models/Entities/AccountEntity.hpp \
+ Servers/ServerIncluding.hpp Servers/ServerDefinition.hpp \
+ Servers/ServerNetwork.hpp Servers/Utilities/ServerLogger.hpp \
+ Servers/Models/Entities/AccountEntity.hpp \
  Servers/Models/Records/AccountRecord.hpp \
  Servers/Models/Entities/LobbyEntity.hpp \
  Servers/Handlers/Handlers/AccountHandler.hpp \
@@ -27,9 +28,10 @@ Servers/../Commons/Networks/MessageHandler.hpp:
 Servers/../Commons/Networks/../CommonIncluding.hpp:
 Servers/../Commons/Models/Lobby2.hpp:
 Servers/../Commons/Models/../CommonIncluding.hpp:
-Servers/ServerDefinition.hpp:
 Servers/ServerIncluding.hpp:
+Servers/ServerDefinition.hpp:
 Servers/ServerNetwork.hpp:
+Servers/Utilities/ServerLogger.hpp:
 Servers/Models/Entities/AccountEntity.hpp:
 Servers/Models/Records/AccountRecord.hpp:
 Servers/Models/Entities/LobbyEntity.hpp:

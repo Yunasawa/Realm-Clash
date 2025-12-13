@@ -1,16 +1,23 @@
-#ifndef CLIENT_HANDLER_PHASE_LOBBY_JOINING
-#define CLIENT_HANDLER_PHASE_LOBBY_JOINING
+#ifndef CLIENT_HANDLER_PHASE_LOBBY_JOINING_READY
+#define CLIENT_HANDLER_PHASE_LOBBY_JOINING_READY
 
 void HandleLobbyInput(int clientFD, vector<string> split)
 {
     string message;
     int code = atoi(split[0].c_str());
 
-    if (CurrentPhase == PHASE_LOBBY_JOINING)
+    if (CurrentPhase == PHASE_LOBBY_JOINING_READY)
     {
         if (code == 1)
         {
             SendMessage(clientFD, string(RQ_JOIN_TEAM) + " " + split[1]);
+        }
+    }
+    else if (CurrentPhase == PHASE_LOBBY_JOINING_PENDING)
+    {
+        if (code == 1)
+        {
+            SendMessage(clientFD, string(RQ_CANCEL_JOINING));
         }
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINED_MEMBER)
@@ -152,15 +159,28 @@ void HandleLobbyResponse(int clientFD, const string& code, vector<string> split)
                 CurrentPhase = PHASE_LOBBY_JOINED_MEMBER;
             }
         }
+        else
+        {
+            CurrentPhase = PHASE_LOBBY_JOINING_READY;
+        }
 
         ShowLobbyView(code);
     }
     else if (code == RS_EXIT_TEAM_S)
     {
         Lobby = LobbyRecord::Deserialize(split[1]);
-        CurrentPhase = PHASE_LOBBY_JOINING;
+        CurrentPhase = PHASE_LOBBY_JOINING_READY;
         
         ShowLobbyView(code);
+    }
+    else if (code == RS_UPDATE_JOIN_REQUEST)
+    {
+        JoinRequestAmount = stoi(split[1]);
+        cout << "Join request: " << JoinRequestAmount << endl;
+    }
+    else if (code == RS_JOIN_TEAM_F_TEAM_FULL)
+    {
+		ShowLobbyView(code);
     }
 }
 

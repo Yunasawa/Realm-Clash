@@ -25,6 +25,14 @@ void ResetFiles()
             std::cerr << "Failed to open " << ACCOUNT_PATH << "\n";
         }
     }
+
+    {
+        std::ofstream logFile(LOG_PATH, std::ios::trunc);
+        if (!logFile)
+        {
+            std::cerr << "Failed to open " << LOG_PATH << "\n";
+        }
+    }
 }
 
 int main() 

@@ -7,6 +7,7 @@ struct AccountEntity
     string Name;
 
     int Team;
+    int PendingTeam;
     bool IsTeamLeader;
     bool IsRoomLeader;
 

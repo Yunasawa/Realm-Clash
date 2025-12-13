@@ -10,29 +10,55 @@ void HandleUpdateLobby(int clientFD)
 
 void HandleJoinTeam(int clientFD, string data)
 {
-    int team = atoi(data.c_str()) - 1;
+    auto teamID = atoi(data.c_str()) - 1;
+	auto team = Lobby.Teams[teamID];
 
-    auto& account = Accounts[Clients[clientFD]];
-    auto assignedSlot = Lobby.Teams[team].AssignFreeSlot(account.ID);
+	int memberCount = team.CountMember();
 
-    if (assignedSlot != -1)
+	if (memberCount >= 3)
+	{
+		SendMessage(clientFD, string(RS_JOIN_TEAM_F_TEAM_FULL));
+		return;
+	}
+    else
     {
-        if (RoomLeader == 0)
-        {
-            RoomLeader = account.ID;
-            account.IsRoomLeader = true;
-        }
+		auto& account = Accounts[Clients[clientFD]];
 
-        if (assignedSlot == 0)
+        if (memberCount == 0)
         {
-            account.IsTeamLeader = true;
-        }
+            auto assignedSlot = team.AssignFreeSlot(account.ID);
 
-        account.Team = team;
+            if (assignedSlot != -1)
+            {
+                if (RoomLeader == 0)
+                {
+                    RoomLeader = account.ID;
+                    account.IsRoomLeader = true;
+                }
+
+                if (assignedSlot == 0)
+                {
+                    account.IsTeamLeader = true;
+                }
+
+                account.Team = teamID;
+                JoinedMembers.push_back(account.ID);
+				team.JoinRequests.push_back(account.ID);
+            }
+
+            SendMessage(clientFD, string(RS_JOIN_TEAM_S) + " " + Lobby.Serialize());
+            BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), false);
+        }
+        else
+        {
+			auto teamLeaderID = team.Members[0];
+			auto teamLeaderFD = GetValueByKey(Clients, teamLeaderID);
+
+			team.JoinRequests.push_back(account.ID);
+			
+            SendMessage(teamLeaderFD, string(RS_UPDATE_JOIN_REQUEST) + " " + to_string(team.JoinRequests.size()));
+        }
     }
-
-    SendMessage(clientFD, string(RS_JOIN_TEAM_S) + " " + Lobby.Serialize());
-    BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), false);
 }
 
 AccountEntity* FindAccountByName(const std::string& myName)
@@ -50,7 +76,8 @@ void HandleAddMember(int clientFD, string name)
     if (auto* account = FindAccountByName(name))
     {
         auto clientAccount = Accounts[Clients[clientFD]];
-        auto freeSlotAmount = Lobby.Teams[clientAccount.Team].CountFreeSlot();
+		auto team = Lobby.Teams[clientAccount.Team];
+        auto freeSlotAmount = team.CountFreeSlot();
 
         if (freeSlotAmount == 0)
         {
@@ -58,7 +85,12 @@ void HandleAddMember(int clientFD, string name)
         }
         else
         {
-            auto assignedSlot = Lobby.Teams[clientAccount.Team].AssignFreeSlot(account->ID);
+            // auto assignedSlot = team.AssignFreeSlot(account->ID);
+            team.AssignFreeSlot(account->ID);
+
+            account->Team = clientAccount.Team;
+            JoinedMembers.push_back(account->ID);
+            team.JoinRequests.push_back(account->ID);
 
             SendMessage(clientFD, string(RS_ADD_MEMBER_S) + " " + Lobby.Serialize());
             BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), false);
@@ -74,22 +106,16 @@ void HandleAddMember(int clientFD, string name)
 void HandleExitTeam(int clientFD)
 {
     auto account = Accounts[Clients[clientFD]];
-
-    if (account.IsRoomLeader)
-    {
-
-    }
-    if (account.IsTeamLeader)
-    {
-        
-    }
-
-    account.Team = 0;
+	auto team = Lobby.Teams[account.Team];
 
     Lobby.RemoveMember(account.Team, account.ID);
+    JoinedMembers.erase(remove(JoinedMembers.begin(), JoinedMembers.end(), account.ID), JoinedMembers.end());
+    team.JoinRequests.erase(remove(team.JoinRequests.begin(), team.JoinRequests.end(), account.ID), team.JoinRequests.end());
 
     SendMessage(clientFD, string(RS_EXIT_TEAM_S) + " " + Lobby.Serialize());
     BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), false);
 }
+
+
 
 #endif

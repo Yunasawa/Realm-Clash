@@ -1,0 +1,81 @@
+# ===============================
+# Visual Studio / VS 2022
+# ===============================
+.vs/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ===============================
+# Build results
+# ===============================
+[Bb]in/
+[Oo]bj/
+[xX]64/
+[xX]86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+[Ll]og/
+[Bb]uild/
+[Dd]ebug/
+[Rr]elease/
+
+# ===============================
+# C++ specific
+# ===============================
+*.ilk
+*.obj
+*.pdb
+*.idb
+*.iobj
+*.ipdb
+*.pch
+*.tlog
+*.exp
+*.lib
+*.dll
+*.exe
+*.map
+
+# ===============================
+# CMake (if used)
+# ===============================
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+cmake_install.cmake
+compile_commands.json
+out/
+build/
+
+# ===============================
+# NuGet
+# ===============================
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+
+# ===============================
+# Temporary / logs
+# ===============================
+*.log
+*.tmp
+*.temp
+*.cache
+
+# ===============================
+# OS generated
+# ===============================
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ===============================
+# Crash dumps
+# ===============================
+*.dmp

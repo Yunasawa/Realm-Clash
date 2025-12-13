@@ -10,6 +10,7 @@
 int CurrentPhase = 0;
 AccountRecord Account;
 LobbyRecord Lobby;
+int JoinRequestAmount = 0;
 
 #include "Views/LobbyView.hpp"
 #include "Views/WelcomeView.hpp"
