@@ -114,7 +114,7 @@ int ResourceCompare(unordered_map<Resources,int> own, unordered_map<Resources,in
         int requiredAmount = req.second;
         auto it = own.find(type);
         if (it == own.end() || it->second < requiredAmount)
-            return false;
+            return RS_SHOP_EQUIPMENT_F_LACK_RESOURCE;
     }
     return true; 
 }
@@ -180,14 +180,14 @@ void RemoveWeapon(vector<int>& Inventory, int index){
 }
 int AttackCastle(Castle* castle, Team* team, Items weapon){
     
-    if(castle->ownerTeamID == team->ID) return -1; /*Tự tấn công bản thân*/
+    if(castle->ownerTeamID == team->ID) return RS_ATTACK_CASTLE_F_SELF_ATTACK; /*Tự tấn công bản thân*/
 
     int find_result_index = FindWeapon(team,weapon);
     if(find_result_index >= 0){
         Item* attack_item = GetItem(weapon);
         if(castle->defensePoints > attack_item->AttackPoint){
             delete attack_item;
-            return ATTACK_CASTLE_F_INSUFFICIENT_POWER;
+            return RS_ATTACK_CASTLE_F_INSUFFICIENT_POWER;
         }
         else if(castle->defensePoints <= attack_item->AttackPoint){
             castle->defensePoints = 0;
@@ -197,22 +197,22 @@ int AttackCastle(Castle* castle, Team* team, Items weapon){
             /* Change questions ...*/
 
             delete attack_item;
-            return ATTACK_CASTLE_S;
+            return RS_ATTACK_CASTLE_S;
         }
     }
     else{
-        return 0; /* Bổ sung mã trả về : Trường hợp không tồn tại vũ khí trong kho đồ*/
+        return RS_ATTACK_CASTLE_F_WEAPON_NOT_FOUND;
     }
 }
 int MineResourceFromSpot(Spot* spot, Team* team, Resources resourceType)
 {
     // Chỉ team chiếm spot mới được khai thác
     if (spot->ownerTeamID != team->ID)
-        return 0;
+        return RS_REQUEST_QUESTION_F_SLOT_OCCUPIED;
 
     auto mineIt = RESOURCE_MINE_AMOUNT.find(resourceType);
     if (mineIt == RESOURCE_MINE_AMOUNT.end())
-        return 0;
+        return RS_GIVE_RESOURCE_F;
 
     int amount = mineIt->second;
 

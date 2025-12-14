@@ -65,6 +65,8 @@
 
 #define RS_ATTACK_CASTLE_S                      "710"
 #define RS_ATTACK_CASTLE_F_INSUFFICIENT_POWER   "701"
+#define RS_ATTACK_CASTLE_F_SELF_ATTACK          "702"
+#define RS_ATTACK_CASTLE_F_WEAPON_NOT_FOUND     "703"
 
 #define RS_UPDATE_ROOM_LIST                     "810"
 #define RS_UPDATE_TEAM_ROLE                     "811"
