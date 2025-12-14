@@ -15,6 +15,10 @@ struct AccountRecord
         r.Password = j.value("Password", "");
         return r;
     }
+	string Capture() const
+	{
+		return "Email: " + Email + ", Password: " + Password;
+	}
 };
 
 #endif

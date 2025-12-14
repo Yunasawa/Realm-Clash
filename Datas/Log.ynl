@@ -1,35 +1,16 @@
-14/12/2025 07:59:56 |   5 | ❓ | LOG_IN {"Email":"a","Password":"b"}
-14/12/2025 07:59:56 |   5 | ➕ | LOG_IN_S {"ID":1,"Name":"U0000001"}
-14/12/2025 07:59:59 |   6 | ❓ | LOG_IN {"Email":"b","Password":"c"}
-14/12/2025 07:59:59 |   6 | ➕ | LOG_IN_S {"ID":2,"Name":"U0000002"}
-14/12/2025 08:00:01 |   8 | ❓ | LOG_IN {"Email":"c","Password":"d"}
-14/12/2025 08:00:01 |   8 | ➖ | LOG_IN_F_ACCOUNT_NOT_EXISTED
-14/12/2025 08:00:03 |   8 | ❓ | LOG_IN {"Email":"d","Password":"e"}
-14/12/2025 08:00:03 |   8 | ➕ | LOG_IN_S {"ID":3,"Name":"U0000003"}
-14/12/2025 08:00:06 |   7 | ❓ | LOG_IN {"Email":"e","Password":"f"}
-14/12/2025 08:00:06 |   7 | ➕ | LOG_IN_S {"ID":4,"Name":"U0000004"}
-14/12/2025 08:00:08 |   5 | ❓ | JOIN_TEAM 1
-14/12/2025 08:00:08 |   5 | ➕ | JOIN_TEAM_S {"Teams":[{"Members":[{"ID":1,"IsRoomLeader":true,"IsTeamLeader":true,"Name":"U0000001"},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]},{"Members":[{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]},{"Members":[{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]},{"Members":[{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]},{"Members":[{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""},{"ID":0,"IsRoomLeader":false,"IsTeamLeader":false,"Name":""}]}]}
-14/12/2025 08:00:09 |   6 | ❓ | JOIN_TEAM 1
-14/12/2025 08:00:09 |   5 | ➕ | UPDATE_JOIN_REQUEST 1
-14/12/2025 08:00:11 |   7 | ❓ | JOIN_TEAM 1
-14/12/2025 08:00:11 |   5 | ➕ | UPDATE_JOIN_REQUEST 2
-14/12/2025 08:00:13 |   8 | ❓ | JOIN_TEAM 1
-14/12/2025 08:00:17 |   8 | ➕ | EXIT_TEAM_S
-14/12/2025 08:00:22 |   8 | ❓ | LOG_IN {"Email":"e","Password":"f"}
-14/12/2025 08:00:22 |   8 | ➖ | LOG_IN_F_ACCOUNT_HAS_BEEN_USED
-14/12/2025 08:00:24 |   8 | ❓ | LOG_IN {"Email":"f","Password":"g"}
-14/12/2025 08:00:24 |   8 | ➕ | LOG_IN_S {"ID":5,"Name":"U0000005"}
-14/12/2025 08:00:40 |   6 | ➖ | JOIN_TEAM_F_REQUEST_REJECTED
-14/12/2025 08:00:40 |   5 | ➕ | UPDATE_JOIN_REQUEST 1
-14/12/2025 08:00:41 |   7 | ➖ | JOIN_TEAM_F_REQUEST_REJECTED
-14/12/2025 08:00:41 |   5 | ➕ | UPDATE_JOIN_REQUEST 0
-14/12/2025 08:00:41 |   8 | ❓ | JOIN_TEAM 1
-14/12/2025 08:00:41 |   5 | ➕ | UPDATE_JOIN_REQUEST 1
-14/12/2025 08:00:44 |   7 | ❓ | JOIN_TEAM 1
-14/12/2025 08:00:44 |   5 | ➕ | UPDATE_JOIN_REQUEST 2
-14/12/2025 08:00:46 |   6 | ❓ | JOIN_TEAM 1
-14/12/2025 08:00:48 |   7 | ➕ | EXIT_TEAM_S
-14/12/2025 08:00:49 |   8 | ➕ | EXIT_TEAM_S
-14/12/2025 08:00:50 |   6 | ➕ | EXIT_TEAM_S
-14/12/2025 08:00:50 |   5 | ➕ | EXIT_TEAM_S
+        TIME        ┃ CID ┃ ➖ ┃                  ACTION                   ┃            DATA
+━━━━━━━━━━━━━━━━━━━━╋━━━━━╋━➖━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+14/12/2025 13:02:18 ┃   5 ┃ ❓ ┃ REQUESTSIGN UP                            ┃ Email: a, Password: b
+14/12/2025 13:02:18 ┃   5 ┃ ➖ ┃ FAILURESIGN UP : Account existed          ┃ 
+14/12/2025 13:02:22 ┃   5 ┃ ❓ ┃ REQUESTLOG IN                             ┃ Email: m, Password: n
+14/12/2025 13:02:22 ┃   5 ┃ ➖ ┃ FAILURELOG IN : Account not existed       ┃ 
+14/12/2025 13:02:24 ┃   5 ┃ ❓ ┃ REQUESTLOG IN                             ┃ Email: a, Password: b
+14/12/2025 13:02:24 ┃   5 ┃ ➕ ┃ SUCCESSLOG IN                             ┃ ID: 1, Name: U0000001
+14/12/2025 13:02:26 ┃   6 ┃ ❓ ┃ REQUESTLOG IN                             ┃ Email: b, Password: c
+14/12/2025 13:02:26 ┃   6 ┃ ➕ ┃ SUCCESSLOG IN                             ┃ ID: 2, Name: U0000002
+14/12/2025 13:02:27 ┃   6 ┃ ❓ ┃ REQUESTJOIN TEAM                          ┃ Team: 1
+14/12/2025 13:02:27 ┃   6 ┃ ➕ ┃ SUCCESSJOIN TEAM                          ┃ Team 0: [(2,0,U0000002,1,1),(0,0,,0,0),(0,0,,0,0)], Team 1: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 2: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 3: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 4: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)]
+14/12/2025 13:02:28 ┃   5 ┃ ❓ ┃ REQUESTJOIN TEAM                          ┃ Team: 1
+14/12/2025 13:02:28 ┃   6 ┃ ➕ ┃ SUCCESSUPDATE JOIN REQUEST                ┃ Request: 1
+14/12/2025 13:02:29 ┃   5 ┃ ➕ ┃ SUCCESSQUIT GAME                          ┃ 
+14/12/2025 13:02:29 ┃   6 ┃ ➕ ┃ SUCCESSQUIT GAME                          ┃ 

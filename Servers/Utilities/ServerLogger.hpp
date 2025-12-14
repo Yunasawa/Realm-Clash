@@ -26,7 +26,7 @@ inline string Now()
     return ss.str();
 }
 
-inline const char* LogPrefix(LogType type)
+inline const string LogPrefix(LogType type)
 {
     switch (type)
     {
@@ -37,7 +37,18 @@ inline const char* LogPrefix(LogType type)
     return "";
 }
 
-inline void WriteLog(LogType type, int clientFD, const std::string& log)
+inline const string CodePrefix(LogType type)
+{
+    switch (type)
+    {
+    case LogType::Request: return "REQUEST ";
+    case LogType::Success: return "SUCCESS ";
+    case LogType::Failure: return "FAILURE ";
+    }
+    return "";
+}
+
+inline void WriteLog(LogType type, int clientFD, const std::string& code, const std::string& data = "")
 {
     static std::mutex LogMutex;
     std::lock_guard<std::mutex> lock(LogMutex);
@@ -49,9 +60,10 @@ inline void WriteLog(LogType type, int clientFD, const std::string& log)
     }
 
     LogFile << Now()
-        << " | " << std::setw(3) << clientFD
-        << " | " << LogPrefix(type)
-        << " | " << log
+        << " ┃ " << std::setw(3) << std::right << clientFD
+        << " ┃ " << LogPrefix(type)
+		<< " ┃ " << std::setw(41) << std::left << (CodePrefix(type) + code)
+		<< " ┃ " << data
         << '\n';
 
     LogFile.flush();

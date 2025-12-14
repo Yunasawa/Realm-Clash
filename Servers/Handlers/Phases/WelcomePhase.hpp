@@ -5,12 +5,16 @@ void HandleWelcomePhase(int clientFD, const string& code, const vector<string>& 
 {
     if (code == RQ_SIGN_UP)
     {
-		WriteLog(LogType::Request, clientFD, "SIGN_UP " + parts[1]);
+        AccountRecord account = AccountRecord::Deserialize(parts[1]);
+		WriteLog(LogType::Request, clientFD, "SIGN UP", account.Capture());
+
         HandleSignUp(clientFD, parts[1]);
     }
     else if (code == RQ_LOG_IN)
     {
-		WriteLog(LogType::Request, clientFD, "LOG_IN " + parts[1]);
+        AccountRecord account = AccountRecord::Deserialize(parts[1]);
+		WriteLog(LogType::Request, clientFD, "LOG IN ", account.Capture());
+
         HandleLogIn(clientFD, parts[1]);
     }
 }

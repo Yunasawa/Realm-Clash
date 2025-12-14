@@ -24,7 +24,7 @@ void HandleSignUp(int clientFD, string data)
         if (IsExistedAccount(ACCOUNT_PATH, account.Email, password, id, name))
         {
             SendMessage(clientFD, RS_SIGN_UP_F_ACCOUNT_EXISTED);
-            WriteLog(LogType::Failure, clientFD, "SIGN_UP_F_ACCOUNT_EXISTED");
+            WriteLog(LogType::Failure, clientFD, "SIGN UP : Account existed");
         }
         else
         {
@@ -44,7 +44,7 @@ void HandleSignUp(int clientFD, string data)
             Clients[clientFD] = accountID;
 
             SendMessage(clientFD, string(RS_SIGN_UP_S) + " " + acc.Serialize());
-            WriteLog(LogType::Success, clientFD, "SIGN_UP_S " + acc.Serialize());
+            WriteLog(LogType::Success, clientFD, "SIGN UP", acc.Capture());
 
             stringstream ss;
             ss << accountID << " " << account.Email << " " << account.Password << " " << accountName;
@@ -73,7 +73,7 @@ void HandleLogIn(int clientFD, string data)
             if (Accounts.find(id) != Accounts.end())
             {
                 SendMessage(clientFD, RS_LOG_IN_F_ACCOUNT_HAS_BEEN_USED);
-                WriteLog(LogType::Failure, clientFD, "LOG_IN_F_ACCOUNT_HAS_BEEN_USED");
+                WriteLog(LogType::Failure, clientFD, "LOG IN : Account has been used");
             }
             else if (account.Password == password)
             {
@@ -85,18 +85,18 @@ void HandleLogIn(int clientFD, string data)
                 Accounts[acc.ID] = acc;
                 Clients[clientFD] = acc.ID;
                 SendMessage(clientFD, string(RS_LOG_IN_S) + " " + acc.Serialize());
-                WriteLog(LogType::Success, clientFD, "LOG_IN_S " + acc.Serialize());
+                WriteLog(LogType::Success, clientFD, "LOG IN", acc.Capture());
             }
             else
             {
                 SendMessage(clientFD, RS_LOG_IN_F_WRONG_PASSWORD);
-                WriteLog(LogType::Failure, clientFD, "LOG_IN_F_WRONG_PASSWORD");
+                WriteLog(LogType::Failure, clientFD, "LOG IN : Wrong password");
             }
         }
         else
         {
             SendMessage(clientFD, RS_LOG_IN_F_ACCOUNT_NOT_EXISTED);
-            WriteLog(LogType::Failure, clientFD, "LOG_IN_F_ACCOUNT_NOT_EXISTED");
+            WriteLog(LogType::Failure, clientFD, "LOG IN : Account not existed");
         }
     }
     else

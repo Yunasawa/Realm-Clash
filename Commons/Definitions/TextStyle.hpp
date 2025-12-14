@@ -24,6 +24,15 @@
 #define FG_CYAN                 "\033[36m"
 #define FG_WHITE                "\033[37m"
 
+#define FG_GRAY					"\033[90m"
+#define FG_BRIGHT_RED			"\033[91m"
+#define FG_BRIGHT_GREEN			"\033[92m"
+#define FG_BRIGHT_YELLOW		"\033[93m"
+#define FG_BRIGHT_BLUE			"\033[94m"
+#define FG_BRIGHT_MAGENTA		"\033[95m"
+#define FG_BRIGHT_CYAN			"\033[96m"
+#define FG_BRIGHT_WHITE			"\033[97m"
+
 // Màu nền cơ bản
 #define BG_BLACK                "\033[40m"
 #define BG_RED                  "\033[41m"

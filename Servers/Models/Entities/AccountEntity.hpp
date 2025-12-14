@@ -18,7 +18,7 @@ struct AccountEntity
     int ID;
     string Name;
 
-    int Team;
+    int Team = -1;
     int PendingTeam;
     bool IsTeamLeader;
     bool IsRoomLeader;
@@ -30,6 +30,10 @@ struct AccountEntity
         j["Name"] = Name;
 
         return j.dump();
+    }
+    string Capture() const
+    {
+		return "ID: " + to_string(ID) + ", Name: " + Name;
     }
 };
 

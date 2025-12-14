@@ -32,7 +32,7 @@ void HandleClient(int clientFD)
         lock_guard<mutex> lock(ClientsMutex);
     }
 
-    HandleExitPhase(clientFD);
+    HandleQuitPhase(clientFD);
     close(clientFD);
     cout << FG_RED "●" RESET " Client " << clientFD << " disconnected.\n";
 }
@@ -51,6 +51,11 @@ int main()
     if (!LogFile)
     {
         cout << "Failed to open " << LOG_PATH << endl;
+    }
+    else
+    {
+        LogFile << "        TIME        ┃ CID ┃ ➖ ┃                  ACTION                   ┃            DATA\n";
+        LogFile << "━━━━━━━━━━━━━━━━━━━━╋━━━━━╋━➖━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
     }
 
     int serverFD = CreateSocket();
