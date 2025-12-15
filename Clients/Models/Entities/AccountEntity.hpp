@@ -1,7 +1,7 @@
 #ifndef CLIENT_MODEL_ACCOUT_ENTITY
 #define CLIENT_MODEL_ACCOUT_ENTITY
 
-struct AccountEntity
+struct AccountEntity /*Tài khoản để đăng nhập*/
 {
     string Email;
     string Password;
@@ -13,6 +13,14 @@ struct AccountEntity
         j["Password"] = Password;
 
         return j.dump();
+        /*
+        Email = "quang@gmail.com"
+        Password = "123456"
+        -> j = {
+            "Email" : "quang@gmail.com",
+            "Password" : "123456"
+        }
+        */
     }
 };
 

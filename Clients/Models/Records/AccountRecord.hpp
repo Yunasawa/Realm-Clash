@@ -1,7 +1,7 @@
 #ifndef SERVER_MODEL_ACCOUT_RECORD
 #define SERVER_MODEL_ACCOUT_RECORD
 
-struct AccountRecord
+struct AccountRecord /*Account <=> Member*/
 {
     int ID;
     string Name;
@@ -11,7 +11,7 @@ struct AccountRecord
         json j = json::parse(msg);
 
         AccountRecord r;
-        r.ID = j.value("ID", 0);
+        r.ID = j.value("ID", 0); /*Đọc trường ID nếu không có thì mặc định = 0*/
         r.Name = j.value("Name", "");
         return r;
     }

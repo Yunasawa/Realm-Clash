@@ -1,7 +1,7 @@
 #ifndef CLIENT_NETWORK
 #define CLIENT_NETWORK
 
-int CreateSocket(const string& ip)
+int CreateSocket(const string& ip) /*socket -> connect*/
 {
     int clientFD = socket(AF_INET, SOCK_STREAM, 0);
     if (clientFD < 0) 

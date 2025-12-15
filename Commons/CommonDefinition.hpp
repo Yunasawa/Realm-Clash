@@ -57,6 +57,7 @@
 #define RS_ANSWER_QUESTION_S                    "410"
 #define RS_ANSWER_QUESTION_F_WRONG_ANSWER       "401"
 #define RS_ANSWER_QUESTION_F_TIME_OUT           "402"
+#define RS_ANSWER_QUESTION_F_TIME_PENALTY       "403"
 
 #define RS_GIVE_RESOURCE_S                      "510"
 #define RS_GIVE_RESOURCE_F                      "501"
@@ -66,6 +67,8 @@
 
 #define RS_ATTACK_CASTLE_S                      "710"
 #define RS_ATTACK_CASTLE_F_INSUFFICIENT_POWER   "701"
+#define RS_ATTACK_CASTLE_F_SELF_ATTACK          "702"
+#define RS_ATTACK_CASTLE_F_INVALID_ITEM         "703"
 
 #define RS_UPDATE_ROOM_LIST                     "810"
 #define RS_UPDATE_TEAM_ROLE                     "811"

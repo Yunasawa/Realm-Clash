@@ -1,7 +1,7 @@
 #ifndef SERVER_MODEL_RECORD_LOBBY
 #define SERVER_MODEL_RECORD_LOBBY
 
-struct MemberRecord
+struct MemberRecord 
 {
     int ID;
     string Name;
@@ -12,20 +12,20 @@ struct MemberRecord
 
 struct TeamRecord
 {
-    array<MemberRecord, 3> Members;
+    array<MemberRecord, 3> Members; /*Mỗi team tối đa 3 thành viên */
 };
 
 struct LobbyRecord
 {
-    array<TeamRecord, 5> Teams;
+    array<TeamRecord, 5> Teams; /*Mỗi phòng tối đa 5 team */
 
-    static LobbyRecord Deserialize(const string& data)
+    static LobbyRecord Deserialize(const string& data) /*Convert json -> struct LobbyRecord*/
     {
         json j = json::parse(data);
 
         LobbyRecord r;
 
-        if (!j.contains("Teams") || !j["Teams"].is_array())
+        if (!j.contains("Teams") || !j["Teams"].is_array()) 
             return r;
 
         for (int t = 0; t < 5; t++)
@@ -78,7 +78,7 @@ struct LobbyRecord
             }
         }
 
-        return MemberRecord{};
+        return MemberRecord{}; /*Nếu duyệt LobbyRecord hiện tại mà không tồn tại -> giá trị khởi tạo mặc định*/
     }
 };
 

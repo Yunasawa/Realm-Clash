@@ -1,6 +1,8 @@
 #ifndef CLIENT_INCLUDING
 #define CLIENT_INCLUDING
 
+/*Lưu các file .hpp cần được khai báo !*/
+
 #include "Models/Records/AccountRecord.hpp"
 #include "Models/Records/LobbyRecord.hpp"
 

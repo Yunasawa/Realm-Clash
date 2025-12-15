@@ -2,7 +2,8 @@
 #define PART
 using namespace std;
 #include <iostream>
-#include "InGame.hpp"
+#include "GameEntities.hpp"
+#include "Participant.hpp"
 extern unordered_map<int,Team> Teams;
 
 void GetCastleInfo(Building b, int castleId)
