@@ -1,7 +1,7 @@
 #ifndef UTILITIES_SERVER_TIMER
 #define UTILITIES_SERVER_TIMER
 
-void StartTick(int clientFD, int duration,
+void StartTickOnClient(int clientFD, int duration,
     const function<void(int, int)>& onTick = nullptr,
     const function<void(int)>& onEnd = nullptr)
 {
@@ -34,7 +34,7 @@ void StartTick(int clientFD, int duration,
         }).detach();
 }
 
-void StopTick(int clientFD, const function<void(int)>& onStop = nullptr)
+void StopTickOnClient(int clientFD, const function<void(int)>& onStop = nullptr)
 {
     lock_guard<mutex> lock(SessionsMutex);
 

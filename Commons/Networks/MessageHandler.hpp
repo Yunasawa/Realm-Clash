@@ -21,7 +21,7 @@ bool SendMessage(int clientFD, const string &msg)
 string ReceiveMessage(int clientFD)
 {
     static thread_local string buffer;
-    char temp[1024];
+    char temp[RECEIVE_CHUNK_SIZE];
 
     while (true)
     {
@@ -40,6 +40,11 @@ string ReceiveMessage(int clientFD)
         }
 
         buffer.append(temp, n);
+
+        if (buffer.size() > BUFFER_LIMIT_LENGTH)
+        {
+            return "";
+        }
     }
 }
 

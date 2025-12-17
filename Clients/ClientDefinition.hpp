@@ -34,4 +34,6 @@
 #define PHASE_LOBBY_JOINED_RTLEADER         104                
 >>>>>>> Stashed changes
 
+#define PHASE_GAME_START_GAME					200
+
 #endif

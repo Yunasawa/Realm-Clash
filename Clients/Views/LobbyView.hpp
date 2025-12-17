@@ -18,19 +18,6 @@
 ┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃                                                                    ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-# Joined & Become member
-
-┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃ • 1: Invite to team              ┃ • 2: Exit team                  ┃
-┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-
-Branch 3: Joined a team & being leader
-
-┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃ • 1: Invite to team              ┃ • 2: Accept participation       ┃
-┃ • 3: Exit team                   ┃                                 ┃
-┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 */
 
 string MakeLobbyTitle(const std::string& playerName)
@@ -76,7 +63,7 @@ string MakeLobbyTeamLine(const TeamRecord& team)
     "| " + MakeLobbyMemberName(team.Members[2]) + string(19 - team.Members[2].Name.length(), ' ') + "┃\n";
 }
 
-string GetLobbyLog(string code)
+string LogLobbyCode(string code)
 {
     if (code == RS_SIGN_UP_S)
     {
@@ -114,6 +101,18 @@ string GetLobbyLog(string code)
     {
 		return FG_GREEN "You exited the team!";
     }
+    else if (code == RS_ACCEPT_PARTICIPATION_S)
+    {
+		return FG_GREEN "You accepted all joining requests!";
+    }
+    else if (code == RS_UPDATE_INVITE_REQUEST)
+    {
+        return LOG_NONE;
+    }
+    else if (code == RS_UPDATE_INVITE_EXPIRED)
+    {
+        return LOG_NONE;
+    }
 
     return Log;
 }
@@ -123,7 +122,7 @@ string GetLobbyOption()
     if (CurrentPhase == PHASE_LOBBY_JOINING_READY)
     {
         return 
-        "┃ • 1 <teamID>: Create/Join team                                     ┃\n";
+        "┃ • 1 <teamID>: Create/Join team   | • 2: Accept invitation          ┃\n";
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINING_PENDING)
     {
@@ -139,15 +138,14 @@ string GetLobbyOption()
     {
         return 
         "┃ • 1 <member>: Add to team        | • 2: Exit team                  ┃\n"   
-        "┃ • 3 <id>: Accept join request    | • 4 <member>: Kick member       ┃\n"   
-        "┃ • 5: Remove team                 | • 6: Start game                 ┃\n";   
+        "┃ • 3: Accept join request         | • 4 <member>: Kick member       ┃\n"   
+        "┃ • 5: Start game                                                    ┃\n";   
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINED_TLEADER)
     {
         return 
         "┃ • 1 <member>: Add to team        | • 2: Exit team                  ┃\n"   
-        "┃ • 3 <id>: Accept join request    | • 4 <member>: Kick member       ┃\n"
-        "┃ • 5: Remove team                                                   ┃\n";   
+        "┃ • 3 <id>: Accept join request    | • 4 <member>: Kick member       ┃\n";
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINED_RLEADER)
     {
@@ -161,15 +159,35 @@ string GetLobbyOption()
 
 string GetLobbySubLog()
 {
-    if (JoinRequestAmount == 0)
-    {
-        return "";
-    }
-    else
+    if (JoinRequestAmount != 0)
     {
         string text = to_string(JoinRequestAmount) + " pending joining request(s).";
         return "┃ " + text + string(67 - text.length(), ' ') + "┃\n";
     }
+   
+    if (TeamInviteRequest == -1)
+    {
+        TeamInviteRequest = 0;
+
+        string text = FG_RED "Invite request expired." RESET;
+        return "┃ " + text + string(76 - text.length(), ' ') + "┃\n";
+    }
+
+    if (TeamInviteRequest == -2)
+    {
+		TeamInviteRequest = 0;
+
+		string text = FG_GREEN "Invite request accepted." RESET;
+		return "┃ " + text + string(76 - text.length(), ' ') + "┃\n";
+    }
+
+    if (TeamInviteRequest != 0)
+    {
+        string text = FG_YELLOW "Invite request to team " + to_string(TeamInviteRequest) + "." RESET;
+        return "┃ " + text + string(76 - text.length(), ' ') + "┃\n";
+    }
+
+    return "";
 }
 
 void ShowLobbyView()
@@ -201,7 +219,7 @@ void ShowLobbyLog(string log)
 
 void ShowLobbyCode(string code)
 {
-    Log = GetLobbyLog(code);
+    Log = LogLobbyCode(code);
 
     ShowLobbyView();
 }

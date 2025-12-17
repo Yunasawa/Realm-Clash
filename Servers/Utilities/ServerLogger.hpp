@@ -5,7 +5,8 @@ enum class LogType
 {
     Request,
     Success,
-    Failure
+    Failure,
+    Update
 };
 
 inline string Now()
@@ -33,6 +34,7 @@ inline const string LogPrefix(LogType type)
         case LogType::Request: return "❓";
         case LogType::Success: return "➕";
         case LogType::Failure: return "➖";
+        case LogType::Update: return "❌";
     }
     return "";
 }
@@ -41,9 +43,10 @@ inline const string CodePrefix(LogType type)
 {
     switch (type)
     {
-        case LogType::Request: return "REQUEST ";
-        case LogType::Success: return "SUCCESS ";
-        case LogType::Failure: return "FAILURE ";
+        case LogType::Request: return "REQUEST | ";
+        case LogType::Success: return "SUCCESS | ";
+        case LogType::Failure: return "FAILURE | ";
+        case LogType::Update: return "UPDATE  | ";
     }
     return "";
 }
@@ -62,7 +65,7 @@ inline void WriteLog(LogType type, int clientFD, const std::string& code, const 
     LogFile << Now()
         << " ┃ " << std::setw(3) << std::right << clientFD
         << " ┃ " << LogPrefix(type)
-		<< " ┃ " << std::setw(41) << std::left << (CodePrefix(type) + code)
+		<< " ┃ " << std::setw(80) << std::left << (CodePrefix(type) + code)
 		<< " ┃ " << data
         << '\n';
 

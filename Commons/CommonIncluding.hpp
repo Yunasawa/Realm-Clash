@@ -23,6 +23,8 @@
 
 #include "Definitions/TextStyle.hpp"
 
+#include "CommonDefinition.hpp"
+
 using namespace std;
 using json = nlohmann::json;
 

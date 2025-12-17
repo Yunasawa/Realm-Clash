@@ -21,17 +21,24 @@ struct TeamEntity
     array<MemberEntity, 3> Members;
     vector<int> JoinRequests;
 
-    int CountFreeSlot() const
+    int CountMember(bool includingRequest = false) const
     {
         return count_if(Members.begin(), Members.end(),
-            [](const MemberEntity& m)
+            [includingRequest](const MemberEntity& m)
             {
-                return m.ID == 0;
+                if (includingRequest)
+                {
+					return m.ID != 0;
+                }
+                else
+                {
+                    return m.ID != 0 && m.IsRequestPending == false;
+                }
             });
     }
-    int CountMember() const
+    int CountFreeSlot(bool includingRequest = false) const
     {
-        return 3 - CountFreeSlot();
+		return 3 - CountMember(includingRequest);
     }
     int AssignFreeSlot(int account, bool isPending = false)
     {
@@ -200,6 +207,14 @@ struct LobbyEntity
             }
         }
         return count;
+    }
+    int CountTeam()
+    {
+		return count_if(Teams.begin(), Teams.end(),
+			[](const TeamEntity& team)
+			{
+				return team.CountMember(true) > 0;
+			});
     }
 };
 

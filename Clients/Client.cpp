@@ -12,7 +12,8 @@ void CallPhase(int phase, int clientFD, const vector<string>& args)
     static void (*funcs[])(int, vector<string>) = 
     { 
         HandleWelcomeInput, 
-        HandleLobbyInput
+        HandleLobbyInput,
+		HandleGameInput
     };
 
     funcs[phase](clientFD, args);
@@ -24,12 +25,13 @@ void ReceiveThread(int clientFD)
     {
         string msg = ReceiveMessage(clientFD);
         if (msg.empty()) break;
-
+            
         auto split = SplitBySpace(msg);
         auto code = split[0];
 
         HandleWelcomeResponse(clientFD, code, split);
         HandleLobbyResponse(clientFD, code, split);
+		HandleGameResponse(clientFD, code, split);
     }
 }
 

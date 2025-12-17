@@ -45,8 +45,9 @@ void HandleJoinTeam(int clientFD, string data)
         }
         else
         {
-            if (team.CountFreeSlot() == (int)team.JoinRequests.size())
+            if (team.CountFreeSlot(true) == 0)
             {
+                WriteLog(LogType::Failure, clientFD, "JOIN TEAM : Request list is full");
 				SendMessage(clientFD, string(RS_JOIN_TEAM_F_REQUEST_FULL));
             }
             else
@@ -65,7 +66,7 @@ void HandleJoinTeam(int clientFD, string data)
 
 				BroadcastMessage(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
 
-                StartTick(clientFD, TICK_JOIN_REQUEST,
+                StartTickOnClient(clientFD, TICK_JOIN_REQUEST,
                     [accountID](int clientFD, int tick)
                     {
                         SendMessage(clientFD, string(RS_UPDATE_PENDING_JOIN) + " " + to_string(tick));
@@ -114,52 +115,53 @@ void HandleAddMember(int clientFD, string name)
     {
         auto& adderAccount = Accounts[Clients[clientFD]];
 		auto& team = Lobby.Teams[adderAccount.Team];
-        auto freeSlotAmount = team.CountFreeSlot();
+        
+        auto* member = team.CheckIfPending(account->ID);
 
-        if (freeSlotAmount == 0)
+        if (member == nullptr)
         {
-            SendMessage(clientFD, string(RS_ADD_MEMBER_F_TEAM_FULL));
-            WriteLog(LogType::Failure, clientFD, "ADD MEMBER : Team is full");
-        }
-        else
-        {
-			auto* member = team.CheckIfPending(account->ID);
+            auto freeSlot = team.CountFreeSlot(true);
 
-            if (member == nullptr)
+            if (freeSlot == 0)
             {
-                team.AssignFreeSlot(account->ID);
+                WriteLog(LogType::Failure, clientFD, "ADD MEMBER : Team is full");
+                SendMessage(clientFD, string(RS_ADD_MEMBER_F_TEAM_FULL));
             }
             else
             {
-                member->IsRequestPending = false;
-
-                account->PendingTeam = -1;
+                team.AssignFreeSlot(account->ID);
             }
-
-            account->Team = adderAccount.Team;
-            JoinedMembers.push_back(account->ID);
-
-            auto serializedLobby = Lobby.Serialize();
-
-            SendMessage(clientFD, string(RS_ADD_MEMBER_S) + " " + serializedLobby);
-            WriteLog(LogType::Success, clientFD, "ADD MEMBER", Lobby.Capture());
-
-            BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + serializedLobby, false);
-
-            auto memberFD = GetValueByKey(Clients, account->ID);
-            SendMessage(memberFD, string(RS_UPDATE_TEAM_ROLE));
-            WriteLog(LogType::Success, memberFD, "UPDATE TEAM ROLE");
-
-            StopTick(memberFD,
-                [memberFD](int clientFD)
-                {
-                    SendMessage(memberFD, string(RS_JOIN_TEAM_S_REQUEST_ACCEPTED));
-                });
         }
+        else
+        {
+            member->IsRequestPending = false;
+
+            account->PendingTeam = -1;
+        }
+
+        account->Team = adderAccount.Team;
+        JoinedMembers.push_back(account->ID);
+
+        auto serializedLobby = Lobby.Serialize();
+
+        SendMessage(clientFD, string(RS_ADD_MEMBER_S) + " " + serializedLobby);
+        WriteLog(LogType::Success, clientFD, "ADD MEMBER", Lobby.Capture());
+
+        BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + serializedLobby, false);
+
+        auto memberFD = GetValueByKey(Clients, account->ID);
+        SendMessage(memberFD, string(RS_UPDATE_TEAM_ROLE));
+        WriteLog(LogType::Success, memberFD, "UPDATE TEAM ROLE");
+
+        StopTickOnClient(memberFD,
+            [memberFD](int clientFD)
+            {
+                SendMessage(memberFD, string(RS_JOIN_TEAM_S_REQUEST_ACCEPTED));
+            });
     }
     else
     {
-        SendMessage(clientFD, string(RS_ADD_MEMBER_F_NOT_FOUND) + " " + name);
+        SendMessage(clientFD, string(RS_ADD_MEMBER_F_MEMBER_NOT_FOUND) + " " + name);
         WriteLog(LogType::Failure, clientFD , "ADD MEMBER : Member not found", name);
     }
 }
@@ -170,6 +172,8 @@ void HandleExitTeam(int clientFD)
 
     auto [roomLeader, teamLeader] = Lobby.RemoveMember(account.Team, account.ID);
     JoinedMembers.erase(remove(JoinedMembers.begin(), JoinedMembers.end(), account.ID), JoinedMembers.end());
+
+	//cout << "Member 0:" << Accounts[JoinedMembers[0]] << endl;
 
     SendMessage(clientFD, string(RS_EXIT_TEAM_S) + " " + Lobby.Serialize());
     WriteLog(LogType::Success, clientFD, "EXIT TEAM");
@@ -196,6 +200,184 @@ void HandleExitTeam(int clientFD)
         notify(roomLeader);
         notify(teamLeader);
     }
+}
+
+void HandleAcceptParticipation(int clientFD)
+{
+    auto& leader = Accounts[Clients[clientFD]];
+    auto& team = Lobby.Teams[leader.Team];
+
+	if (team.JoinRequests.size() == 0)
+	{
+        WriteLog(LogType::Failure, clientFD, "ACCEPT PARTICIPATION : There is no joining request.");
+        SendMessage(clientFD, string(RS_ACCEPT_PARTICIPATION_F_NO_REQUEST));
+	}
+    else
+    {
+		int requestAmount = team.JoinRequests.size();
+
+		team.JoinRequests.clear();
+
+        vector<int> acceptedMembers;
+
+		for (auto& member : team.Members)
+		{
+			if (member.IsRequestPending)
+			{
+                member.IsRequestPending = false;
+
+				auto& account = Accounts[member.ID];
+				account.Team = leader.Team;
+				account.PendingTeam = -1;
+
+				JoinedMembers.push_back(member.ID);
+				acceptedMembers.push_back(member.ID);
+			}
+		}
+
+        WriteLog(LogType::Success, clientFD, "ACCEPT PARTICIPATION", "Request: " + to_string(requestAmount));
+        SendMessage(clientFD, string(RS_ACCEPT_PARTICIPATION_S) + " " + to_string(requestAmount));
+        
+        BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+    
+		for (auto memberID : acceptedMembers)
+		{
+            auto memberFD = GetValueByKey(Clients, memberID);
+            SendMessage(memberFD, string(RS_UPDATE_TEAM_ROLE));
+            WriteLog(LogType::Success, memberFD, "UPDATE TEAM ROLE");
+
+            StopTickOnClient(memberFD,
+                [memberFD](int clientFD)
+                {
+                    SendMessage(memberFD, string(RS_JOIN_TEAM_S_REQUEST_ACCEPTED));
+                });
+		}
+    }
+}
+
+void HandleInviteMember(int clientFD, string name)
+{
+    auto& inviter = Accounts[Clients[clientFD]];
+    auto& team = Lobby.Teams[inviter.Team];
+
+    int memberCount = team.CountMember();
+
+    if (memberCount >= 3)
+    {
+        WriteLog(LogType::Failure, clientFD, "INVITE MEMBER : Team is full");
+        SendMessage(clientFD, string(RS_INVITE_MEMBER_F_TEAM_FULL));
+    }
+    else
+    {
+        if (auto* account = FindAccountByName(name))
+        {
+            if (team.CheckIfPending(account->ID) != nullptr)
+            {
+                WriteLog(LogType::Failure, clientFD, "INVITE MEMBER : Member requested to join", "Name: " + name);
+                SendMessage(clientFD, string(RS_INVITE_MEMBER_F_JOIN_REQUESTED));
+
+                return;
+            }
+            
+            if (team.CountFreeSlot(true) == 0)
+            {
+                WriteLog(LogType::Failure, clientFD, "INVITE MEMBER : Request list is full");
+                SendMessage(clientFD, string(RS_INVITE_MEMBER_F_REQUEST_FULL));
+
+                return;
+            }
+
+            auto memberFD = GetValueByKey(Clients, account->ID);
+
+			account->PendingInvitation = inviter.Team;
+            account->InvitorID = inviter.ID;
+
+            WriteLog(LogType::Update, memberFD, "INVITE REQUEST", "From: " + inviter.Name + ", Team: " + to_string(inviter.Team));
+            SendMessage(memberFD, string(RS_UPDATE_INVITE_REQUEST) + " " + to_string(inviter.Team));
+
+            StartTickOnClient(clientFD, TICK_INVITE_REQUEST,
+                [](int clientFD, int tick)
+                {
+                    SendMessage(clientFD, string(RS_UPDATE_PENDING_INVITE) + " " + to_string(tick));
+                },
+                [memberFD, account](int clientFD)
+                {
+                    account->PendingInvitation = -1;
+					account->InvitorID = 0;
+
+					WriteLog(LogType::Failure, clientFD, "INVITE MEMBER : Invite request expired");
+                    SendMessage(clientFD, string(RS_INVITE_MEMBER_F_REQUEST_EXPIRED));
+
+					WriteLog(LogType::Update, memberFD, "INVITE REQUEST : Invite request expired");
+                    SendMessage(memberFD, string(RS_UPDATE_INVITE_EXPIRED));
+                });
+        }
+        else
+        {
+            WriteLog(LogType::Failure, clientFD, "INVITE MEMBER : Member not found", "Name: " + name);
+            SendMessage(clientFD, string(RS_INVITE_MEMBER_F_MEMBER_NOT_FOUND));
+        }
+    }
+}
+
+void HandleAcceptInvitation(int clientFD)
+{
+	auto& account = Accounts[Clients[clientFD]];
+    auto teamID = account.PendingTeam;
+    auto& team = Lobby.Teams[teamID];
+
+    {
+        auto teamLeaderFD = GetValueByKey(Clients, team.Members[0].ID);
+        auto accountID = account.ID;
+
+        account.PendingTeam = teamID;
+
+        team.JoinRequests.push_back(accountID);
+
+        team.AssignFreeSlot(accountID, true);
+
+        SendMessage(teamLeaderFD, string(RS_UPDATE_JOIN_REQUEST) + " " + to_string(team.JoinRequests.size()));
+        WriteLog(LogType::Success, teamLeaderFD, "UPDATE JOIN REQUEST", "Request: " + to_string(team.JoinRequests.size()));
+
+        BroadcastMessage(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+
+        StartTickOnClient(clientFD, TICK_JOIN_REQUEST,
+            [accountID](int clientFD, int tick)
+            {
+                SendMessage(clientFD, string(RS_UPDATE_PENDING_JOIN) + " " + to_string(tick));
+            },
+            [accountID, teamID, teamLeaderFD](int clientFD)
+            {
+                auto& account = Accounts[accountID];
+
+                account.PendingTeam = -1;
+
+                lock_guard<mutex> lock(SessionsMutex);
+                auto& team = Lobby.Teams[teamID];
+                team.JoinRequests.erase(
+                    remove(team.JoinRequests.begin(), team.JoinRequests.end(), accountID),
+                    team.JoinRequests.end()
+                );
+
+                Lobby.RemoveMember(teamID, accountID);
+
+                BroadcastMessage(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+
+                SendMessage(clientFD, string(RS_JOIN_TEAM_F_REQUEST_EXPIRED));
+                WriteLog(LogType::Failure, clientFD, "JOIN TEAM : Request rejected");
+
+                SendMessage(teamLeaderFD, string(RS_UPDATE_JOIN_REQUEST) + " " + to_string(team.JoinRequests.size()));
+                WriteLog(LogType::Success, teamLeaderFD, "UPDATE JOIN REQUEST", "Request: " + to_string(team.JoinRequests.size()));
+            });
+    }
+
+	auto invitorFD = GetValueByKey(Clients, account.InvitorID);
+
+    StopTickOnClient(invitorFD,
+        [invitorFD](int clientFD)
+        {
+			SendMessage(invitorFD, string(RS_INVITE_MEMBER_S));
+		});
 }
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef CLIENT_HANDLER_PHASE_LOBBY_JOINING_READY
-#define CLIENT_HANDLER_PHASE_LOBBY_JOINING_READY
+#ifndef CLIENT_HANDLER_PHASE_LOBBY
+#define CLIENT_HANDLER_PHASE_LOBBY
 
 void HandleLobbyInput(int clientFD, vector<string> command)
 {
@@ -21,6 +21,14 @@ void HandleLobbyInput(int clientFD, vector<string> command)
                 ShowLobbyLog(LOG_LOBBY_WRONG_TEAM);
             }
         }
+		else if (code == 2 && command.size() == 1)
+		{
+			SendMessage(clientFD, string(RQ_ACCEPT_INVITATION));
+
+            TeamInviteRequest = -2;
+
+            ShowLobbyCode("");
+		}
 		else goto UnknownCommand;
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINING_PENDING)
@@ -231,6 +239,54 @@ void HandleLobbyResponse(int clientFD, const string& code, vector<string> split)
     else if (code == RS_JOIN_TEAM_S_REQUEST_ACCEPTED)
     {
 		ShowLobbyLog(LOG_LOBBY_REQUEST_ACCEPTED);
+    }
+    else if (code == RS_ACCEPT_PARTICIPATION_S)
+    {
+        JoinRequestAmount = 0;
+
+		ShowLobbyCode(code);
+    }
+    else if (code == RS_INVITE_MEMBER_F_TEAM_FULL)
+    {
+        ShowLobbyLog(FG_RED "Invite failed: Team is full!");
+    }
+    else if (code == RS_INVITE_MEMBER_F_REQUEST_FULL)
+    {
+        ShowLobbyLog(FG_RED "Invite failed: Request list is full!");
+    }
+    else if (code == RS_INVITE_MEMBER_F_MEMBER_NOT_FOUND)
+    {
+        ShowLobbyLog(FG_RED "Invite failed: Member not found!");
+    }
+    else if (code == RS_INVITE_MEMBER_F_JOIN_REQUESTED)
+    {
+        ShowLobbyLog(FG_RED "Invite failed: Member requested to join!");
+    }
+	else if (code == RS_UPDATE_PENDING_INVITE)
+	{
+        PendingJoinTick = TICK_INVITE_REQUEST - stoi(split[1]);
+
+		ShowLobbyLog(FG_YELLOW "Invite request sent. Expired in " + to_string(PendingJoinTick) + ".");
+    }
+    else if (code == RS_INVITE_MEMBER_F_REQUEST_EXPIRED)
+    {
+        ShowLobbyLog(FG_RED "Invite request expired!");
+    }
+    else if (code == RS_UPDATE_INVITE_REQUEST)
+    {
+        TeamInviteRequest = stoi(split[1]) + 1;
+
+		ShowLobbyCode(code);
+    }
+    else if (code == RS_UPDATE_INVITE_EXPIRED)
+    {
+        TeamInviteRequest = -1;
+
+        ShowLobbyCode(code);
+    }
+    else if (code == RS_INVITE_MEMBER_S)
+    {
+        ShowLobbyLog(FG_GREEN "Member accepted invitation!");
     }
 }
 

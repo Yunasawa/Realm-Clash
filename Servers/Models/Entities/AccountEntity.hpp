@@ -20,6 +20,8 @@ struct AccountEntity
 
     int Team = -1;
     int PendingTeam;
+    int PendingInvitation = -1;
+    int InvitorID = 0;
     bool IsTeamLeader;
     bool IsRoomLeader;
 
