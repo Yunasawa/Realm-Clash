@@ -13,6 +13,7 @@ Clients/Client.o: Clients/Client.cpp \
  Clients/Models/Records/AccountRecord.hpp \
  Clients/Models/Records/LobbyRecord.hpp \
  Clients/Models/Records/MapRecord.hpp \
+ Clients/Models/Records/ResourceRecord.hpp \
  Clients/Models/Entities/AccountEntity.hpp \
  Clients/Models/Entities/OccupationEntity.hpp Clients/ClientUtilities.hpp \
  Clients/Views/LobbyView.hpp Clients/Views/WelcomeView.hpp \
@@ -36,6 +37,7 @@ Clients/ClientIncluding.hpp:
 Clients/Models/Records/AccountRecord.hpp:
 Clients/Models/Records/LobbyRecord.hpp:
 Clients/Models/Records/MapRecord.hpp:
+Clients/Models/Records/ResourceRecord.hpp:
 Clients/Models/Entities/AccountEntity.hpp:
 Clients/Models/Entities/OccupationEntity.hpp:
 Clients/ClientUtilities.hpp:

@@ -4,6 +4,7 @@
 #include "Models/Records/AccountRecord.hpp"
 #include "Models/Records/LobbyRecord.hpp"
 #include "Models/Records/MapRecord.hpp"
+#include "Models/Records/ResourceRecord.hpp"
 
 #include "Models/Entities/AccountEntity.hpp"
 #include "Models/Entities/OccupationEntity.hpp"
@@ -19,6 +20,7 @@ string Log = FG_GREEN "";
 int Team;
 int Tick;
 MapRecord Map;
+ResourceRecord Resource;
 
 #include "ClientUtilities.hpp"
 

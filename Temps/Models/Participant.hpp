@@ -3,13 +3,6 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-enum Resources
-{
-    Wood,
-    Stone,
-    Iron,
-    Gold
-};
 
 struct Player
 {

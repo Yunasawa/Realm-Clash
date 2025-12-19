@@ -60,6 +60,8 @@
 #define RS_START_GAME_F_NOT_ENOUGH_TEAMS		"301"
 
 #define RS_OCCUPY_SPOT_S						"400"
+#define RS_OCCUPY_SPOT_F_SPOT_OCCUPIED			"401"
+#define RS_OCCUPY_SPOT_F_FULL_OF_SLOT			"402"
 
 // Server - Update responses
 #define RS_UPDATE_ROOM_LIST                     "810"
@@ -78,6 +80,7 @@
 #define RS_UPDATE_GAME_START					"820"
 #define RS_UPDATE_GAME_TICK						"821"
 #define RS_UPDATE_GAME_MAP						"822"
+#define RS_UPDATE_TEAM_RESOURCE					"823"
 
 #define RS_NETWORK_CONNECTED                    "910"
 

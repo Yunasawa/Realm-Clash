@@ -51,12 +51,6 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 	{
 		ShowLobbyLog(FG_RED "Start game failed: Not enough teams!");
 	}
-	else if (code == RS_UPDATE_GAME_TICK)
-	{
-		Tick = stoi(data[1]);
-
-		WriteLineAt(0, GetGameTitle());
-	}
 	else if (code == RS_UPDATE_GAME_MAP)
 	{
 		Map = MapRecord::Deserialize(data[1]);
@@ -66,6 +60,28 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 	else if (code == RS_OCCUPY_SPOT_S)
 	{
 		ShowGameLog(FG_GREEN "Successfully occupied spot!");
+	}
+	else if (code == RS_OCCUPY_SPOT_F_SPOT_OCCUPIED)
+	{
+		ShowGameLog(FG_RED "Spot slot has been occupied!");
+	}
+	else if (code == RS_OCCUPY_SPOT_F_FULL_OF_SLOT)
+	{
+		ShowGameLog(FG_RED "Both slots of this resource has been occupied!");
+	}
+
+	if (code == RS_UPDATE_GAME_TICK)
+	{
+		Tick = stoi(data[1]);
+
+		WriteLineAt(1, GetGameTitle());
+	}
+
+	if (code == RS_UPDATE_TEAM_RESOURCE)
+	{
+		Resource = ResourceRecord::Deserialize(data[1]);
+
+		WriteLineAt(2, GetResourceLine());
 	}
 }
 

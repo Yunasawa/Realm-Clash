@@ -16,23 +16,7 @@ void HandleStartGame(int clientFD)
 	//	return;
 	//}
 
-    for (auto& team : Lobby.Teams)
-    {
-        if (team.CountMember() == 0) continue;
-
-        int teamIndex = (int)Teams.size();
-        Teams.emplace_back();
-        auto& gameTeam = Teams.back();
-
-        for (auto& member : team.Members)
-        {
-            if (member.ID == 0) continue;
-
-            Accounts[member.ID].GameTeam = teamIndex;
-            gameTeam.Members.push_back(member.ID);
-
-        }
-    }
+    Group.CreateTeam();
 
     WriteLog(LogType::Success, clientFD, "START GAME");
 	BroadcastToClient(clientFD, string(RS_UPDATE_GAME_START), true);
@@ -40,6 +24,16 @@ void HandleStartGame(int clientFD)
     StartTickOnServer(
         [](int tick)
         {
+            if (tick % RESOURCE_UPDATE_TICK == 0)
+            {
+                Group.UpdateResource();
+
+                auto json = Group.SerializeResource();
+
+                WriteLog(LogType::Update, -1, "UPDATE RESOURCE", json);
+                BroadcastToClient(-1, string(RS_UPDATE_TEAM_RESOURCE) + " " + json);
+            }
+
 			BroadcastToClient(-1, string(RS_UPDATE_GAME_TICK) + " " + to_string(tick));
         },
         []()
@@ -57,7 +51,29 @@ void HandleOccupySpot(int clientFD, const string& data)
     WriteLog(LogType::Request, clientFD, "OCCUPY SPOT", request.Capture());
 
     auto account = Accounts[Clients[clientFD]];
+    auto& spot = Map.Spots[request.Spot];
+    auto& slot = spot.Slots[request.Type];
 
+    if (slot != -1)
+    {
+        WriteLog(LogType::Failure, clientFD, "OCCUPY SLOT : Slot occupied", request.Capture());
+        SendMessage(clientFD, string(RS_OCCUPY_SPOT_F_SPOT_OCCUPIED));
+
+        return;
+    }
+
+    auto& team = Group.Teams[account.GameTeam];
+    auto freeSlot = team.GetFreeSlot(request.Type);
+
+    if (freeSlot == -1)
+    {
+        WriteLog(LogType::Failure, clientFD, "OCCUPY SLOT : Both slots are occupied", request.Capture());
+        SendMessage(clientFD, string(RS_OCCUPY_SPOT_F_FULL_OF_SLOT));
+
+        return;
+    }
+
+    team.SpotSlots[request.Type][freeSlot] = request.Spot;
     Map.Spots[request.Spot].Slots[request.Type] = account.GameTeam;
 
     WriteLog(LogType::Success, clientFD, "OCCUPY SPOT", request.Capture());

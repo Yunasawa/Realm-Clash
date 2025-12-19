@@ -1,6 +1,8 @@
 #ifndef SERVER_INCLUDING
 #define SERVER_INCLUDING
 
+constexpr array<int, 4> ResourcePerTick = { 30, 15, 5, 5 };
+
 mutex ClientsMutex;
 mutex SessionsMutex;
 ofstream LogFile;
@@ -37,7 +39,7 @@ LobbyEntity Lobby;
 
 #include "Models/Entities/GameEntity.hpp"
 
-vector<GameTeamEntity> Teams;
+GroupEntity Group;
 MapEntity Map;
 
 #include "ServerNetwork.hpp"

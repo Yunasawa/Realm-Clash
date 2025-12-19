@@ -81,9 +81,9 @@ void BroadcastToTeam(int teamID, const string& msg)
     {
         lock_guard<mutex> lock(ClientsMutex);
 
-        if (teamID < 0 || teamID >= (int)Teams.size()) return;
+        if (teamID < 0 || teamID >= (int)Group.Teams.size()) return;
 
-        for (int memberID : Teams[teamID].Members)
+        for (int memberID : Group.Teams[teamID].Members)
         {
 			auto id = GetValueByKey(Clients, memberID);
             if (id != -1)

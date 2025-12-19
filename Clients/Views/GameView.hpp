@@ -1,5 +1,5 @@
 ﻿#ifndef VIEW_GAME
-#define VIEW_GAME
+#define VIEW_GAMEwsl
 
 /*
 ┏━ ■ Team 1 ━ U0000001 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 00:00:00 ━┓
@@ -60,15 +60,22 @@ string PadWithGrayZeros(int value, int width)
         s;
 }
 
-string GetResourceLine(int wood, int rock, int iron, int gold)
+string GetResourceLine()
 {
+    array<int, 4> resource = { 0, 0, 0, 0 };
+
+    if (Team >= 0 && Team < (int)Resource.Resources.size())
+    {
+        resource = Resource.Resources[Team];
+    }
+
     stringstream ss;
 
     ss << "┃ "
-        << "Wood : " << PadWithGrayZeros(wood, 8) << " | "
-        << "Rock : " << PadWithGrayZeros(rock, 8) << " | "
-        << "Iron : " << PadWithGrayZeros(iron, 8) << " | "
-        << "Gold : " << PadWithGrayZeros(gold, 5)
+        << "Wood : " << PadWithGrayZeros(resource[0], 8) << " | "
+        << "Rock : " << PadWithGrayZeros(resource[1], 8) << " | "
+        << "Iron : " << PadWithGrayZeros(resource[2], 8) << " | "
+        << "Gold : " << PadWithGrayZeros(resource[3], 5)
         << " ┃\n";
 
     return ss.str();
@@ -76,16 +83,33 @@ string GetResourceLine(int wood, int rock, int iron, int gold)
 
 string GetSpotLine(int spotID)
 {
+    auto GetSpotText = [&](int teamID) -> string
+        {
+            auto color = teamID == -1 ? FG_GRAY : GetTeamColor(teamID + 1);
+            auto text = teamID == -1 ? " " : to_string(teamID + 1);
+            return color + "[" + text + "]" + RESET;
+        };
+
 	auto spot = Map.Spots[spotID];
+
     return " 🎪 Spot " + to_string(spotID + 1) + " |  " + 
-        "Wood [" + (spot.WoodSlot == -1 ? " " : GetTeamColor(spot.WoodSlot + 1) + to_string(spot.WoodSlot + 1)) + RESET + "]   " +
-        "Rock [" + (spot.RockSlot == -1 ? " " : GetTeamColor(spot.RockSlot + 1) + to_string(spot.RockSlot + 1)) + RESET + "]   " +
-        "Iron [" + (spot.IronSlot == -1 ? " " : GetTeamColor(spot.IronSlot + 1) + to_string(spot.IronSlot + 1)) + RESET + "]";
+        "Wood " + GetSpotText(spot.WoodSlot) + "   " +
+        "Rock " + GetSpotText(spot.RockSlot) + "   " +
+        "Iron " + GetSpotText(spot.IronSlot) + "";
 }
 
 string GetCastleLine(int castleID)
 {
-    return "🏰 Castle " + to_string(castleID + 1) + " [ ]";
+    auto GetCastleText = [&](int teamID) -> string
+        {
+            auto color = teamID == -1 ? FG_GRAY : GetTeamColor(teamID + 1);
+            auto text = teamID == -1 ? " " : to_string(teamID + 1);
+            return color + "[" + text + "]" + RESET;
+        };
+
+    auto castle = Map.Castles[castleID];
+
+    return "🏰 Castle " + to_string(castleID + 1) + " " + GetCastleText(castle.OwnerTeam);
 }
 
 string GetGameOption()
@@ -105,8 +129,7 @@ void ShowGameView()
 
 	cout 
         << GetGameTitle()
-        //"┃ Wood : 00000000 | Rock : 00000000 | Iron : 00000000 | Gold : 00000 ┃\n"
-        << GetResourceLine(1233, 1231, 1231, 11) <<
+        << GetResourceLine() <<
         "┣━ GAME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┫\n"
         "┃ " << GetSpotLine(0) << "  ┃  " << GetCastleLine(0) << "   ┃\n"
         "┃ " << GetSpotLine(1) << "  ┃                    ┃\n"

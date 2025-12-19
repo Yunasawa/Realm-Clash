@@ -3,12 +3,76 @@
 
 enum class ResourceType { Wood, Stone, Iron, Gold };
 
-struct GameTeamEntity
+struct TeamEntity
 {
 	vector<int> Members;
-	pair<int, int> WoodSlot = { -1, -1 };
-	pair<int, int> RockSlot = { -1, -1 };
-	pair<int, int> IronSlot = { -1, -1 };
+    array<array<int, 2>, 3> SpotSlots = { { {-1, -1}, {-1, -1}, {-1, -1} } };
+    vector<int> CastleSlots;
+
+    array<int, 4> Resources;
+
+    int GetFreeSlot(int type)
+    {
+        auto& spot = SpotSlots[type];
+
+        if (spot[0] == -1) return 0;
+        else if (spot[1] == -1) return 1;
+
+        return -1;
+    }
+};
+
+struct GroupEntity
+{
+    vector<TeamEntity> Teams;
+
+    void CreateTeam()
+    {
+        for (auto& team : Lobby.Teams)
+        {
+            if (team.CountMember() == 0) continue;
+
+            int teamIndex = (int)Teams.size();
+            Teams.emplace_back();
+            auto& gameTeam = Teams.back();
+
+            for (auto& member : team.Members)
+            {
+                if (member.ID == 0) continue;
+
+                Accounts[member.ID].GameTeam = teamIndex;
+                gameTeam.Members.push_back(member.ID);
+
+            }
+        }
+    }
+    void UpdateResource()
+    {
+        for (auto& team : Teams)
+        {
+            for (int t = 0; t < 3; t++)
+            {
+                for (int s = 0; s < 2; s++)
+                {
+                    if (team.SpotSlots[t][s] == -1) continue;
+
+                    team.Resources[t] += ResourcePerTick[t];
+                }
+            }
+        }
+    }
+
+    string SerializeResource() const
+    {
+        json j = json::array();
+
+        for (const auto& team : Teams)
+        {
+            j.push_back(team.Resources);
+        }
+
+        return j.dump();
+    }
 };
 
 struct SpotEntity
