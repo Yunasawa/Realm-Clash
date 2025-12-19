@@ -13,10 +13,8 @@ int ToID(const string& s)
     return stoi(s.substr(1));
 }
 
-void HandleSignUp(int clientFD, string data)
+void HandleSignUp(int clientFD, const AccountRecord& account)
 {
-    AccountRecord account = AccountRecord::Deserialize(data);
-
     if (FileExists(ACCOUNT_PATH))
     {
         string id, name, password;
@@ -58,10 +56,8 @@ void HandleSignUp(int clientFD, string data)
     }
 }
 
-void HandleLogIn(int clientFD, string data)
+void HandleLogIn(int clientFD, const AccountRecord& account)
 {
-    AccountRecord account = AccountRecord::Deserialize(data);
-
     if (FileExists(ACCOUNT_PATH))
     {
         string sid, name, password;

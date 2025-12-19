@@ -4,15 +4,15 @@
 void HandleQuitPhase(int clientFD)
 {
     auto& account = Accounts[Clients[clientFD]];
-    auto& team = Lobby.Teams[account.Team];
+    auto& team = Lobby.Teams[account.LobbyTeam];
 
-    Lobby.RemoveMember(account.Team, account.ID);
+    Lobby.RemoveMember(account.LobbyTeam, account.ID);
     JoinedMembers.erase(remove(JoinedMembers.begin(), JoinedMembers.end(), account.ID), JoinedMembers.end());
     team.JoinRequests.erase(remove(team.JoinRequests.begin(), team.JoinRequests.end(), account.ID), team.JoinRequests.end());
 
     WriteLog(LogType::Success, clientFD, "QUIT GAME");
 
-    BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), false);
+    BroadcastToClient(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), false);
 
 	auto accountID = Clients[clientFD];
 

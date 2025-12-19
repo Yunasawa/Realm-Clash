@@ -8,14 +8,14 @@ void HandleWelcomePhase(int clientFD, const string& code, const vector<string>& 
         AccountRecord account = AccountRecord::Deserialize(parts[1]);
 		WriteLog(LogType::Request, clientFD, "SIGN UP", account.Capture());
 
-        HandleSignUp(clientFD, parts[1]);
+        HandleSignUp(clientFD, account);
     }
     else if (code == RQ_LOG_IN)
     {
         AccountRecord account = AccountRecord::Deserialize(parts[1]);
 		WriteLog(LogType::Request, clientFD, "LOG IN ", account.Capture());
 
-        HandleLogIn(clientFD, parts[1]);
+        HandleLogIn(clientFD, account);
     }
 }
 

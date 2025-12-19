@@ -27,15 +27,7 @@
 #define RQ_ACCEPT_INVITATION					"ACCEPT_INVITATION"
 
 #define RQ_START_GAME                           "START_GAME"
-
-#define RQ_REQUEST_SPOT                         "REQUEST_SPOT"
-#define RQ_ANSWER_SPOT                          "ANSWER_SPOT"
-#define RQ_REQUEST_CASTLE                       "REQUEST_CASTLE"
-#define RQ_ANSWER_CASTLE                        "ANSWER_CASTLE"
-#define RQ_BUY_DEFENSE                          "BUY_DEFENSE"
-#define RQ_BUY_WEAPON                           "BUY_WEAPON"
-#define RQ_ATTACK_CASTLE                        "ATTACK_CASTLE"
-#define RQ_GET_STATUS                           "GET_STATUS"
+#define RQ_OCCUPY_SPOT                          "OCCUPY_SPOT"
 
 // Server - Response protocols
 #define RS_SIGN_UP_S                            "110"
@@ -87,6 +79,9 @@
 #define RS_ATTACK_CASTLE_F_SELF_ATTACK          "702"
 #define RS_ATTACK_CASTLE_F_INVALID_ITEM         "703"
 
+#define RS_OCCUPY_SPOT_S						"400"
+
+
 // Server - Update responses
 #define RS_UPDATE_ROOM_LIST                     "810"
 #define RS_UPDATE_TEAM_ROLE                     "811"
@@ -99,7 +94,11 @@
 #define RS_UPDATE_PENDING_INVITE				"816"
 #define RS_UPDATE_INVITE_EXPIRED				"817"
 
+#define RS_UPDATE_KICK_OUT						"818"
+
 #define RS_UPDATE_GAME_START					"820"
+#define RS_UPDATE_GAME_TICK						"821"
+#define RS_UPDATE_GAME_MAP						"822"
 
 #define RS_NETWORK_CONNECTED                    "910"
 

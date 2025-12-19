@@ -53,15 +53,50 @@ int AcceptClient(int serverFD)
     return clientFD;
 }
 
-void BroadcastMessage(int senderFD, const string &msg, bool includeSender)
+void BroadcastToClient(int senderFD, const string& msg, bool includeSender = false)
 {
-    lock_guard<mutex> lock(ClientsMutex);
-    for (const auto& client : Clients)
+    vector<int> fds;
+
     {
-        if (client.first != senderFD || includeSender)
+        lock_guard<mutex> lock(ClientsMutex);
+        for (const auto& client : Clients)
         {
-            SendMessage(client.first, msg);
+            if (client.first != senderFD || includeSender)
+            {
+                fds.push_back(client.first);
+            }
         }
     }
+
+    for (int fd : fds)
+    {
+        SendMessage(fd, msg);
+    }
 }
+
+void BroadcastToTeam(int teamID, const string& msg)
+{
+    vector<int> clientFDs;
+
+    {
+        lock_guard<mutex> lock(ClientsMutex);
+
+        if (teamID < 0 || teamID >= (int)Teams.size()) return;
+
+        for (int memberID : Teams[teamID].Members)
+        {
+			auto id = GetValueByKey(Clients, memberID);
+            if (id != -1)
+            {
+                clientFDs.push_back(id);
+            }
+        }
+    }
+
+    for (int fd : clientFDs)
+    {
+        SendMessage(fd, msg);
+    }
+}
+
 #endif

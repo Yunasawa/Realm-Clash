@@ -1,9 +1,7 @@
 #ifndef SERVER_MODEL_ENTITY_LOBBY
 #define SERVER_MODEL_ENTITY_LOBBY
 
-#include <array>
-
-struct MemberEntity
+struct LobbyMemberEntity
 {
     int ID; // AccountID
 
@@ -16,15 +14,15 @@ struct MemberEntity
     }
 };
 
-struct TeamEntity
+struct LobbyTeamEntity
 {
-    array<MemberEntity, 3> Members;
+    array<LobbyMemberEntity, 3> Members;
     vector<int> JoinRequests;
 
     int CountMember(bool includingRequest = false) const
     {
         return count_if(Members.begin(), Members.end(),
-            [includingRequest](const MemberEntity& m)
+            [includingRequest](const LobbyMemberEntity& m)
             {
                 if (includingRequest)
                 {
@@ -54,7 +52,7 @@ struct TeamEntity
 
         return -1;
     }
-    MemberEntity* CheckIfPending(int id)
+    LobbyMemberEntity* CheckIfPending(int id)
     {
         for (auto& member : Members)
         {
@@ -67,7 +65,7 @@ struct TeamEntity
 
 struct LobbyEntity
 {
-    array<TeamEntity, 5> Teams;
+    array<LobbyTeamEntity, 5> Teams;
 
     string Serialize() const
     {
@@ -167,7 +165,7 @@ struct LobbyEntity
         }
         if (account.IsTeamLeader)
         {
-            for (auto& member : Teams[account.Team].Members)
+            for (auto& member : Teams[account.LobbyTeam].Members)
             {
                 if (member.ID != 0 && member.ID != id)
                 {
@@ -181,12 +179,12 @@ struct LobbyEntity
             account.IsTeamLeader = false;
         }
 
-        account.Team = -1;
+        account.LobbyTeam = -1;
 
         // Remove account
         auto& members = Teams[teamIndex].Members;
 
-        auto it = find_if(members.begin(), members.end(), [&](const MemberEntity& m) { return m.ID == id; });
+        auto it = find_if(members.begin(), members.end(), [&](const LobbyMemberEntity& m) { return m.ID == id; });
     
         if (it != members.end())
         {
@@ -211,7 +209,7 @@ struct LobbyEntity
     int CountTeam()
     {
 		return count_if(Teams.begin(), Teams.end(),
-			[](const TeamEntity& team)
+			[](const LobbyTeamEntity& team)
 			{
 				return team.CountMember(true) > 0;
 			});

@@ -18,12 +18,14 @@ struct AccountEntity
     int ID;
     string Name;
 
-    int Team = -1;
+    int LobbyTeam = -1;
     int PendingTeam;
     int PendingInvitation = -1;
     int InvitorID = 0;
     bool IsTeamLeader;
     bool IsRoomLeader;
+
+    int GameTeam = -1;
 
     string Serialize() const
     {

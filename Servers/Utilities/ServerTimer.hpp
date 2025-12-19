@@ -45,5 +45,40 @@ void StopTickOnClient(int clientFD, const function<void(int)>& onStop = nullptr)
     if (onStop) onStop(clientFD);
 }
 
+void StartTickOnServer(
+    const function<void(int)>& onTick = nullptr,
+    const function<void()>& onEnd = nullptr)
+{
+    bool expected = false;
+    if (!ServerTicking.compare_exchange_strong(expected, true))
+    {
+        return;
+    }
+
+    ServerTickThread = thread([onTick, onEnd]()
+        {
+            int tick = 0;
+
+            while (ServerTicking.load())
+            {
+                if (onTick) onTick(tick);
+
+                tick++;
+                this_thread::sleep_for(chrono::seconds(1));
+            }
+
+            if (onEnd) onEnd();
+        });
+}
+
+void StopTickOnServer()
+{
+    ServerTicking.store(false);
+
+    if (ServerTickThread.joinable() && this_thread::get_id() != ServerTickThread.get_id())
+    {
+        ServerTickThread.join();
+    }
+}
 
 #endif

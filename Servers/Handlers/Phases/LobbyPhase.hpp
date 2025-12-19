@@ -11,7 +11,7 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
     }
     else if (code == RQ_JOIN_TEAM)
     {
-        if (account.Team != -1) return;
+        if (account.LobbyTeam != -1) return;
 
         WriteLog(LogType::Request, clientFD, "JOIN TEAM", "Team: " + command[1]);
         HandleJoinTeam(clientFD, command[1]);
@@ -29,7 +29,7 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
     }
     else if (code == RQ_EXIT_TEAM)
     {
-		if (account.Team == -1) return;
+		if (account.LobbyTeam == -1) return;
 
         WriteLog(LogType::Request, clientFD, "EXIT TEAM");
         HandleExitTeam(clientFD);

@@ -1,6 +1,8 @@
 #ifndef CLIENT_DEFINITION
 #define CLIENT_DECLARATION
 
+#define WINDOW_WIDTH							70
+
 #define LOG_NONE								FG_GREEN ""
 #define LOG_UNKNOWN_COMMAND						FG_RED "Unknown command!"
 
@@ -10,6 +12,9 @@
 #define LOG_LOBBY_WRONG_TEAM					FG_RED "Joined in wrong team!"
 #define LOG_LOBBY_REQUEST_FULL					FG_RED "Joining request failed: Request list is full!"
 #define LOG_LOBBY_REQUEST_ACCEPTED				FG_GREEN "Joining request accepted!"
+
+#define LOG_GAME_WRONG_SPOT						FG_RED "Trying to occupy wrong spot!"
+#define LOG_GAME_WRONG_RESOURCE_TYPE			FG_RED "Selected wrong resource type!"
 
 //
 #define CODE_NULL								"NULL"
@@ -34,6 +39,6 @@
 #define PHASE_LOBBY_JOINED_RTLEADER         104                
 >>>>>>> Stashed changes
 
-#define PHASE_GAME_START_GAME					200
+#define PHASE_GAME_MAP_IDLING					200
 
 #endif

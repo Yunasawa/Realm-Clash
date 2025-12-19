@@ -5,15 +5,13 @@
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ U0000001 ━┓
 ┣━ LOBBY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃ ● 1 |                    |                    |                    ┃
-┃--------------------------------------------------------------------┃
 ┃ ● 2 |                    |                    |                    ┃
-┃--------------------------------------------------------------------┃
 ┃ ● 3 |                    |                    |                    ┃
-┃--------------------------------------------------------------------┃
 ┃ ● 4 |                    |                    |                    ┃
-┃--------------------------------------------------------------------┃
 ┃ ● 5 |                    |                    |                    ┃
 ┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃ • 1 <teamID>: Create/Join team                                     ┃
+┃ • 1 <teamID>: Create/Join team                                     ┃
 ┃ • 1 <teamID>: Create/Join team                                     ┃
 ┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃                                                                    ┃
@@ -47,8 +45,16 @@ string MakeLobbyMemberName(const MemberRecord& member)
     return name;
 }
 
-string MakeLobbyTeamLine(const TeamRecord& team)
+string MakeLobbyTeamLine(const TeamRecord& team, int teamID)
 {
+    for (int i = 0; i < 3; i++)
+    {
+        if (team.Members[i].ID == Account.ID)
+        {
+            Team = teamID;
+        }
+    }
+
     auto member0 = team.Members[0];
     auto isRoomLeader = team.Members[0].IsRoomLeader;
 
@@ -197,11 +203,11 @@ void ShowLobbyView()
     cout << MakeLobbyTitle(Account.Name) << "\n";
     cout <<
     "┣━ LOBBY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
-    "┃ " << GetTeamColor(1) << SQUARE << RESET << " 1" << MakeLobbyTeamLine(Lobby.Teams[0]) <<
-    "┃ " << GetTeamColor(2) << SQUARE << RESET << " 2" << MakeLobbyTeamLine(Lobby.Teams[1]) <<
-    "┃ " << GetTeamColor(3) << SQUARE << RESET << " 3" << MakeLobbyTeamLine(Lobby.Teams[2]) <<
-    "┃ " << GetTeamColor(4) << SQUARE << RESET << " 4" << MakeLobbyTeamLine(Lobby.Teams[3]) <<
-    "┃ " << GetTeamColor(5) << SQUARE << RESET << " 5" << MakeLobbyTeamLine(Lobby.Teams[4]) <<
+    "┃ " << GetTeamColor(1) << SQUARE << RESET << " 1" << MakeLobbyTeamLine(Lobby.Teams[0], 0) <<
+    "┃ " << GetTeamColor(2) << SQUARE << RESET << " 2" << MakeLobbyTeamLine(Lobby.Teams[1], 1) <<
+    "┃ " << GetTeamColor(3) << SQUARE << RESET << " 3" << MakeLobbyTeamLine(Lobby.Teams[2], 2) <<
+    "┃ " << GetTeamColor(4) << SQUARE << RESET << " 4" << MakeLobbyTeamLine(Lobby.Teams[3], 3) <<
+    "┃ " << GetTeamColor(5) << SQUARE << RESET << " 5" << MakeLobbyTeamLine(Lobby.Teams[4], 4) <<
     "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
         << GetLobbyOption() <<
     "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"

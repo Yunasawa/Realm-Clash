@@ -19,6 +19,7 @@
 #include <atomic>
 #include <functional>
 #include <utility>
+#include <array>
 #include "Plugins/Nlohmann Json/json.hpp"
 
 #include "Definitions/TextStyle.hpp"
@@ -32,11 +33,11 @@ string GetTeamColor(int team)
 {
     switch (team)
     {
-        case 1: return FG_RED;
-        case 2: return FG_GREEN;
-        case 3: return FG_YELLOW;
-        case 4: return FG_BLUE;
-        case 5: return FG_MAGENTA;
+        case 1: return FG_BRIGHT_RED;
+        case 2: return FG_BRIGHT_GREEN;
+        case 3: return FG_BRIGHT_YELLOW;
+        case 4: return FG_BRIGHT_BLUE;
+        case 5: return FG_BRIGHT_MAGENTA;
     }
 
     return "";

@@ -31,7 +31,7 @@ void HandleJoinTeam(int clientFD, string data)
             }
 
             account.IsTeamLeader = true;
-            account.Team = teamID;
+            account.LobbyTeam = teamID;
             
 			team.Members[0].ID = account.ID;
             JoinedMembers.push_back(account.ID);
@@ -39,7 +39,7 @@ void HandleJoinTeam(int clientFD, string data)
 			auto serializedLobby = Lobby.Serialize();
 
             SendMessage(clientFD, string(RS_JOIN_TEAM_S) + " " + serializedLobby);
-            BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + serializedLobby, false);
+            BroadcastToClient(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + serializedLobby, false);
 
             WriteLog(LogType::Success, clientFD, "JOIN TEAM", Lobby.Capture());
         }
@@ -64,7 +64,7 @@ void HandleJoinTeam(int clientFD, string data)
                 SendMessage(teamLeaderFD, string(RS_UPDATE_JOIN_REQUEST) + " " + to_string(team.JoinRequests.size()));
                 WriteLog(LogType::Success, teamLeaderFD, "UPDATE JOIN REQUEST", "Request: " + to_string(team.JoinRequests.size()));
 
-				BroadcastMessage(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+				BroadcastToClient(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
 
                 StartTickOnClient(clientFD, TICK_JOIN_REQUEST,
                     [accountID](int clientFD, int tick)
@@ -86,7 +86,7 @@ void HandleJoinTeam(int clientFD, string data)
 
                         Lobby.RemoveMember(teamID, accountID);
 
-                        BroadcastMessage(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+                        BroadcastToClient(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
 
                         SendMessage(clientFD, string(RS_JOIN_TEAM_F_REQUEST_EXPIRED));
                         WriteLog(LogType::Failure, clientFD, "JOIN TEAM : Request rejected");
@@ -99,7 +99,7 @@ void HandleJoinTeam(int clientFD, string data)
     }
 }
 
-AccountEntity* FindAccountByName(const std::string& myName)
+AccountEntity* FindAccountByName(const string& myName)
 {
     for (auto& [id, acc] : Accounts)
     {
@@ -114,7 +114,7 @@ void HandleAddMember(int clientFD, string name)
     if (auto* account = FindAccountByName(name))
     {
         auto& adderAccount = Accounts[Clients[clientFD]];
-		auto& team = Lobby.Teams[adderAccount.Team];
+		auto& team = Lobby.Teams[adderAccount.LobbyTeam];
         
         auto* member = team.CheckIfPending(account->ID);
 
@@ -139,7 +139,7 @@ void HandleAddMember(int clientFD, string name)
             account->PendingTeam = -1;
         }
 
-        account->Team = adderAccount.Team;
+        account->LobbyTeam = adderAccount.LobbyTeam;
         JoinedMembers.push_back(account->ID);
 
         auto serializedLobby = Lobby.Serialize();
@@ -147,7 +147,7 @@ void HandleAddMember(int clientFD, string name)
         SendMessage(clientFD, string(RS_ADD_MEMBER_S) + " " + serializedLobby);
         WriteLog(LogType::Success, clientFD, "ADD MEMBER", Lobby.Capture());
 
-        BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + serializedLobby, false);
+        BroadcastToClient(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + serializedLobby, false);
 
         auto memberFD = GetValueByKey(Clients, account->ID);
         SendMessage(memberFD, string(RS_UPDATE_TEAM_ROLE));
@@ -170,7 +170,7 @@ void HandleExitTeam(int clientFD)
 {
     auto& account = Accounts[Clients[clientFD]];
 
-    auto [roomLeader, teamLeader] = Lobby.RemoveMember(account.Team, account.ID);
+    auto [roomLeader, teamLeader] = Lobby.RemoveMember(account.LobbyTeam, account.ID);
     JoinedMembers.erase(remove(JoinedMembers.begin(), JoinedMembers.end(), account.ID), JoinedMembers.end());
 
 	//cout << "Member 0:" << Accounts[JoinedMembers[0]] << endl;
@@ -178,7 +178,7 @@ void HandleExitTeam(int clientFD)
     SendMessage(clientFD, string(RS_EXIT_TEAM_S) + " " + Lobby.Serialize());
     WriteLog(LogType::Success, clientFD, "EXIT TEAM");
 
-    BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), false);
+    BroadcastToClient(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), false);
 
 	WriteLog(LogType::Success, clientFD, "UPDATE ROOM LIST : After exit team", Lobby.Capture());
 
@@ -205,7 +205,7 @@ void HandleExitTeam(int clientFD)
 void HandleAcceptParticipation(int clientFD)
 {
     auto& leader = Accounts[Clients[clientFD]];
-    auto& team = Lobby.Teams[leader.Team];
+    auto& team = Lobby.Teams[leader.LobbyTeam];
 
 	if (team.JoinRequests.size() == 0)
 	{
@@ -227,7 +227,7 @@ void HandleAcceptParticipation(int clientFD)
                 member.IsRequestPending = false;
 
 				auto& account = Accounts[member.ID];
-				account.Team = leader.Team;
+				account.LobbyTeam = leader.LobbyTeam;
 				account.PendingTeam = -1;
 
 				JoinedMembers.push_back(member.ID);
@@ -238,7 +238,7 @@ void HandleAcceptParticipation(int clientFD)
         WriteLog(LogType::Success, clientFD, "ACCEPT PARTICIPATION", "Request: " + to_string(requestAmount));
         SendMessage(clientFD, string(RS_ACCEPT_PARTICIPATION_S) + " " + to_string(requestAmount));
         
-        BroadcastMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+        BroadcastToClient(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
     
 		for (auto memberID : acceptedMembers)
 		{
@@ -258,7 +258,7 @@ void HandleAcceptParticipation(int clientFD)
 void HandleInviteMember(int clientFD, string name)
 {
     auto& inviter = Accounts[Clients[clientFD]];
-    auto& team = Lobby.Teams[inviter.Team];
+    auto& team = Lobby.Teams[inviter.LobbyTeam];
 
     int memberCount = team.CountMember();
 
@@ -289,11 +289,11 @@ void HandleInviteMember(int clientFD, string name)
 
             auto memberFD = GetValueByKey(Clients, account->ID);
 
-			account->PendingInvitation = inviter.Team;
+			account->PendingInvitation = inviter.LobbyTeam;
             account->InvitorID = inviter.ID;
 
-            WriteLog(LogType::Update, memberFD, "INVITE REQUEST", "From: " + inviter.Name + ", Team: " + to_string(inviter.Team));
-            SendMessage(memberFD, string(RS_UPDATE_INVITE_REQUEST) + " " + to_string(inviter.Team));
+            WriteLog(LogType::Update, memberFD, "INVITE REQUEST", "From: " + inviter.Name + ", Team: " + to_string(inviter.LobbyTeam));
+            SendMessage(memberFD, string(RS_UPDATE_INVITE_REQUEST) + " " + to_string(inviter.LobbyTeam));
 
             StartTickOnClient(clientFD, TICK_INVITE_REQUEST,
                 [](int clientFD, int tick)
@@ -339,7 +339,7 @@ void HandleAcceptInvitation(int clientFD)
         SendMessage(teamLeaderFD, string(RS_UPDATE_JOIN_REQUEST) + " " + to_string(team.JoinRequests.size()));
         WriteLog(LogType::Success, teamLeaderFD, "UPDATE JOIN REQUEST", "Request: " + to_string(team.JoinRequests.size()));
 
-        BroadcastMessage(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+        BroadcastToClient(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
 
         StartTickOnClient(clientFD, TICK_JOIN_REQUEST,
             [accountID](int clientFD, int tick)
@@ -361,7 +361,7 @@ void HandleAcceptInvitation(int clientFD)
 
                 Lobby.RemoveMember(teamID, accountID);
 
-                BroadcastMessage(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+                BroadcastToClient(teamLeaderFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
 
                 SendMessage(clientFD, string(RS_JOIN_TEAM_F_REQUEST_EXPIRED));
                 WriteLog(LogType::Failure, clientFD, "JOIN TEAM : Request rejected");

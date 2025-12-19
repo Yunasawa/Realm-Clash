@@ -63,9 +63,9 @@ inline void WriteLog(LogType type, int clientFD, const std::string& code, const 
     }
 
     LogFile << Now()
-        << " ┃ " << std::setw(3) << std::right << clientFD
+        << " ┃ " << std::setw(2) << std::right << clientFD
         << " ┃ " << LogPrefix(type)
-		<< " ┃ " << std::setw(80) << std::left << (CodePrefix(type) + code)
+		<< " ┃ " << std::setw(70) << std::left << (CodePrefix(type) + code)
 		<< " ┃ " << data
         << '\n';
 

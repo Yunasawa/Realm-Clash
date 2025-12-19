@@ -8,6 +8,10 @@ void HandleGamePhase(int clientFD, const string& code, const vector<string>& com
 		WriteLog(LogType::Request, clientFD, "START GAME");
 		HandleStartGame(clientFD);
 	}
+	else if (code == RQ_OCCUPY_SPOT)
+	{
+		HandleOccupySpot(clientFD, command[1]);
+	}
 }
 
 #endif
