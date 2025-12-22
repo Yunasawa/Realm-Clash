@@ -27,7 +27,16 @@ void HandleGamePhase(int clientFD, const string& code, const vector<string>& com
 	{
 		if (code == RQ_BUY_EQUIPMENT)
 		{
-			cout << command[1] << endl;
+			auto cart = CartRecord::Deserialize(command[1]);
+
+			if (cart.Type == 0)
+			{
+				HandleBuyWeapon(clientFD, cart);
+			}
+			else
+			{
+				HandleBuyDefense(clientFD, cart);
+			}
 		}
 	}
 }

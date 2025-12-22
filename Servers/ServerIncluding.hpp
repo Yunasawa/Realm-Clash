@@ -31,6 +31,7 @@ int GetValueByKey(unordered_map<int,int>& m, int v)
 
 #include "Models/Records/AccountRecord.hpp"
 #include "Models/Records/OccupationRecord.hpp"
+#include "Models/Records/CartRecord.hpp"
 
 unordered_map<int, AccountEntity> Accounts; // Map accountID to AccountEntity
 unordered_map<int, SessionEntity> Sessions; // Map accountID to SessionEntity

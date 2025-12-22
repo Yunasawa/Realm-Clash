@@ -113,13 +113,37 @@ void HandleOccupyCastle(int clientFD, const string& data)
 
         return;
     }
- 
+
     auto& team = Group.Teams[account.GameTeam];
     team.CastleSlots.push_back(idCastle);
+    if (team.CastleSlot != -1)
+    {
+        WriteLog(LogType::Failure, clientFD, "OCCUPY CASTLE : Slot full");
+        SendMessage(clientFD, string(RS_OCCUPY_CASTLE_F_SLOT_FULL));
+
+        return;
+    }
+
+    team.CastleSlot = idCastle;
     castle.OwnerTeam = account.GameTeam;
 
     WriteLog(LogType::Success, clientFD, "OCCUPY CASTLE", "Castle: " + data);
     SendMessage(clientFD, string(RS_OCCUPY_CASTLE_S));
     BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
 }
+
+void HandleBuyWeapon(int client, const CartRecord& cart)
+{
+    auto account = Accounts[Clients[client]];
+    auto& team = Group.Teams[account.GameTeam];
+
+    Item* item_type = GetItemByEquipment(cart.Equipment);
+}
+
+
+void HandleBuyDefense(int client, const CartRecord& cart)
+{
+
+}
+
 #endif

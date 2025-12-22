@@ -161,6 +161,10 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 	{
 		ShowGameLog(FG_RED "Castle has been occupied!");
 	}
+	else if (code == RS_OCCUPY_CASTLE_F_SLOT_FULL)
+	{
+		ShowGameLog(FG_RED "Occupy only one castle at a time!");
+	}
 	else if (code == RS_UPDATE_START_COMBAT)
 	{
 		CurrentPhase = PHASE_GAME_MAP_COMBATING;
