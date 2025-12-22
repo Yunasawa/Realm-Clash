@@ -81,7 +81,6 @@ void GameResult()
     stringstream ss;
     ss << "Team " << (it->second).Name << " has " << maxPoint << " point(s) !";
     for(auto client : Clients){
-        stringstream ss;
         SendMessage(client.first, ss.str());
     };
 }
