@@ -12,6 +12,7 @@ Servers/Server.o: Servers/Server.cpp \
  Servers/Models/Entities/AccountEntity.hpp \
  Servers/Models/Records/AccountRecord.hpp \
  Servers/Models/Records/OccupationRecord.hpp \
+ Servers/Models/Records/CartRecord.hpp \
  Servers/Models/Entities/LobbyEntity.hpp \
  Servers/Models/Entities/GameEntity.hpp Servers/ServerNetwork.hpp \
  Servers/Utilities/ServerLogger.hpp Servers/Utilities/ServerTimer.hpp \
@@ -36,6 +37,7 @@ Servers/ServerDefinition.hpp:
 Servers/Models/Entities/AccountEntity.hpp:
 Servers/Models/Records/AccountRecord.hpp:
 Servers/Models/Records/OccupationRecord.hpp:
+Servers/Models/Records/CartRecord.hpp:
 Servers/Models/Entities/LobbyEntity.hpp:
 Servers/Models/Entities/GameEntity.hpp:
 Servers/ServerNetwork.hpp:
