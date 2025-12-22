@@ -99,29 +99,27 @@ void HandleOccupySpot(int clientFD, const string& data)
 
 void HandleOccupyCastle(int clientFD, const string& data)
 {
-    auto request = stoi(data);
+    auto idCastle = stoi(data);
 
     WriteLog(LogType::Request, clientFD, "OCCUPY CASTLE", "Castle: " + data);
 
     auto account = Accounts[Clients[clientFD]];
-    auto& castle = Map.Castles[request];
+    auto& castle = Map.Castles[idCastle];
 
     if (castle.OwnerTeam != -1)
-    {
+    {   
         WriteLog(LogType::Failure, clientFD, "OCCUPY CASTLE : Castle occupied", "Castle: " + data);
         SendMessage(clientFD, string(RS_OCCUPY_CASTLE_F_CASTLE_OCCUPIED));
 
         return;
     }
-
+ 
     auto& team = Group.Teams[account.GameTeam];
-
-    team.CastleSlots.push_back(request);
+    team.CastleSlots.push_back(idCastle);
     castle.OwnerTeam = account.GameTeam;
 
     WriteLog(LogType::Success, clientFD, "OCCUPY CASTLE", "Castle: " + data);
     SendMessage(clientFD, string(RS_OCCUPY_CASTLE_S));
     BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
 }
-
 #endif
