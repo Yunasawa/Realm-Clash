@@ -18,6 +18,8 @@
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+/*Giao diện khi bắt đầu khai cuộc*/
+
 string ToTimeFormat(int tick)
 {
 	int hours = tick / 3600;

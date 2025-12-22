@@ -18,6 +18,8 @@
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
+/*Sảnh chờ*/
+
 string MakeLobbyTitle(const std::string& playerName)
 {
     const int totalLen = 70;

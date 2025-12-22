@@ -1,6 +1,8 @@
 #ifndef SERVER_MODEL_RECORD_MAP
 #define SERVER_MODEL_RECORD_MAP
 
+/*Hiển thị thông tin lên màn hình clients*/
+
 struct SpotRecord
 {
     int WoodSlot = -1;

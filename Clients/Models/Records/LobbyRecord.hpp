@@ -5,7 +5,7 @@ struct MemberRecord
 {
     int ID;
     string Name;
-    bool IsRequestPending;
+    bool IsRequestPending; /*Chờ xác nhận được accept hay không ?*/
     bool IsTeamLeader;
     bool IsRoomLeader;
 };
