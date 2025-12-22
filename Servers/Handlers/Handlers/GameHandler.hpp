@@ -1,6 +1,7 @@
 #ifndef SERVER_HANDLER_GAME
 #define SERVER_HANDLER_GAME
 
+#include "../../Temps/Models/InGameServer.hpp"
 void RequestStopServerTick()
 {
 	ServerTicking.store(false);
@@ -99,15 +100,15 @@ void HandleOccupySpot(int clientFD, const string& data)
 
 void HandleOccupyCastle(int clientFD, const string& data)
 {
-    auto request = stoi(data);
+    auto idCastle = stoi(data);
 
     WriteLog(LogType::Request, clientFD, "OCCUPY CASTLE", "Castle: " + data);
 
     auto account = Accounts[Clients[clientFD]];
-    auto& castle = Map.Castles[request];
+    auto& castle = Map.Castles[idCastle];
 
     if (castle.OwnerTeam != -1)
-    {
+    {   
         WriteLog(LogType::Failure, clientFD, "OCCUPY CASTLE : Castle occupied", "Castle: " + data);
         SendMessage(clientFD, string(RS_OCCUPY_CASTLE_F_CASTLE_OCCUPIED));
 
@@ -115,7 +116,7 @@ void HandleOccupyCastle(int clientFD, const string& data)
     }
 
     auto& team = Group.Teams[account.GameTeam];
-
+    team.CastleSlots.push_back(idCastle);
     if (team.CastleSlot != -1)
     {
         WriteLog(LogType::Failure, clientFD, "OCCUPY CASTLE : Slot full");
@@ -124,7 +125,7 @@ void HandleOccupyCastle(int clientFD, const string& data)
         return;
     }
 
-    team.CastleSlot = request;
+    team.CastleSlot = idCastle;
     castle.OwnerTeam = account.GameTeam;
 
     WriteLog(LogType::Success, clientFD, "OCCUPY CASTLE", "Castle: " + data);
@@ -132,14 +133,46 @@ void HandleOccupyCastle(int clientFD, const string& data)
     BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
 }
 
-void HandleBuyWeapon(int client, const CartRecord& cart)
+void HandleBuyWeapon(int clientFD, const CartRecord& cart)
 {
+    auto account = Accounts[Clients[clientFD]];
+    auto& team = Group.Teams[account.GameTeam];
 
+    Item item_type = GetItem(cart.Equipment);
+    if (cart.Type == 1) return;
+    if (ResourceCompare(team.ResourceQuantity, item_type.Cost) == 0)
+    {
+        writeLog(LogType::Failure, clientFD, "BUY WEAPON : Lack of resources", item_type.Capture());
+        SendMsg(team,string(RS_SHOP_EQUIPMENT_F_LACK_RESOURCE));
+        return;
+    }
+    for(auto i : cart.Amount){
+        team.Inventory.push_back(item_type.id);
+    };
+    UpdateResourcesQuantity(team.ResourceQuantity, item_type.Cost);
+    writeLog(LogType::Success, clientFD, "BUY WEAPON", item_type.Capture());
+    SendMsg(team,string(RS_SHOP_EQUIPMENT_S));
 }
 
-void HandleBuyDefense(int client, const CartRecord& cart)
+void HandleBuyDefense(int clientFD,const CartRecord& cart)
 {
+    auto account = Accounts[Clients[clientFD]];
+    auto& team = Group.Teams[account.GameTeam];
 
+    if (cart.Type == 0) return;
+    Item item_type = GetItem(cart.Equipment);
+    if (ResourceCompare(team.ResourceQuantity, item_type.Cost) == 0)
+    {
+        writeLog(LogType::Failure, clientFD, "BUY DEFENSE : Lack of resources", item_type.Capture());
+        SendMsg(team,string(RS_SHOP_EQUIPMENT_F_LACK_RESOURCE));
+        return;
+    }
+    for(auto i : cart.Amount){
+        team.Inventory.push_back(item_type.id);
+    };
+    UpdateResourcesQuantity(team.ResourceQuantity, item_type.Cost);
+    writeLog(LogType::Success, clientFD, "BUY DEFENSE", item_type.Capture());
+    SendMsg(team,string(RS_SHOP_EQUIPMENT_S));
 }
 
 #endif

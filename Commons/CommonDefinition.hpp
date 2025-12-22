@@ -90,6 +90,8 @@
 #define RS_OCCUPY_CASTLE_F_CASTLE_OCCUPIED		"411"
 #define RS_OCCUPY_CASTLE_F_SLOT_FULL			"412"
 
+#define RS_SHOP_EQUIPMENT_S						"500"
+#define RS_SHOP_EQUIPMENT_F_LACK_RESOURCE		"501"
 
 // Server - Update responses
 #define RS_UPDATE_ROOM_LIST                     "810"

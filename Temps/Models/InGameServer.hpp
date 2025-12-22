@@ -5,21 +5,6 @@
 #include "../../Cores/CoreDefinition.hpp"
 #include <unordered_map>
 using namespace std;
-Building CreateMap()
-{
-    auto building = Building();
-    building.Castles[1] = Castle{1, -1, 0, {}};
-    building.Castles[2] = Castle{2, -1, 0, {}};
-    building.Castles[3] = Castle{3, -1, 0, {}};
-    building.Spots[1] = Spot{1, -1};
-    building.Spots[2] = Spot{2, -1};
-    building.Spots[3] = Spot{3, -1};
-    building.Spots[4] = Spot{4, -1};
-    building.Spots[5] = Spot{5, -1};
-    building.Spots[6] = Spot{6, -1};
-    return building;
-}
-
 enum Items{
     BALLISTA, 
     CATAPULT,
@@ -32,6 +17,7 @@ enum Items{
 
 struct Item
 {
+    int id;
     Items ItemType;
     std::unordered_map<Resources,int> Cost;
     int AttackPoint = 0;
@@ -44,76 +30,65 @@ void SendMsg(Team* team, const string &msg)
         SendMessage(memberFD, msg);
     }
 }
-Building CreateMap()
-{
-    auto building = Building();
-    building.Castles[1] = Castle{1, -1, 0, {}};
-    building.Castles[2] = Castle{2, -1, 0, {}};
-    building.Castles[3] = Castle{3, -1, 0, {}};
-    for(int i = 0; i < 3; i++){
-        for (int j = 0;j < 6;j++){
-            building.Spots[j] = Spot{j, -1, static_cast<Resources>(i)};
-        }
-    }
-    return building;
-}
 
-Item* GetItem(Items ItemType)
+Item GetItem(int id)
 {
-    Item* item = new Item;
-    item->ItemType = ItemType;
-    switch(ItemType){
+    Item item;
+    item.id = id;
+    auto type = static_cast<Items>(id);
+    item.type = type;
+    switch(type){
         case BALLISTA: 
-            item->AttackPoint = 1000; 
-            item->Cost = {
+            item.AttackPoint = 1000; 
+            item.Cost = {
                 {Resources::Wood,1500},
                 {Resources::Stone,0},
                 {Resources::Iron,200}
             };
             break;
         case CATAPULT: 
-            item->AttackPoint = 3000;
-            item->Cost = {
+            item.AttackPoint = 3000;
+            item.Cost = {
                 {Resources::Wood,400},
                 {Resources::Stone,1500},
                 {Resources::Iron,300}
             };
             break;
         case CANNON: 
-            item->AttackPoint = 8000;
-            item->Cost = {
+            item.AttackPoint = 8000;
+            item.Cost = {
                 {Resources::Wood,500},
                 {Resources::Stone,2500},
                 {Resources::Iron,1800}
             };
             break;
         case FENCE: 
-            item->DefensePoint = 200; 
-            item->Cost = {
+            item.DefensePoint = 200; 
+            item.Cost = {
                 {Resources::Wood,200},
                 {Resources::Stone,50},
                 {Resources::Iron,0}
             };
             break;
         case WOOD_WALL: 
-            item->DefensePoint = 1000;
-            item->Cost = {
+            item.DefensePoint = 1000;
+            item.Cost = {
                 {Resources::Wood,1000},
                 {Resources::Stone,100},
                 {Resources::Iron,100}
             }; 
             break;
         case STONE_WALL: 
-            item->DefensePoint = 3000; 
-            item->Cost = {
+            item.DefensePoint = 3000; 
+            item.Cost = {
                 {Resources::Wood,200},
                 {Resources::Stone,1000},
                 {Resources::Iron,200}
             };
             break;
         case LEGEND_WALL: 
-            item->DefensePoint = 8000; 
-            item->Cost = {
+            item.DefensePoint = 8000; 
+            item.Cost = {
                 {Resources::Wood,1000},
                 {Resources::Stone,2000},
                 {Resources::Iron,1000}
@@ -126,7 +101,7 @@ Item* GetItem(Items ItemType)
 int ResourceCompare(unordered_map<Resources,int> own, unordered_map<Resources,int> require){
     for (const auto& req : require)
     {
-        Resources type = req.first;
+        Resource type = req.first;
         int requiredAmount = req.second;
         auto it = own.find(type);
         if (it == own.end() || it->second < requiredAmount)
