@@ -6,13 +6,43 @@
 ┃ Wood : 00000000 | Rock : 00000000 | Iron : 00000000 | Gold : 00000 ┃
 ┣━ GAME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┫
 ┃ 🎪 Spot 1 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  🏰 Castle 1 [ ]	 ┃
-┃ 🎪 Spot 2 |  Wood [ ]   Rock [ ]    Iron [ ]	┃					 ┃
+┃ 🎪 Spot 2 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  - DEF: 100000 -	 ┃
 ┃ 🎪 Spot 1 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  🏰 Castle 1 [ ]	 ┃
-┃ 🎪 Spot 3 |  Wood [ ]   Rock [ ]    Iron [ ]	┃					 ┃
+┃ 🎪 Spot 3 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  - DEF: 100000 -	 ┃
 ┃ 🎪 Spot 1 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  🏰 Castle 1 [ ]	 ┃
-┃ 🎪 Spot 4 |  Wood [ ]   Rock [ ]    Iron [ ]	┃					 ┃
+┃ 🎪 Spot 4 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  - DEF: 100000 -	 ┃
 ┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━┫
 ┃ • 1 <teamID>: Create/Join team                                     ┃
+┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃                                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━ ■ Team 1 ━ U0000001 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 00:00:00 ━┓
+┃ Wood : 00000000 | Rock : 00000000 | Iron : 00000000 | Gold : 00000 ┃
+┣━ GAME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃  🏰 Castle 1 [ ] | 100000🛡️  ┃
+┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃                              ┃
+┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃  🏰 Castle 1 [ ] | 100000🛡️  ┃
+┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃                              ┃
+┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃  🏰 Castle 1 [ ] | 100000🛡️  ┃
+┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃                              ┃
+┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃ • 1 <teamID>: Create/Join team                                     ┃
+┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃                                                                    ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+┏━ ■ Team 1 ━ U0000001 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 00:00:02 ━┓
+┃ Wood : 00000000 | Rock : 00000000 | Iron : 00000000 | Gold : 00000 ┃  
+┣━ GAME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃  🏰 Castle 1 [ ] | 100000🛡️ ┃
+┃ 🎪 Spot 2 |  W [ ]   R [ ]   I [ ]  ┃                             ┃
+┃ 🎪 Spot 3 |  W [ ]   R [ ]   I [ ]  ┃  🏰 Castle 2 [ ] | 100000🛡️ ┃
+┃ 🎪 Spot 4 |  W [ ]   R [ ]   I [ ]  ┃                             ┃
+┃ 🎪 Spot 5 |  W [ ]   R [ ]   I [ ]  ┃  🏰 Castle 3 [ ] | 100000🛡️ ┃
+┃ 🎪 Spot 6 |  W [ ]   R [ ]   I [ ]  ┃                             ┃
+┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃ • 1 <spot> <type>: Occupy spot   | • 2 <castle>: Occupy castle     ┃
 ┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃                                                                    ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -94,10 +124,10 @@ string GetSpotLine(int spotID)
 
 	auto spot = Map.Spots[spotID];
 
-    return " 🎪 Spot " + to_string(spotID + 1) + " |  " + 
-        "Wood " + GetSpotText(spot.WoodSlot) + "   " +
-        "Rock " + GetSpotText(spot.RockSlot) + "   " +
-        "Iron " + GetSpotText(spot.IronSlot) + "";
+    return "🎪 Spot " + to_string(spotID + 1) + " |  " + 
+        "W " + GetSpotText(spot.WoodSlot) + "   " +
+        "R " + GetSpotText(spot.RockSlot) + "   " +
+        "I " + GetSpotText(spot.IronSlot) + "";
 }
 
 string GetCastleLine(int castleID)
@@ -109,9 +139,14 @@ string GetCastleLine(int castleID)
             return color + "[" + text + "]" + RESET;
         };
 
+    auto GetDefenseText = [&]() -> string
+        {
+            return " | 100000🛡️";
+        };
+
     auto castle = Map.Castles[castleID];
 
-    return "🏰 Castle " + to_string(castleID + 1) + " " + GetCastleText(castle.OwnerTeam);
+    return "🏰 Castle " + to_string(castleID + 1) + " " + GetCastleText(castle.OwnerTeam) + GetDefenseText();
 }
 
 string GetGameOption()
@@ -137,14 +172,14 @@ void ShowGameView()
 	cout 
         << GetGameTitle()
         << GetResourceLine() <<
-        "┣━ GAME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┫\n"
-        "┃ " << GetSpotLine(0) << "  ┃  " << GetCastleLine(0) << "   ┃\n"
-        "┃ " << GetSpotLine(1) << "  ┃                    ┃\n"
-        "┃ " << GetSpotLine(2) << "  ┃  " << GetCastleLine(1) << "   ┃\n"
-        "┃ " << GetSpotLine(3) << "  ┃                    ┃\n"
-        "┃ " << GetSpotLine(4) << "  ┃  " << GetCastleLine(2) << "   ┃\n"
-        "┃ " << GetSpotLine(5) << "  ┃                    ┃\n"
-        "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━┫\n"
+        "┣━ GAME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
+        "┃ " << GetSpotLine(0) << "  ┃  " << GetCastleLine(0) << " ┃\n"
+        "┃ " << GetSpotLine(1) << "  ┃                             ┃\n"
+        "┃ " << GetSpotLine(2) << "  ┃  " << GetCastleLine(1) << " ┃\n"
+        "┃ " << GetSpotLine(3) << "  ┃                             ┃\n"
+        "┃ " << GetSpotLine(4) << "  ┃  " << GetCastleLine(2) << " ┃\n"
+        "┃ " << GetSpotLine(5) << "  ┃                             ┃\n"
+        "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
             << GetGameOption() <<
         "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
         "┃ " << BOLD << Log << RESET << string(72 - Log.length(), ' ') << "┃\n"

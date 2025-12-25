@@ -7,7 +7,7 @@ struct TeamEntity
 {
 	vector<int> Members;
     array<array<int, 2>, 3> SpotSlots = { { {-1, -1}, {-1, -1}, {-1, -1} } };
-    vector<int> CastleSlots;
+    int CastleSlot = -1;
 
     array<int, 4> Resources;
     array<int, 3> Weapons;
@@ -61,7 +61,7 @@ struct GroupEntity
                 }
             }
 
-            for (int castle = 0; castle < (int)team.CastleSlots.size(); castle++)
+            if (team.CastleSlot != -1)
             {
                 team.Resources[3] += ResourcePerTick[3] * MULTIPLIER_RESOURSE_UPDATE;
             }
