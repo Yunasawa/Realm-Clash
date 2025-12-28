@@ -6,6 +6,7 @@ struct CartRecord
     int Type;
     int Equipment;
     int Amount;
+    int TargetCastle; /*Đâu là castle sẽ được trang bị phòng thủ ?*/
 
     static CartRecord Deserialize(const string& msg)
     {
@@ -15,6 +16,7 @@ struct CartRecord
         r.Type = j.value("Type", -1);
         r.Equipment = j.value("Equipment", -1);
         r.Amount = j.value("Amount", 0);
+        r.TargetCastle = j.value("TargetCastle", -1);
         return r;
     }
     string Capture() const

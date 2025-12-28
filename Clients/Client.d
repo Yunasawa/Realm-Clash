@@ -16,12 +16,17 @@ Clients/Client.o: Clients/Client.cpp \
  Clients/Models/Records/ResourceRecord.hpp \
  Clients/Models/Entities/AccountEntity.hpp \
  Clients/Models/Entities/OccupationEntity.hpp \
- Clients/Models/Entities/CartEntity.hpp Clients/ClientUtilities.hpp \
- Clients/Views/LobbyView.hpp Clients/Views/WelcomeView.hpp \
- Clients/Views/GameView.hpp Clients/Views/ShopView.hpp \
- Clients/Views/QuestionView.hpp Clients/Handlers/Phases/PhaseWelcome.hpp \
+ Clients/Models/Entities/CartEntity.hpp \
+ Clients/Models/Entities/QuestionEntity.hpp \
+ Clients/Models/Entities/../../../Commons/CommonIncluding.hpp \
+ Clients/ClientUtilities.hpp Clients/Views/LobbyView.hpp \
+ Clients/Views/WelcomeView.hpp Clients/Views/GameView.hpp \
+ Clients/Views/ShopView.hpp Clients/Views/QuestionView.hpp \
+ Clients/Views/../Models/Entities/QuestionEntity.hpp \
+ Clients/Handlers/Phases/PhaseWelcome.hpp \
  Clients/Handlers/Phases/PhaseLobby.hpp \
- Clients/Handlers/Phases/PhaseGame.hpp
+ Clients/Handlers/Phases/PhaseGame.hpp \
+ Clients/Handlers/Phases/../../../Commons/CommonIncluding.hpp
 
 Clients/../Commons/Networks/MessageHandler.hpp:
 
@@ -63,6 +68,10 @@ Clients/Models/Entities/OccupationEntity.hpp:
 
 Clients/Models/Entities/CartEntity.hpp:
 
+Clients/Models/Entities/QuestionEntity.hpp:
+
+Clients/Models/Entities/../../../Commons/CommonIncluding.hpp:
+
 Clients/ClientUtilities.hpp:
 
 Clients/Views/LobbyView.hpp:
@@ -75,8 +84,12 @@ Clients/Views/ShopView.hpp:
 
 Clients/Views/QuestionView.hpp:
 
+Clients/Views/../Models/Entities/QuestionEntity.hpp:
+
 Clients/Handlers/Phases/PhaseWelcome.hpp:
 
 Clients/Handlers/Phases/PhaseLobby.hpp:
 
 Clients/Handlers/Phases/PhaseGame.hpp:
+
+Clients/Handlers/Phases/../../../Commons/CommonIncluding.hpp:

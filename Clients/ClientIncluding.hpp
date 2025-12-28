@@ -11,6 +11,7 @@
 #include "Models/Entities/AccountEntity.hpp"
 #include "Models/Entities/OccupationEntity.hpp"
 #include "Models/Entities/CartEntity.hpp"
+#include "Models/Entities/QuestionEntity.hpp"
 
 int CurrentPhase = 0;
 AccountRecord Account;
@@ -24,6 +25,11 @@ int Team;
 int Tick;
 MapRecord Map;
 ResourceRecord Resource;
+int CurrentQuestionSpot = -1;
+bool CurrentQuestionIsCastle = false;
+QuestionEntity CurrentQuestion;
+int QuestionTimeOut = 30;
+
 
 #include "ClientUtilities.hpp"
 

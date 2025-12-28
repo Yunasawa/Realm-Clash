@@ -32,12 +32,11 @@ struct Question{
 struct QuestionBank{
     vector<Question> questions;
 
-    bool load_json(const string& filename){
+    bool load_data(const string& filename){
         ifstream file(filename);
         if(!file.is_open()){
             return false;
         }
-
         // Peek first non-space char to guess format
         char c;
         while (file.get(c)) {

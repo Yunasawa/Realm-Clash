@@ -1,116 +1,95 @@
 #include <iostream>
-#include "Models/Part.hpp"
-
 using namespace std;
+#include <vector>
+#include <string>
+#include <ctype.h>
+#include <fstream>
+enum class Difficulty{
+    EASY,
+    DIFFICULT
+};
 
-// Hàm khởi tạo Teams với tài nguyên cố định
-void InitializeTeams() {
-    // Khởi tạo Team A (ID = 1)
-    // Wood: 10000, Stone: 100, Iron: 10000, Gold: 10000
-    Team teamA;
-    teamA.ID = 1;
-    teamA.Name = "A";
-    teamA.ResourceQuantity = {
-        {Resources::Wood, 10000},
-        {Resources::Stone, 100},
-        {Resources::Iron, 10000},
-        {Resources::Gold, 10000}
-    };
-    Teams[1] = teamA;
-    
-    // Khởi tạo Team B (ID = 2)
-    // Wood: 2000, Stone: 2000, Iron: 2000, Gold: 2000
-    Team teamB;
-    teamB.ID = 2;
-    teamB.Name = "B";
-    teamB.ResourceQuantity = {
-        {Resources::Wood, 2000},
-        {Resources::Stone, 2000},
-        {Resources::Iron, 2000},
-        {Resources::Gold, 2000}
-    };
-    Teams[2] = teamB;
-    
-    // Khởi tạo Team C (ID = 3)
-    // Wood: 1500, Stone: 2000, Iron: 0, Gold: 10000
-    Team teamC;
-    teamC.ID = 3;
-    teamC.Name = "C";
-    teamC.ResourceQuantity = {
-        {Resources::Wood, 7000},
-        {Resources::Stone, 2000},
-        {Resources::Iron, 5000},
-        {Resources::Gold, 10000}
-    };
-    Teams[3] = teamC;
-    
-    // // In ra thông tin các team đã khởi tạo
-    // cout << "=== Teams Initialized ===" << endl;
-    // for (const auto& pair : Teams) {
-    //     const Team& t = pair.second;
-    //     cout << "\nTeam " << t.Name << " (ID: " << t.ID << "):" << endl;
-    //     cout << "  Wood: " << t.ResourceQuantity.at(Resources::Wood) << endl;
-    //     cout << "  Stone: " << t.ResourceQuantity.at(Resources::Stone) << endl;
-    //     cout << "  Iron: " << t.ResourceQuantity.at(Resources::Iron) << endl;
-    //     cout << "  Gold: " << t.ResourceQuantity.at(Resources::Gold) << endl;
-    // }
-}
+struct QuestionEntity{
+    string content; 
+    vector<string> answers;
+    int correctAnswer;
+    Difficulty difficulty;
 
-// Hàm khởi tạo Castles
-void InitializeCastles(Building& building) {
-    // Castle 1 - bị Team A chiếm đóng
-    Castle castle1;
-    castle1.castleID = 1;
-    castle1.ownerTeamID = 1; // Team A
-    castle1.defensePoints = 0;
-    building.Castles[1] = castle1;
-    
-    // Castle 2 - chưa bị chiếm đóng
-    Castle castle2;
-    castle2.castleID = 2;
-    castle2.ownerTeamID = -1; // Chưa có chủ
-    castle2.defensePoints = 0;
-    building.Castles[2] = castle2;
-    
-    // Castle 3 - bị Team B chiếm đóng
-    Castle castle3;
-    castle3.castleID = 3;
-    castle3.ownerTeamID = 2; // Team B
-    castle3.defensePoints = 0;
-    building.Castles[3] = castle3;
-    
-    // // In ra thông tin các castle đã khởi tạo
-    // cout << "\n=== Castles Initialized ===" << endl;
-    // for (const auto& pair : building.Castles) {
-    //     const Castle& c = pair.second;
-    //     cout << "\nCastle " << c.castleID << ":" << endl;
-    //     if (c.ownerTeamID != -1) {
-    //         cout << "  Owner: Team " << Teams[c.ownerTeamID].Name << endl;
-    //     } else {
-    //         cout << "  Owner: None (Not occupied)" << endl;
-    //     }
-    //     cout << "  Defense Points: " << c.defensePoints << endl;
-    // }
-}
+    void display() const {
+        cout << "Question: " << content << endl;
+        cout << "A. " << answers[0] << endl;
+        cout << "B. " << answers[1] << endl;
+        cout << "C. " << answers[2] << endl;
+        cout << "D. " << answers[3] << endl;
+        cout << "Correct answer: " << (char)('A' + correctAnswer) << endl;
+        cout << "Difficulty: " << (difficulty == Difficulty::EASY ? "Easy" : "Difficult") << endl;
+    }
+};
 
-int main() {
-    InitializeTeams();
+struct QuestionBankEntity{
+    vector<QuestionEntity> spot_questions;
+    vector<QuestionEntity> castle_questions;
     
-    Building building;
-    InitializeCastles(building);
+    bool load_data(const string& filename){
+        ifstream file(filename);
+        if(!file.is_open()){
+            return false;
+        }
+        // Peek first non-space char to guess format
+        char c;
+        while (file.get(c)) {
+            if (!isspace((unsigned char)c)) break;
+        }
+        file.clear();
+        file.seekg(0);
+        string line;
+        while (std::getline(file, line)) {
+            if (line.empty()) continue;
+            // skip comments
+            if (line.size() > 0 && (line[0] == '#' || line[0] == '/')) continue;
 
-    int ret = BuyDefense(&building.Castles[1], &Teams[1], FENCE);
-    cout << ret << endl;
-    GetTeamResourceInfo(1);
+            // split by '|'
+            vector<string> parts;
+            size_t start = 0;
+            while (true) {
+                size_t pos = line.find('|', start);
+                if (pos == string::npos) {
+                    parts.push_back(line.substr(start));
+                    break;
+                }
+                parts.push_back(line.substr(start, pos - start));
+                start = pos + 1;
+            }
 
-    GetCastleInfo(building,1);
+            if (parts.size() < 7) continue; // malformed
 
-    ret = BuyWeapon(&Teams[3], CATAPULT);
-    ret = BuyWeapon(&Teams[3], BALLISTA);
-    cout << ret << endl;
-    GetTeamResourceInfo(3);
-    cout << Teams[3].Inventory.size() << endl;
-    ret = AttackCastle(&building.Castles[1],&Teams[3],CATAPULT);
-    cout << ret << endl;
-    GetCastleInfo(building,1);
+            QuestionEntity q;
+            q.content = parts[1];
+            q.answers.clear();
+            q.answers.push_back(parts[2]);
+            q.answers.push_back(parts[3]);
+            q.answers.push_back(parts[4]);
+            q.answers.push_back(parts[5]);
+            try { q.correctAnswer = stoi(parts[6]); } catch(...) { q.correctAnswer = -1; }
+            
+            if (parts[0][0] - '0' == 1){
+                q.difficulty = Difficulty::EASY;
+                spot_questions.push_back(q);
+            } 
+            else if (parts[0][0] - '0' == 2){
+                q.difficulty = Difficulty::DIFFICULT;
+                castle_questions.push_back(q);
+            }
+        }
+
+        file.close();
+        return true;
+    }
+};
+
+int main(){
+    string part = "/home/quang28/Realm-Clash/Datas/Question.ynl";
+    QuestionBankEntity bank;
+    bank.load_data(part);
+    bank.spot_questions[0].display();
 }

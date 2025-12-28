@@ -18,7 +18,7 @@ void HandleWelcomeInput(int clientFD, vector<string> command)
     }
     else
     {
-        ShowWelcomeLog(LOG_UNKNOWN_COMMAND);
+        ShowWelcomeLog(LOG_UNKNOWN_COMMAND); /*Log là global scope variable*/
     }
 }
 
@@ -36,8 +36,8 @@ void HandleWelcomeResponse(int clientFD, const string& code, vector<string> spli
              code == RS_LOG_IN_S)
     {
         Account = AccountRecord::Deserialize(split[1]);
-        CurrentPhase = PHASE_LOBBY_JOINING_READY;
-
+        CurrentPhase = PHASE_LOBBY_JOINING_READY; 
+        /*Đăng nhập thành công thì chuyển trạng thái của CurrentPhase*/
         ShowLobbyCode(code);
         SendMessage(clientFD, string(RQ_UPDATE_LOBBY));
     }

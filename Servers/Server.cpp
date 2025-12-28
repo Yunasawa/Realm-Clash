@@ -60,6 +60,11 @@ int main()
 
     int serverFD = CreateSocket();
 
+    if (serverFD <= 0) {
+        cout << "Failed to create server socket (fd=" << serverFD << "). Exiting.\n";
+        return 1;
+    }
+
     while (true)
     {
         int clientFD = AcceptClient(serverFD);

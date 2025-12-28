@@ -22,9 +22,9 @@ void HandleJoinTeam(int clientFD, string data)
     {
 		auto& account = Accounts[Clients[clientFD]];
 
-        if (memberCount == 0)
+        if (memberCount == 0) /*Xử lí khi vào 1 team chưa có bất kì client nào*/
         {
-            if (RoomLeader == 0)
+            if (RoomLeader == 0) /*Kiểm tra xem đã tồn tại chủ room chưa, nếu không client đầu tiên sẽ mặc định là chủ room*/
             {
 				RoomLeader = account.ID;
 				account.IsRoomLeader = true;

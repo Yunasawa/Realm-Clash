@@ -70,6 +70,6 @@ inline void WriteLog(LogType type, int clientFD, const std::string& code, const 
         << '\n';
 
     LogFile.flush();
-}
+} /* Viết log vào folder Datas/ */
 
 #endif

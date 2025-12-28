@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -std=c++17 -Wall -pthread
 LDFLAGS = -pthread
 
-SERVER_SRC = Servers/Server.cpp
+SERVER_SRC = Servers/Server.cpp 
 CLIENT_SRC = Clients/Client.cpp
 RESET_SRC  = Functions/ResetData.cpp
 

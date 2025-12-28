@@ -31,7 +31,7 @@ void ReceiveThread(int clientFD)
 
         HandleWelcomeResponse(clientFD, code, split);
         HandleLobbyResponse(clientFD, code, split);
-		HandleGameResponse(clientFD, code, split);
+        HandleGameResponse(clientFD, code, split);
     }
 }
 
@@ -56,3 +56,4 @@ int main(int argc, char *argv[])
     close(clientFD);
     return 1;
 }
+/* Chia 2 thread để giao tiếp nhận và gửi với server */

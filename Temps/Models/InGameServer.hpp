@@ -1,42 +1,13 @@
 #ifndef IN_GAME
 #define IN_GAME
-#include <vector>
+#include <random>
+#include <mutex>
 #include "Participant.hpp"
-#include "../../Cores/CoreDefinition.hpp"
-#include <unordered_map>
+#include "../../Commons/CommonDefinition.hpp"
+#include "../Commons/Networks/MessageHandler.hpp"
 using namespace std;
-Building CreateMap()
-{
-    auto building = Building();
-    building.Castles[1] = Castle{1, -1, 0, {}};
-    building.Castles[2] = Castle{2, -1, 0, {}};
-    building.Castles[3] = Castle{3, -1, 0, {}};
-    building.Spots[1] = Spot{1, -1};
-    building.Spots[2] = Spot{2, -1};
-    building.Spots[3] = Spot{3, -1};
-    building.Spots[4] = Spot{4, -1};
-    building.Spots[5] = Spot{5, -1};
-    building.Spots[6] = Spot{6, -1};
-    return building;
-}
+extern QuestionBank questionBank;
 
-enum Items{
-    BALLISTA, 
-    CATAPULT,
-    CANNON,
-    FENCE,
-    WOOD_WALL,
-    STONE_WALL,
-    LEGEND_WALL,
-};
-
-struct Item
-{
-    Items ItemType;
-    std::unordered_map<Resources,int> Cost;
-    int AttackPoint = 0;
-    int DefensePoint = 0;
-};
 void SendMsg(Team* team, const string &msg)
 {
     for (int memberFD : team->Members)
@@ -44,6 +15,7 @@ void SendMsg(Team* team, const string &msg)
         SendMessage(memberFD, msg);
     }
 }
+
 Building CreateMap()
 {
     auto building = Building();
@@ -123,7 +95,8 @@ Item* GetItem(Items ItemType)
     return item;
 }
 
-int ResourceCompare(unordered_map<Resources,int> own, unordered_map<Resources,int> require){
+int ResourceCompare(Team* team , unordered_map<Resources,int> require){
+    unordered_map<Resources,int> own = team->ResourceQuantity;
     for (const auto& req : require)
     {
         Resources type = req.first;
@@ -149,12 +122,13 @@ void AddResourcesQuantity(unordered_map<Resources,int>& own, Resources resourceT
     auto it = own.find(resourceType);
     it->second += amount;
 }
+
 int BuyDefense(Castle* castle, Team* team, Items item_type){
     if(castle->ownerTeamID != team->ID) return 0; /*Chỉ có team chiếm đóng mới được trang bị phòng thủ*/
 
 
     Item* item = GetItem(item_type);
-    int cmp_res = ResourceCompare(team->ResourceQuantity,item->Cost);
+    int cmp_res = ResourceCompare(team,item->Cost);
     if(cmp_res == 0){
         delete item;
         SendMsg(team, string(RS_SHOP_EQUIPMENT_F_LACK_RESOURCE));
@@ -167,9 +141,10 @@ int BuyDefense(Castle* castle, Team* team, Items item_type){
         SendMsg(team, string(RS_SHOP_EQUIPMENT_S));
     }
 }
+
 int BuyWeapon(Team* team, Items item_type){
     Item* item = GetItem(item_type);
-    int cmp_res = ResourceCompare(team->ResourceQuantity,item->Cost);
+    int cmp_res = ResourceCompare(team,item->Cost);
     if(cmp_res == 0){
         delete item;
         SendMsg(team,string(RS_SHOP_EQUIPMENT_F_LACK_RESOURCE));
@@ -182,63 +157,98 @@ int BuyWeapon(Team* team, Items item_type){
     }
 }
 
-
 int FindWeapon(Team* team, Items weapon){
     std::vector<int> tmp = team->Inventory;
     for(int i = 0; i < tmp.size(); i++){
-        if(tmp[i] == weapon) return i;
+        if(tmp[i] == weapon) {
+            return i;
+        }    
     }
+    SendMsg(team,string(RS_ATTACK_CASTLE_F_NO_WEAPON));
     return -1;
 }
+
 void RemoveWeapon(vector<int>& Inventory, int index){
     Inventory.erase(Inventory.begin() + index);
 }
-int AttackCastle(Castle* castle, Team* team, Items weapon){
-    
-    if(castle->ownerTeamID == team->ID) return RS_ATTACK_CASTLE_F_SELF_ATTACK; /*Tự tấn công bản thân*/
 
+int HandleAttackCastle(Castle* castle, Team* team, Items weapon){
+    /*Xử lí request */
+    int castleCurrentQuestionID = castle->currentQuestion.first;
+
+    if(castle->ownerTeamID == team->ID) {
+        SendMsg(team, string(RS_ATTACK_CASTLE_F_SELF_ATTACK)); /*Tự tấn công bản thân*/
+        return false;
+    }    
     int find_result_index = FindWeapon(team,weapon);
     if(find_result_index >= 0){
         Item* attack_item = GetItem(weapon);
         if(castle->defensePoints > attack_item->AttackPoint){
             delete attack_item;
-            SendMsg(team,string(RS_ATTACK_CASTLE_F_NOT_ENOUGH_ATTACK_POWER));
+            SendMsg(team,string(RS_ATTACK_CASTLE_F_NOT_ENOUGH_POWER));
+            return false;
         }
         else if(castle->defensePoints <= attack_item->AttackPoint){
             castle->defensePoints = 0;
-            castle->equippedItems;
+            castle->equippedItems.clear();
             RemoveWeapon(team->Inventory,find_result_index);
             castle->ownerTeamID = team->ID;
-            /* Change questions ...*/
+            castle->currentQuestion = ChangeQuestion(questionBank,castleCurrentQuestionID);
 
             delete attack_item;
             SendMsg(team,string(RS_ATTACK_CASTLE_S));
         }
     }
     else{
-        SendMsg(team,string(RS_ATTACK_CASTLE_F_NO_WEAPON));
+        return false;
     }
 }
-void MineResourceFromSpot(Spot* spot, Team* team, Resources resourceType)
-{
-    if (spot->ownerTeamID != team->ID)
-       SendMsg(team,string(RS_REQUEST_QUESTION_F_SLOT_OCCUPIED));
-    auto mineIt = RESOURCE_MINE_AMOUNT.find(resourceType);
-    if (mineIt == RESOURCE_MINE_AMOUNT.end())
-        SendMsg(team,string(RS_GIVE_RESOURCE_F)) ;
 
-    int amount = mineIt->second;
+pair<int,Question> ChangeQuestion(const QuestionBank& q, int currentQuestionID){
+    int nums_question = q.questions.size();
+    if (nums_question == 0) return; 
 
-    auto it = team->ResourceQuantity.find(resourceType);
-    if (it == team->ResourceQuantity.end())
-    {
-        SendMsg(team,string(RS_GIVE_RESOURCE_F));
+    Question returnQuestion;
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dist(0,nums_question-1);
+    while(1){ /*Chưa tối ưu*/
+        int random = dist(gen);
+        returnQuestion = q.questions[random];
+        if(returnQuestion.difficulty == DIFFICULT && random != currentQuestionID) return make_pair(random,returnQuestion);
     }
-    else
-    {
-        it->second += amount;
-    }
-
-    SendMsg(team, string(RS_GIVE_RESOURCE_S));
 }
+
+int HandleAnswerCastle(Castle* castle, Team* team, int teamAnswer){
+    auto now = Clock::now();
+    int castleCurrentQuestionID = castle->currentQuestion.first;
+    
+    auto it = castle->lastWrongAnswer.find(team->ID);
+    if (it != castle->lastWrongAnswer.end()) {
+        auto elapsed = chrono::duration_cast<chrono::seconds>(
+            now - it->second
+        ).count();
+        if(elapsed < TIME_PENALTY ) {
+            return false; 
+            SendMsg(team, string(RS_ANSWER_QUESTION_F_TIME_PENALTY));
+        }
+    }
+    else {
+        if(teamAnswer == castle->currentQuestion.second.correctAnswer){
+            if(castle->ownerTeamID == -1){
+                castle->ownerTeamID = team->ID;
+                castle->defensePoints = 0;
+                castle->equippedItems.clear();
+            }
+            ChangeQuestion(questionBank,castleCurrentQuestionID);
+            return true;
+            SendMsg(team,string(RS_ANSWER_QUESTION_S)); /*Now they can attack this castle*/
+        }
+        else{
+            castle->lastWrongAnswer[team->ID] = now;
+            SendMsg(team,string(RS_ANSWER_QUESTION_F_WRONG_ANSWER));
+        }
+    }
+}
+
 #endif

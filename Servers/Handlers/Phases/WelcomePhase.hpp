@@ -6,7 +6,7 @@ void HandleWelcomePhase(int clientFD, const string& code, const vector<string>& 
     if (code == RQ_SIGN_UP)
     {
         AccountRecord account = AccountRecord::Deserialize(parts[1]);
-		WriteLog(LogType::Request, clientFD, "SIGN UP", account.Capture());
+		WriteLog(LogType::Request, clientFD, "SIGN UP", account.Capture()); /*Server console*/
 
         HandleSignUp(clientFD, account);
     }

@@ -45,6 +45,18 @@ LobbyEntity Lobby;
 GroupEntity Group;
 MapEntity Map;
 
+QuestionBankEntity QuestionBank;
+
+
+QuestionEntity TargetSpotQuestion;
+SpotOccupationRecord SpotRequest;
+QuestionEntity TargetCastleQuestion;
+int CastleRequest;
+
+
+
+int TIME_PENALTY = 5; /*Phạt câu trả lời sai*/
+
 #include "ServerNetwork.hpp"
 
 #include "Utilities/ServerLogger.hpp"

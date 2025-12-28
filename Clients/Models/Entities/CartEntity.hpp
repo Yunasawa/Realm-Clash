@@ -6,6 +6,7 @@ struct CartEntity
 	int Type;
 	int Equipment;
 	int Amount;
+    int TargetCastle;
 
     string Serialize() const
     {
@@ -13,7 +14,7 @@ struct CartEntity
         j["Type"] = Type;
         j["Equipment"] = Equipment;
         j["Amount"] = Amount;
-
+        j["TargetCastle"] = TargetCastle;
         return j.dump();
     }
 };

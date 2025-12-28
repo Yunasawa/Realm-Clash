@@ -18,9 +18,17 @@ void HandleGamePhase(int clientFD, const string& code, const vector<string>& com
 		{
 			HandleOccupySpot(clientFD, command[1]);
 		}
+		else if (code == RQ_OCCUPY_ANSWER_SPOT)
+		{
+			HandleAnswerSpotQuestion(clientFD, command[1]);
+		}
 		else if (code == RQ_OCCUPY_CASTLE)
 		{
 			HandleOccupyCastle(clientFD, command[1]);
+		}
+		else if (code == RQ_OCCUPY_ANSWER_CASTLE)
+		{
+			HandleAnswerCastleQuestion(clientFD, command[1]);
 		}
 	}
 	else if (GamePhase == PHASE_CASTLE_COMBATING)

@@ -2,36 +2,6 @@
 #define VIEW_GAMEwsl
 
 /*
-┏━ ■ Team 1 ━ U0000001 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 00:00:00 ━┓
-┃ Wood : 00000000 | Rock : 00000000 | Iron : 00000000 | Gold : 00000 ┃
-┣━ GAME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┫
-┃ 🎪 Spot 1 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  🏰 Castle 1 [ ]	 ┃
-┃ 🎪 Spot 2 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  - DEF: 100000 -	 ┃
-┃ 🎪 Spot 1 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  🏰 Castle 1 [ ]	 ┃
-┃ 🎪 Spot 3 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  - DEF: 100000 -	 ┃
-┃ 🎪 Spot 1 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  🏰 Castle 1 [ ]	 ┃
-┃ 🎪 Spot 4 |  Wood [ ]   Rock [ ]    Iron [ ]	┃  - DEF: 100000 -	 ┃
-┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━┫
-┃ • 1 <teamID>: Create/Join team                                     ┃
-┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃                                                                    ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
-┏━ ■ Team 1 ━ U0000001 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 00:00:00 ━┓
-┃ Wood : 00000000 | Rock : 00000000 | Iron : 00000000 | Gold : 00000 ┃
-┣━ GAME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃  🏰 Castle 1 [ ] | 100000🛡️  ┃
-┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃                              ┃
-┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃  🏰 Castle 1 [ ] | 100000🛡️  ┃
-┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃                              ┃
-┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃  🏰 Castle 1 [ ] | 100000🛡️  ┃
-┃ 🎪 Spot 1 |  W [ ]   R [ ]   I [ ]  ┃                              ┃
-┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃ • 1 <teamID>: Create/Join team                                     ┃
-┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-┃                                                                    ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-
 ┏━ ■ Team 1 ━ U0000001 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 00:00:02 ━┓
 ┃ Wood : 00000000 | Rock : 00000000 | Iron : 00000000 | Gold : 00000 ┃  
 ┣━ GAME ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
@@ -43,6 +13,7 @@
 ┃ 🎪 Spot 6 |  W [ ]   R [ ]   I [ ]  ┃                             ┃
 ┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃ • 1 <spot> <type>: Occupy spot   | • 2 <castle>: Occupy castle     ┃
+┃                                                                    ┃
 ┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃                                                                    ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
@@ -141,7 +112,7 @@ string GetCastleLine(int castleID)
 
     auto GetDefenseText = [&]() -> string
         {
-            return " | 100000🛡️";
+            return " | 0🛡️";
         };
 
     auto castle = Map.Castles[castleID];
@@ -154,12 +125,14 @@ string GetGameOption()
     if (CurrentPhase == PHASE_GAME_MAP_IDLING)
     {
         return
-            "┃ • 1 <spot> <type>: Occupy spot   | • 2 <castle>: Occupy castle     ┃\n";
+            "┃ • 1 <spot> <type>: Occupy spot   | • 2 <castle>: Occupy castle     ┃\n"
+            "┃ • 3 <castle>: Get defense point  | • 4 <teamID>: Resource quantity ┃\n";
     }
     else if (CurrentPhase == PHASE_GAME_MAP_COMBATING)
     {
         return
-            "┃ • 1: Open shop                   | • 2 <castle>: Attack castle     ┃\n";
+            "┃ • 1: Open shop                   | • 2 <castle>: Attack castle     ┃\n"
+            "┃ • 3: Show inventory              | • 4 <teamID>: Resource quantity ┃\n";
     }
 
     return "";

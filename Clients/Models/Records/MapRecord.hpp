@@ -8,6 +8,7 @@ struct SpotRecord
     int WoodSlot = -1;
     int RockSlot = -1;
     int IronSlot = -1;
+
 };
 
 struct CastleRecord

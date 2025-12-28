@@ -1,31 +1,252 @@
-﻿100|What is the speed of light in a vacuum?|300,000 km/s|150,000 km/s|200,000 km/s|100,000 km/s|0
-101|Which planet is known as the Red Planet?|Mars|Venus|Jupiter|Mercury|0
-102|What gas do humans need to breathe to survive?|Oxygen|Carbon Dioxide|Nitrogen|Hydrogen|0
-103|How many continents are there on Earth?|7|5|6|8|0
-104|What is H2O commonly known as?|Water|Hydrogen Peroxide|Salt|Oxygen|0
-105|Which animal is known as the king of the jungle?|Lion|Tiger|Elephant|Wolf|0
-106|What force pulls objects toward the Earth?|Gravity|Magnetism|Friction|Electricity|0
-107|How many days are there in one week?|7|5|6|8|0
-108|Which part of the plant conducts photosynthesis?|Leaf|Root|Stem|Flower|0
-109|What is the largest ocean on Earth?|Pacific Ocean|Atlantic Ocean|Indian Ocean|Arctic Ocean|0
-110|What color do you get by mixing red and blue?|Purple|Green|Orange|Brown|0
-111|How many legs does a spider have?|8|6|10|12|0
-112|Which planet is closest to the Sun?|Mercury|Venus|Earth|Mars|0
-113|What is the freezing point of water in Celsius?|0|10|32|100|0
-114|Which device is used to measure time?|Clock|Thermometer|Barometer|Scale|0
-115|What shape has three sides?|Triangle|Square|Circle|Hexagon|0
-116|Which sense is used to hear sound?|Hearing|Sight|Smell|Touch|0
-117|What do bees produce?|Honey|Milk|Silk|Wax|0
-118|Which animal is the largest on Earth?|Blue whale|Elephant|Giraffe|Shark|0
-119|What do plants absorb from sunlight?|Energy|Heat|Radiation|Light waves|0
+﻿/* Question data */
+1001|What is the capital of France?|Paris|London|Berlin|Madrid|0
+1002|How many continents are there on Earth?|5|7|6|8|1
+1003|What is the largest planet in our solar system?|Saturn|Neptune|Jupiter|Earth|2
+1004|Who wrote "Romeo and Juliet"?|Charles Dickens|Jane Austen|Mark Twain|William Shakespeare|3
+1005|What is the chemical symbol for water?|H2O|CO2|O2|H2|0
+1006|How many days are in a leap year?|365|366|364|367|1
+1007|What is the smallest prime number?|1|3|2|5|2
+1008|Which ocean is the largest?|Atlantic|Indian|Arctic|Pacific|3
+1009|What color do you get when you mix red and blue?|Purple|Green|Orange|Brown|0
+1010|How many sides does a triangle have?|4|3|5|6|1
+1011|What is the boiling point of water at sea level in Celsius?|90°C|110°C|100°C|120°C|2
+1012|Who painted the Mona Lisa?|Pablo Picasso|Vincent van Gogh|Michelangelo|Leonardo da Vinci|3
+1013|What is the longest river in the world?|Nile|Amazon|Mississippi|Yangtze|0
+1014|How many bones are in the adult human body?|208|206|204|200|1
+1015|What is the capital of Japan?|Kyoto|Osaka|Tokyo|Hiroshima|2
+1016|Which planet is known as the Red Planet?|Venus|Mercury|Jupiter|Mars|3
+1017|What is the largest mammal in the world?|Blue whale|Elephant|Giraffe|Polar bear|0
+1018|How many strings does a standard guitar have?|5|6|7|8|1
+1019|What is the freezing point of water in Celsius?|32°C|-10°C|0°C|10°C|2
+1020|Which gas do plants absorb from the atmosphere?|Oxygen|Nitrogen|Hydrogen|Carbon dioxide|3
+1021|What is the speed of sound in air approximately?|343 m/s|300 m/s|400 m/s|500 m/s|0
+1022|How many hours are in a day?|12|24|48|36|1
+1023|What is the largest organ in the human body?|Liver|Heart|Skin|Brain|2
+1024|Which country is home to the kangaroo?|New Zealand|South Africa|Brazil|Australia|3
+1025|What is the square root of 64?|8|6|10|12|0
+1026|Who was the first person to walk on the moon?|Buzz Aldrin|Neil Armstrong|Yuri Gagarin|John Glenn|1
+1027|What is the main language spoken in Brazil?|Spanish|English|Portuguese|French|2
+1028|How many legs does a spider have?|6|10|12|8|3
+1029|What is the currency of the United States?|Dollar|Euro|Pound|Yen|0
+1030|Which vitamin is produced when skin is exposed to sunlight?|Vitamin C|Vitamin D|Vitamin A|Vitamin B12|1
+1031|What is the capital of Italy?|Milan|Venice|Rome|Florence|2
+1032|How many players are on a soccer team?|10|12|9|11|3
+1033|What is the hardest natural substance on Earth?|Diamond|Gold|Iron|Granite|0
+1034|Which planet is closest to the Sun?|Venus|Mercury|Earth|Mars|1
+1035|What do bees collect to make honey?|Water|Pollen|Nectar|Sap|2
+1036|How many minutes are in one hour?|50|70|80|60|3
+1037|What is the tallest mountain in the world?|Mount Everest|K2|Kilimanjaro|Denali|0
+1038|Which animal is known as the "King of the Jungle"?|Tiger|Lion|Elephant|Gorilla|1
+1039|What is the primary color that is not red or blue?|Green|Orange|Yellow|Purple|2
+1040|How many zeros are in one thousand?|2|4|5|3|3
+1041|What is the main ingredient in bread?|Flour|Sugar|Salt|Butter|0
+1042|Which organ pumps blood throughout the body?|Liver|Heart|Lungs|Kidneys|1
+1043|What is the capital of Spain?|Barcelona|Seville|Madrid|Valencia|2
+1044|How many sides does a hexagon have?|5|7|8|6|3
+1045|What is the largest desert in the world?|Antarctic Desert|Sahara|Arabian|Gobi|0
+1046|Which metal is liquid at room temperature?|Gold|Mercury|Silver|Iron|1
+1047|What is the smallest country in the world?|Monaco|San Marino|Vatican City|Liechtenstein|2
+1048|How many teeth does an adult human typically have?|28|30|36|32|3
+1049|What is the chemical symbol for gold?|Au|Ag|Fe|Cu|0
+1050|Which bird cannot fly?|Eagle|Ostrich|Sparrow|Pigeon|1
+1051|What is the capital of Germany?|Munich|Hamburg|Berlin|Frankfurt|2
+1052|How many colors are in a rainbow?|6|8|5|7|3
+1053|What is the main gas in Earth's atmosphere?|Nitrogen|Oxygen|Carbon dioxide|Argon|0
+1054|Which fruit is known for keeping doctors away?|Banana|Apple|Orange|Grape|1
+1055|What is the speed of light in vacuum approximately?|200,000 km/s|400,000 km/s|300,000 km/s|500,000 km/s|2
+1056|How many degrees are in a right angle?|45|180|60|90|3
+1057|What is the largest country by area?|Russia|Canada|China|USA|0
+1058|Which planet has the most visible rings?|Jupiter|Saturn|Uranus|Neptune|1
+1059|What is the capital of England?|Manchester|Liverpool|London|Birmingham|2
+1060|How many seconds are in one minute?|50|70|30|60|3
+1061|What is the process by which plants make food?|Photosynthesis|Respiration|Digestion|Fermentation|0
+1062|Which continent is the driest inhabited continent?|Africa|Australia|Asia|Europe|1
+1063|What is the chemical formula for table salt?|KCl|CaCl2|NaCl|MgCl2|2
+1064|How many planets are in our solar system?|9|7|10|8|3
+1065|What is the largest island in the world?|Greenland|Australia|Madagascar|Borneo|0
+1066|Which animal is known for its black and white stripes?|Tiger|Zebra|Panda|Skunk|1
+1067|What is the capital of Canada?|Toronto|Montreal|Ottawa|Vancouver|2
+1068|How many sides does a pentagon have?|4|6|7|5|3
+1069|What is the primary source of energy for Earth?|Sun|Moon|Stars|Wind|0
+1070|Which ocean is the smallest?|Indian|Arctic|Atlantic|Pacific|1
+1071|What is the symbol for iron on the periodic table?|Au|Ag|Fe|Cu|2
+1072|How many wings does a bee have?|2|3|6|4|3
+1073|What is the capital of Australia?|Canberra|Sydney|Melbourne|Brisbane|0
+1074|Which gas is most abundant in Earth's atmosphere after nitrogen?|Oxygen|Carbon dioxide|Argon|Helium|0
+1075|What is the freezing point of water in Fahrenheit?|0°F|32°F|100°F|212°F|1
+1076|How many cents are in a dollar?|50|200|100|25|2
+1077|What is the largest continent?|Africa|Europe|Antarctica|Asia|3
+1078|Which planet is known as Earth's sister planet?|Venus|Mars|Mercury|Jupiter|0
+1079|What is the square root of 100?|5|10|15|20|1
+1080|How many chambers does the human heart have?|2|3|4|5|2
+1081|What is the capital of China?|Shanghai|Hong Kong|Guangzhou|Beijing|3
+1082|Which element has the symbol O?|Oxygen|Gold|Silver|Iron|0
+1083|How many states are in the USA?|48|50|52|51|1
+1084|What is the smallest bone in the human body?|Femur|Radius|Stapes|Tibia|2
+1085|Which animal is the fastest land animal?|Lion|Leopard|Antelope|Cheetah|3
+1086|What is the boiling point of water in Fahrenheit?|212°F|100°F|32°F|200°F|0
+1087|How many weeks are in a year?|50|52|54|48|1
+1088|What is the largest lake in the world?|Lake Superior|Lake Victoria|Caspian Sea|Lake Michigan|2
+1089|Which vitamin is found in citrus fruits?|Vitamin A|Vitamin D|Vitamin K|Vitamin C|3
+1090|What is the currency of Japan?|Yen|Won|Yuan|Dollar|0
+1091|How many millimeters are in a centimeter?|5|10|100|1000|1
+1092|What is the capital of Russia?|St Petersburg|Novosibirsk|Moscow|Kazan|2
+1093|Which planet is farthest from the Sun?|Uranus|Pluto|Saturn|Neptune|3
+1094|What is the chemical symbol for sodium?|Na|So|Sd|S|0
+1095|How many degrees in a circle?|180|360|90|270|1
+1096|What is the longest bone in the human body?|Tibia|Humerus|Femur|Radius|2
+1097|Which gas do humans exhale?|Oxygen|Nitrogen|Helium|Carbon dioxide|3
+1098|What is the square of 12?|144|121|169|196|0
+1099|How many sides does an octagon have?|6|8|10|12|1
+1100|What is the capital of Egypt?|Alexandria|Giza|Cairo|Luxor|2
+1101|Which ocean borders the east coast of the United States?|Pacific|Indian|Arctic|Atlantic|3
+1102|What is 25% of 200?|50|75|100|25|0
+1103|How many years in a century?|50|100|150|200|1
+1104|What is the chemical formula for carbon dioxide?|O2|H2O|CO2|CH4|2
+1105|Which instrument has 88 keys?|Organ|Guitar|Violin|Piano|3
+1106|What is the sum of angles in a triangle?|180 degrees|90 degrees|360 degrees|270 degrees|0
+1107|How many meters in a kilometer?|100|1000|10000|500|1
+1108|What is the largest city in the United States by population?|Los Angeles|Chicago|New York City|Houston|2
+1109|Which element is represented by the symbol C?|Calcium|Copper|Chlorine|Carbon|3
+1110|What is the capital of Mexico?|Mexico City|Guadalajara|Monterrey|Cancun|0
+1111|How many months have 31 days?|6|7|8|5|1
+1112|What is the smallest planet in our solar system?|Mars|Venus|Mercury|Pluto|2
+1113|Which animal can live both in water and on land?|Fish|Bird|Reptile|Amphibian|3
+1114|What is the currency of the United Kingdom?|Dollar|Pound|Euro|Franc|1
+1115|How many faces does a cube have?|4|8|6|12|2
+1116|What is the capital of South Korea?|Busan|Incheon|Pyongyang|Seoul|3
+1117|Which element is the most abundant in the universe?|Hydrogen|Helium|Oxygen|Carbon|0
+1118|How many centimeters in a meter?|10|100|1000|50|1
+1119|What is the largest bone in the human body?|Humerus|Tibia|Femur|Radius|2
+1120|Which continent has the most countries?|Asia|Europe|South America|Africa|3
+1121|What is 10 squared?|100|50|200|25|0
+1122|How many teeth do children typically have?|16|20|24|28|1
+1123|What is the capital of India?|Mumbai|Kolkata|New Delhi|Bangalore|2
+1124|Which gas is used by plants during photosynthesis?|Oxygen|Nitrogen|Helium|Carbon dioxide|3
+1125|What is the value of pi approximately?|3.14|2.71|1.41|4.13|0
+1126|How many edges does a cube have?|6|12|8|10|1
+1127|What is the smallest ocean?|Indian|Atlantic|Arctic|Pacific|2
+1128|Which country has the largest population?|India|USA|Indonesia|China|3
+1129|What is the chemical symbol for silver?|Ag|Au|Si|Sr|0
+1130|How many continents does the Equator pass through?|2|3|4|5|1
+1131|What is the capital of Brazil?|Rio de Janeiro|São Paulo|Brasília|Salvador|2
+1132|Which vitamin is important for blood clotting?|Vitamin A|Vitamin C|Vitamin D|Vitamin K|3
+1133|What is the freezing point of water in Kelvin?|273 K|0 K|100 K|373 K|0
+1134|How many chromosomes do humans have?|23|46|48|44|1
+1135|What is the longest mountain range in the world?|Himalayas|Rockies|Andes|Alps|2
+1136|Which element is necessary for respiration?|Carbon|Nitrogen|Helium|Oxygen|3
+1137|What is the distance around a circle called?|Circumference|Diameter|Radius|Perimeter|0
+1138|How many Great Lakes are there in North America?|3|5|7|4|1
+1139|What is the capital of Argentina?|Córdoba|Rosario|Buenos Aires|Mendoza|2
+1140|Which layer of Earth is the thickest?|Crust|Core|Lithosphere|Mantle|3
+1141|What is the main component of the Sun?|Hydrogen|Helium|Oxygen|Carbon|0
+1142|How many time zones does Russia have?|9|11|13|7|1
+1143|What is the capital of Thailand?|Phuket|Chiang Mai|Bangkok|Pattaya|2
+1144|Which blood type is the universal donor?|A|B|AB|O|3
+1145|What is the speed of light in meters per second?|299,792,458 m/s|300,000,000 m/s|250,000,000 m/s|350,000,000 m/s|0
+1146|How many bones are in the human skull?|18|22|26|30|1
+1147|What is the largest waterfall in the world by height?|Niagara Falls|Victoria Falls|Iguazu Falls|Angel Falls|3
+1148|Which planet has the most moons?|Mars|Earth|Uranus|Saturn|3
+1149|What is the chemical formula for ammonia?|NH3|CH4|H2O|CO2|0
+1150|How many degrees is each angle in an equilateral triangle?|45|60|90|30|1
+1151|What is the capital of Turkey?|Istanbul|Izmir|Ankara|Bursa|2
+1152|Which organ produces insulin?|Liver|Kidney|Stomach|Pancreas|3
+1153|What is the atomic number of oxygen?|8|6|16|10|0
+1154|How many sides does a square have?|3|4|5|6|1
+1155|What is the capital of Poland?|Krakow|Gdansk|Warsaw|Wroclaw|2
+1156|Which element has atomic number 1?|Helium|Oxygen|Carbon|Hydrogen|3
+1157|What is the capital of Greece?|Athens|Thessaloniki|Patras|Crete|0
+1158|How many hours in a week?|148|168|188|208|1
+1159|What is the largest carnivore on land?|Lion|Grizzly Bear|Polar Bear|Tiger|2
+1160|Which gas makes up most of the air we breathe?|Oxygen|Carbon dioxide|Argon|Nitrogen|3
+1161|What is the chemical symbol for helium?|He|H|Hl|Ho|0
+1162|How many planets in our solar system have rings?|2|4|6|8|1
+1163|What is the capital of Sweden?|Gothenburg|Malmö|Stockholm|Uppsala|2
+1164|Which famous scientist developed the theory of general relativity?|Newton|Galileo|Hawking|Einstein|3
+1165|What is the largest type of penguin?|King|Chinstrap|Emperor|Gentoo|2
+1166|How many sides does a heptagon have?|5|7|9|11|1
+1167|What is the capital of Portugal?|Porto|Lisbon|Faro|Braga|1
+1168|Which is the hottest planet in our solar system?|Mercury|Venus|Mars|Jupiter|1
+1169|What is 15% of 200?|30|45|60|75|0
+1170|How many millennia in 5000 years?|3|5|7|10|1
+1171|What is the capital of Norway?|Bergen|Trondheim|Oslo|Stavanger|2
+1172|Which blood cells fight infection?|Red blood cells|Platelets|Plasma|White blood cells|3
+1173|What is the square root of 144?|12|10|14|16|0
+1174|How many moons does Mars have?|1|2|3|4|1
+1175|What is the capital of Denmark?|Aarhus|Odense|Copenhagen|Aalborg|2
+1176|Which vitamin is produced by bacteria in the intestines?|B12|C|D|K|3
+1177|What is the chemical symbol for calcium?|Ca|Cl|C|Cm|0
+1178|How many lungs do humans have?|1|2|3|4|1
+1179|What is the capital of Finland?|Tampere|Turku|Helsinki|Espoo|2
+1180|Which element is liquid at room temperature besides mercury?|Water|Helium|Alcohol|Bromine|3
+1181|What is the sum of 50 + 50?|100|150|200|50|0
+1182|How many eyes does a bee have?|3|5|7|9|1
+1183|What is the capital of Austria?|Salzburg|Graz|Vienna|Innsbruck|2
+1184|Which organ filters blood in the human body?|Liver|Heart|Stomach|Kidneys|3
+1185|What is the chemical symbol for nitrogen?|N|Ni|Ne|Na|0
+1186|How many valves does a trumpet have?|2|3|4|5|1
+1187|What is the capital of Belgium?|Antwerp|Ghent|Brussels|Bruges|2
+1188|Which is the largest living bird?|Emu|Condor|Albatross|Ostrich|3
+1189|What is the square root of 49?|7|6|8|9|0
+1190|How many tentacles does an octopus have?|6|8|10|12|1
+1191|What is the capital of Switzerland?|Zurich|Geneva|Bern|Basel|2
+1192|Which planet is tilted on its side?|Neptune|Saturn|Mars|Uranus|3
+1193|What is the chemical symbol for phosphorus?|P|Ph|Po|Ps|0
+1194|How many strings does a violin have?|3|4|5|6|1
+1195|What is the capital of Netherlands?|Rotterdam|The Hague|Amsterdam|Utrecht|2
+1196|Which sea creature has three hearts?|Squid|Jellyfish|Starfish|Octopus|3
+1197|What is 20% of 500?|100|150|200|250|0
+1198|How many humps does an Arabian camel have?|0|1|2|3|1
+1199|What is the capital of Ireland?|Cork|Galway|Dublin|Limerick|2
+1200|Which scientist is famous for the laws of planetary motion?|Galileo|Copernicus|Newton|Kepler|3
 
-200|In quantum mechanics, which principle limits the precision of simultaneous position and momentum measurements?|Heisenberg principle|Pauli exclusion|Wave collapse|Quantum tunneling|0
-201|Which spacetime solution describes a rotating black hole in general relativity?|Kerr metric|Schwarzschild|FLRW model|Reissner-Nordstrom|0
-202|What quantity remains invariant under Lorentz transformations in special relativity?|Spacetime interval|Velocity|Kinetic energy|Proper force|0
-203|In thermodynamics, what quantity must increase in an isolated system?|Entropy|Temperature|Internal energy|Pressure|0
-204|Which particle mediates the strong nuclear force between quarks?|Gluon|Photon|W boson|Z boson|0
-205|What mathematical object describes spin-1/2 particles in quantum field theory?|Dirac spinor|Vector field|Scalar field|Tensor field|0
-206|Which effect explains time dilation due to relative velocity?|Special relativity|Quantum decoherence|Frame dragging|Grav redshift|0
-207|What type of symmetry leads to conservation of energy?|Time translation|Gauge symmetry|Parity|Charge conjugation|0
-208|Which equation governs wavefunctions in non-relativistic quantum mechanics?|Schrodinger equation|Maxwell equations|Dirac equation|Navier-Stokes|0
-209|What concept explains why no signal exceeds the speed of light?|Causality|Mass-energy limit|Space curvature|Time quantization|0
+2001|In quantum mechanics, which principle states that certain pairs of physical properties cannot be simultaneously known to arbitrary precision?|Heisenberg Uncertainty Principle|Pauli Exclusion Principle|Superposition Principle|Correspondence Principle|0
+2002|What is the Schwarzschild radius of a black hole with one solar mass?|1 km|3 km|5 km|10 km|1
+2003|Which mathematician proved Fermat's Last Theorem in 1995?|Pierre de Fermat|Leonhard Euler|Andrew Wiles|Carl Gauss|2
+2004|What is the half-life of Uranium-238?|1 billion years|2.5 billion years|3.2 billion years|4.5 billion years|3
+2005|Which particle mediates the strong nuclear force?|Photon|W boson|Gluon|Graviton|2
+2006|What is the Chandrasekhar limit approximately?|1.1 solar masses|1.4 solar masses|1.7 solar masses|2.0 solar masses|1
+2007|In thermodynamics, what does the second law state about entropy?|Entropy always decreases|Entropy can increase or decrease|Entropy of an isolated system always increases|Entropy remains constant|2
+2008|Which element has the highest electronegativity?|Oxygen|Chlorine|Nitrogen|Fluorine|3
+2009|What is the fine structure constant approximately?|1/137|1/127|1/147|1/157|0
+2010|How many dimensions does string theory typically require?|8|10|12|26|1
+2011|What is the Hubble constant approximately in km/s/Mpc?|50|70|90|110|1
+2012|Which algorithm has the best average time complexity for sorting?|Bubble Sort|Quick Sort|Merge Sort|Heap Sort|2
+2013|What is the Avogadro constant?|6.02 × 10²²|6.02 × 10²³|6.02 × 10²⁴|6.02 × 10²⁵|1
+2014|In general relativity, what causes spacetime curvature?|Mass-energy|Velocity|Temperature|Charge|0
+2015|What is the Planck length approximately?|10⁻³³ meters|10⁻³⁵ meters|10⁻³⁷ meters|10⁻³⁹ meters|1
+2016|Which philosopher wrote "Critique of Pure Reason"?|Hegel|Kant|Descartes|Nietzsche|1
+2017|What is the computational complexity of the traveling salesman problem?|P|NP-complete|NP-hard|PSPACE|1
+2018|In chemistry, what is the bond angle in methane?|90°|104.5°|109.5°|120°|2
+2019|Which composer wrote "The Art of Fugue"?|Mozart|Beethoven|Haydn|Bach|3
+2020|What is the dielectric constant of vacuum?|0|1|8.85 × 10⁻¹²|∞|1
+2021|In quantum field theory, what are virtual particles?|Real particles|Temporary quantum fluctuations|Photons only|Massless particles|1
+2022|What is the critical temperature of a superconductor measured in?|Celsius|Fahrenheit|Kelvin|Rankine|2
+2023|Which neurologist discovered the neuron doctrine?|Golgi|Sherrington|Cajal|Ramón y Cajal|3
+2024|What is the Rydberg constant approximately?|1.09 × 10⁶ m⁻¹|1.09 × 10⁷ m⁻¹|1.09 × 10⁸ m⁻¹|1.09 × 10⁹ m⁻¹|1
+2025|In game theory, what is a Nash equilibrium?|Maximum payoff|Dominant strategy|No player can benefit by changing strategy alone|Zero-sum outcome|2
+2026|What is the mass of the Higgs boson approximately?|105 GeV/c²|125 GeV/c²|145 GeV/c²|165 GeV/c²|1
+2027|Which mathematician developed category theory?|Eilenberg and Mac Lane|Grothendieck|Lawvere|Kan|0
+2028|What is the cosmological constant in Einstein's equations?|Λ (Lambda)|Ω (Omega)|Γ (Gamma)|Σ (Sigma)|0
+2029|In molecular biology, what does CRISPR stand for?|Clustered Regularly Interspaced Short Palindromic Repeats|Chemical Restriction of Integrated Sequence Palindromes|Cellular Replication via Interspaced Palindromic RNA|None of these|0
+2030|What is the gyromagnetic ratio of the proton?|2.67 × 10⁸ rad/s/T|2.67 × 10⁷ rad/s/T|2.67 × 10⁹ rad/s/T|2.67 × 10⁶ rad/s/T|0
+2031|Which physicist proposed the many-worlds interpretation of quantum mechanics?|Bohr|Heisenberg|Everett|Schrödinger|2
+2032|What is the Boltzmann constant?|1.23 × 10⁻²³ J/K|1.38 × 10⁻²³ J/K|1.53 × 10⁻²³ J/K|1.68 × 10⁻²³ J/K|1
+2033|In linguistics, what is the Sapir-Whorf hypothesis about?|Language evolution|Language and thought relationship|Grammar universals|Phonetic systems|1
+2034|What is the Bekenstein-Hawking entropy formula for black holes?|S = kA/4ℓp²|S = kA/2ℓp²|S = kA/8ℓp²|S = kA/ℓp²|0
+2035|Which economist developed the concept of "creative destruction"?|Keynes|Friedman|Schumpeter|Hayek|2
+2036|What is the electron's anomalous magnetic moment correction factor?|α/π|α/2π|α/3π|α/4π|1
+2037|In topology, what is the Euler characteristic of a torus?|-1|0|1|2|1
+2038|What is the Stefan-Boltzmann constant?|5.67 × 10⁻⁸ W/(m²K⁴)|5.67 × 10⁻⁷ W/(m²K⁴)|5.67 × 10⁻⁹ W/(m²K⁴)|5.67 × 10⁻⁶ W/(m²K⁴)|0
+2039|Which logician proved the incompleteness theorems?|Russell|Frege|Hilbert|Gödel|3
+2040|What is the Debye temperature of copper approximately?|243 K|343 K|443 K|543 K|1
+2041|In particle physics, what are the six types of quarks?|Up, Down, Strange, Charm, Top, Bottom|Red, Green, Blue, Cyan, Magenta, Yellow|Electron, Muon, Tau, Neutrino variants|Alpha, Beta, Gamma, Delta, Epsilon, Zeta|0
+2042|What is the Richardson constant in thermionic emission?|60 A/(m²K²)|120 A/(m²K²)|180 A/(m²K²)|240 A/(m²K²)|1
+2043|Which mathematician solved the Poincaré conjecture?|Thurston|Perelman|Hamilton|Yau|1
+2044|What is the weak mixing angle (Weinberg angle) approximately?|18.5°|23.5°|28.5°|33.5°|2
+2045|In biochemistry, what is the Michaelis constant (Km)?|Substrate concentration at half maximum velocity|Maximum enzyme velocity|Enzyme inhibition constant|Product formation rate|0
+2046|What is the Compton wavelength of an electron?|1.43 pm|2.43 pm|3.43 pm|4.43 pm|1
+2047|Which philosopher developed logical positivism?|Wittgenstein|Carnap|Ayer|All of the above|3
+2048|What is the anomalous Zeeman effect caused by?|Nuclear spin|Electron spin|Orbital motion|Crystal field|1
+2049|In economics, what does the Coase theorem address?|Market equilibrium|Externalities and property rights|Supply and demand|Inflation control|1
+2050|What is the gyromagnetic ratio of the electron?|1.76 × 10¹¹ rad/s/T|2.76 × 10¹¹ rad/s/T|3.76 × 10¹¹ rad/s/T|4.76 × 10¹¹ rad/s/T|0

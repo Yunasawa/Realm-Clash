@@ -3,7 +3,7 @@
 
 void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& command)
 {
-    auto account = Accounts[Clients[clientFD]];
+    auto account = Accounts[Clients[clientFD]]; /*key = clientFD, value = accountID*/
 
     if (code == RQ_UPDATE_LOBBY)
     {
@@ -18,7 +18,7 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
     }
     else if (code == RQ_CANCEL_JOINING)
     {
-
+        /*Chưa xử lí việc client muốn gia nhập 1 team rồi lại thôi*/
     }
     else if (code == RQ_ADD_MEMBER)
     {

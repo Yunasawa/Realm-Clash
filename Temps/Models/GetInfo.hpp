@@ -2,24 +2,14 @@
 #define PART
 using namespace std;
 #include <iostream>
-#include "GameEntities.hpp"
-#include "ParticipantServer.hpp"
-#include "Participant.hpp"
-#include <sstream>
-#include <unordered_map>
-#include <bits/stdc++.h>
-#include "../../Servers/ServerIncluding.hpp"
-
-extern unordered_map<int,Team> Teams;
 #include "InGameServer.hpp"
 #include "Participant.hpp"
-#include <sstream>
-#include <unordered_map>
 #include <bits/stdc++.h>
 #include "../../Servers/ServerIncluding.hpp"
 
 extern unordered_map<int,Team> Teams;
 extern unordered_map<int,int> Clients; // Map clientFD to accountID
+
 void GetCastleInfo(Building b, int castleId)
 {
     Castle tmp = b.Castles[castleId];

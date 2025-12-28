@@ -28,7 +28,9 @@
 
 #define RQ_START_GAME                           "START_GAME"
 #define RQ_OCCUPY_SPOT                          "OCCUPY_SPOT"
+#define RQ_OCCUPY_ANSWER_SPOT                   "ANSWER_SPOT_QUESTION"
 #define RQ_OCCUPY_CASTLE						"OCCUPY_CASTLE"
+#define RQ_OCCUPY_ANSWER_CASTLE                 "ANSWER_CASTLE_QUESTION"
 
 #define RQ_BUY_EQUIPMENT						"BUY_EQUIPMENT"
 
@@ -65,21 +67,30 @@
 #define RS_OCCUPY_SPOT_S						"400"
 #define RS_OCCUPY_SPOT_F_FULL_OF_SLOT			"401"
 #define RS_OCCUPY_SPOT_F_SPOT_OCCUPIED			"401"
+#define RS_OCCUPY_SPOT_F_INVALID_SPOT           "402"
 
 #define RS_OCCUPY_CASTLE_S						"410"
 #define RS_OCCUPY_CASTLE_F_CASTLE_OCCUPIED		"411"
+#define RS_OCCUPY_CASTLE_F_SLOT_FULL			"412"
+#define RS_OCCUPY_CASTLE_F_INVALID_CASTLE       "413"
+
+#define RS_OCCUPY_REQUIRE_ANSWER_QUESTION       "413"
 
 #define RS_REQUEST_QUESTION_S                   "510"
 #define RS_REQUEST_QUESTION_F_SLOT_OCCUPIED     "501"
 #define RS_REQUEST_QUESTION_F_SLOT_LIMIT        "502"
 
-#define RS_ANSWER_QUESTION_S                    "610"
+#define RS_ANSWER_QUESTION_SPOT_S               "610"
+#define RS_ANSWER_QUESTION_CASTLE_S             "610"
 #define RS_ANSWER_QUESTION_F_WRONG_ANSWER       "601"
 #define RS_ANSWER_QUESTION_F_TIME_OUT           "602"
 #define RS_ANSWER_QUESTION_F_TIME_PENALTY       "603"
+#define RS_ANSWER_QUESTION_F_TOO_SLOW           "604"
 
 #define RS_SHOP_EQUIPMENT_S                     "720"
 #define RS_SHOP_EQUIPMENT_F_LACK_RESOURCE       "721"
+#define RS_SHOP_EQUIPMENT_F_ZERO_CASTLE         "722"
+#define RS_SHOP_EQUIPMENT_F_NOT_OWN_CASTLE      "723"
 
 #define RS_ATTACK_CASTLE_S                      "710"
 #define RS_ATTACK_CASTLE_F_INSUFFICIENT_POWER   "701"
