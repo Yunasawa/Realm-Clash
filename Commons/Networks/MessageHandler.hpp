@@ -11,7 +11,7 @@ bool SendMessage(int clientFD, const string &msg)
 
     while (sent < len)
     {
-        ssize_t n = send(clientFD, buf + sent, len - sent, 0);
+        ssize_t n = send(clientFD, buf + sent, len - sent, MSG_NOSIGNAL);
         if (n <= 0) return false;
         sent += n;
     }

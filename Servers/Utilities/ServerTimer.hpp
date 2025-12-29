@@ -75,13 +75,15 @@ void StartTickOnServer(
 
             if (onEnd) onEnd();
         });
+
+    ServerTickThread.detach();
 }
 
 void StopTickOnServer()
 {
     ServerTicking.store(false);
 
-    if (ServerTickThread.joinable() && this_thread::get_id() != ServerTickThread.get_id())
+    if (ServerTickThread.joinable())
     {
         ServerTickThread.join();
     }

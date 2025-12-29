@@ -1,18 +1,29 @@
         TIME        ┃ ID ┃ ➖ ┃                               ACTION                                   ┃                 DATA                   
 ━━━━━━━━━━━━━━━━━━━━╋━━━━╋━➖━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-29/12/2025 04:38:47 ┃  5 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: a, Password: b
-29/12/2025 04:38:47 ┃  5 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 1, Name: U0000001
-29/12/2025 04:38:48 ┃  5 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
-29/12/2025 04:38:48 ┃  5 ┃ ➕ ┃ SUCCESS | JOIN TEAM                                                    ┃ Team 0: [(1,0,U0000001,1,1),(0,0,,0,0),(0,0,,0,0)], Team 1: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 2: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 3: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 4: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)]
-29/12/2025 04:38:48 ┃  5 ┃ ❓ ┃ REQUEST | START GAME                                                   ┃ 
-29/12/2025 04:38:48 ┃  5 ┃ ❌ ┃ UPDATE  | Loaded question bank                                         ┃ Datas/Question.ynl
-29/12/2025 04:38:48 ┃  5 ┃ ➕ ┃ SUCCESS | START GAME                                                   ┃ 
-29/12/2025 04:38:48 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-29/12/2025 04:38:49 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-29/12/2025 04:38:49 ┃  5 ┃ ❓ ┃ REQUEST | OCCUPY SPOT                                                  ┃ Spot: 0, Resource: 0
-29/12/2025 04:38:49 ┃  5 ┃ ❓ ┃ REQUEST | OCCUPY SLOT : Answer the question                            ┃ Spot: 0, Resource: 0
-29/12/2025 04:38:49 ┃  5 ┃ ❌ ┃ UPDATE  | DEBUG                                                        ┃ [OccupySpot] spot_questions.size=200 request.Spot=0
-29/12/2025 04:38:50 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-29/12/2025 04:38:51 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-29/12/2025 04:38:51 ┃  5 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 
-29/12/2025 04:38:52 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+29/12/2025 15:37:43 ┃  5 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: a, Password: b
+29/12/2025 15:37:43 ┃  5 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 1, Name: U0000001
+29/12/2025 15:37:44 ┃  5 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
+29/12/2025 15:37:44 ┃  5 ┃ ➕ ┃ SUCCESS | JOIN TEAM                                                    ┃ Team 0: [(1,0,U0000001,1,1),(0,0,,0,0),(0,0,,0,0)], Team 1: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 2: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 3: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 4: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)]
+29/12/2025 15:37:44 ┃  5 ┃ ❓ ┃ REQUEST | START GAME                                                   ┃ 
+29/12/2025 15:37:44 ┃  5 ┃ ❌ ┃ UPDATE  | Loaded question bank                                         ┃ Datas/Question.ynl
+29/12/2025 15:37:44 ┃  5 ┃ ➕ ┃ SUCCESS | START GAME                                                   ┃ 
+29/12/2025 15:37:44 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+29/12/2025 15:37:45 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+29/12/2025 15:37:46 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+29/12/2025 15:37:46 ┃ -1 ┃ ❌ ┃ UPDATE  | START COMBAT                                                 ┃ 
+29/12/2025 15:37:47 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+29/12/2025 15:37:47 ┃ -1 ┃ ❌ ┃ UPDATE  | START COMBAT                                                 ┃ 
+29/12/2025 15:37:48 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+29/12/2025 15:37:48 ┃ -1 ┃ ❌ ┃ UPDATE  | END GAME                                                     ┃ 
+29/12/2025 15:37:51 ┃  5 ┃ ❓ ┃ REQUEST | START GAME                                                   ┃ 
+29/12/2025 15:37:51 ┃  5 ┃ ❌ ┃ UPDATE  | Loaded question bank                                         ┃ Datas/Question.ynl
+29/12/2025 15:37:51 ┃  5 ┃ ➕ ┃ SUCCESS | START GAME                                                   ┃ 
+29/12/2025 15:37:51 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0],[0,0,0,0]]
+29/12/2025 15:37:52 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0],[0,0,0,0]]
+29/12/2025 15:37:53 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0],[0,0,0,0]]
+29/12/2025 15:37:53 ┃ -1 ┃ ❌ ┃ UPDATE  | START COMBAT                                                 ┃ 
+29/12/2025 15:37:54 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0],[0,0,0,0]]
+29/12/2025 15:37:54 ┃ -1 ┃ ❌ ┃ UPDATE  | START COMBAT                                                 ┃ 
+29/12/2025 15:37:55 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0],[0,0,0,0]]
+29/12/2025 15:37:55 ┃ -1 ┃ ❌ ┃ UPDATE  | END GAME                                                     ┃ 
+29/12/2025 15:37:57 ┃  5 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 

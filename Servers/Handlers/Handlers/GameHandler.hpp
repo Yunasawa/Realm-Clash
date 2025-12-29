@@ -123,33 +123,29 @@ void HandleStartGame(int clientFD)
             {
                 Group.UpdateResource();
 
-
                 auto json = Group.SerializeResource();
-
 
                 WriteLog(LogType::Update, -1, "UPDATE RESOURCE", json);
                 BroadcastToClient(-1, string(RS_UPDATE_TEAM_RESOURCE) + " " + json);
             }
 
-
             BroadcastToClient(-1, string(RS_UPDATE_GAME_TICK) + " " + to_string(tick));
 
-
-            if (tick == TIME_START_COMBAT)
-            {
-                WriteLog(LogType::Update, -1, "START COMBAT");
-                BroadcastToClient(-1, string(RS_UPDATE_START_COMBAT));
-
-
-                GamePhase = PHASE_CASTLE_COMBATING;
-            }
-            if (tick == TIME_END_GAME)
+            if (tick >= TIME_END_GAME)
             {
                 WriteLog(LogType::Update, -1, "END GAME");
                 string jsonData = HandleEndGame();
                 BroadcastToClient(-1, string(RS_UPDATE_END_GAME) + " " + jsonData);
                 StopTickOnServer();
                 GamePhase = PHASE_LOBBY_IDLING;
+            }
+            else if (tick >= TIME_START_COMBAT)
+            {
+                WriteLog(LogType::Update, -1, "START COMBAT");
+                BroadcastToClient(-1, string(RS_UPDATE_START_COMBAT));
+
+
+                GamePhase = PHASE_CASTLE_COMBATING;
             }
         },
         []()
@@ -451,7 +447,7 @@ void UpdateResourcesQuantity(TeamEntity& team, unordered_map<ResourceType,int> c
 
 void ResetGame()
 {
-    Group = GroupEntity();
+    //Group = GroupEntity();
     Map = MapEntity();
     QuestionBank = QuestionBankEntity();
     GamePhase = PHASE_LOBBY_IDLING;

@@ -253,9 +253,6 @@ void ShowQuestionView(QuestionEntity CurrentQuestion)
 	cout << "┗" << repeat_utf8("━", WINDOW_WIDTH - 2) << "┛\n";
 }
 
-//┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
-//┃ • 1 <answerID> : Answer question ┃ • 2 : Return map view           ┃
-
 void StopQuestionCountdown()
 {
 	countdownRunning = false;
