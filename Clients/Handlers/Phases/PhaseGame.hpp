@@ -3,8 +3,6 @@
 
 #include "../../../Commons/CommonIncluding.hpp"
 
-
-
 void HandleGameInput(int clientFD, vector<string> command)
 {
 	string message;
@@ -155,6 +153,19 @@ void HandleGameInput(int clientFD, vector<string> command)
 		}
 		else goto UnknownCommand;
 	}
+	else if (CurrentPhase == PHASE_GAME_ENDING)
+	{
+		if (code == 1 && command.size() == 1)
+		{
+			CurrentPhase = PHASE_LOBBY_JOINING_READY;
+			Lobby = LobbyRecord();
+			ShowLobbyView();
+			SendMessage(clientFD, RQ_RESET_GAME);
+		}
+		else {
+			goto UnknownCommand;
+		} ;
+	}
 
 	return;
 
@@ -286,6 +297,17 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 
 		ShowGameView();
 		ShowGameLog(FG_YELLOW "Start combating. FIGHT!");
+	}
+	else if (code == RS_GAME_END)
+	{
+		ResultRecord result = ResultRecord::Deserialize(data[1]);
+		CurrentPhase = PHASE_GAME_ENDING;
+		ShowResultView(result);
+	}
+	else if (code == RS_UPDATE_END_GAME)
+	{
+		CurrentPhase = PHASE_GAME_ENDING;
+		ShowResultView(ResultRecord::Deserialize(data[1]));
 	}
 	else if (code == RS_SHOP_EQUIPMENT_F_LACK_RESOURCE )
 	{

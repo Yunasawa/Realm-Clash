@@ -8,6 +8,8 @@
 
 
 extern QuestionBankEntity QuestionBank;
+
+void ResetGame();
 extern MapEntity Map;
 extern QuestionEntity TargetSpotQuestion;
 extern QuestionEntity TargetCastleQuestion;
@@ -21,11 +23,64 @@ void RequestStopServerTick()
 {
     ServerTicking.store(false);
 }
+int GetResultPoint(int teamID) {
+    int point = 0;
+    auto& team = Group.Teams[teamID];
 
+    // Tính điểm từ tài nguyên
+    point += team.Resources[0];       // Wood
+    point += team.Resources[1] * 2;   // Stone
+    point += team.Resources[2] * 3;   // Iron
+    point += team.Resources[3] * 10;  // Gold
+
+    return point;
+}
+
+pair<int, int> GetResult(int teamID) {
+    int point = GetResultPoint(teamID);
+    return make_pair(teamID, point);
+}
+
+string HandleEndGame() 
+{
+    vector<pair<int, int>> allResults;
+    
+    for (int id = 0; id < Group.Teams.size(); ++id) {
+        allResults.push_back(GetResult(id));
+    }
+
+    std::sort(allResults.begin(), allResults.end(), 
+        [](const pair<int, int>& a, const pair<int, int>& b) {
+            return a.second > b.second;
+    });
+
+    json j;
+    j["result"] = json::array();
+
+    for (const auto& res : allResults) {
+        json teamData;
+        teamData["id"] = res.first;
+        teamData["point"] = res.second;
+        j["result"].push_back(teamData);
+    }
+
+    /* Cấu trúc JSON gửi về client sẽ trông như thế này:
+       {
+           "result": [
+               { "id": 2, "point": 1500 },  <- Top 1
+               { "id": 0, "point": 1200 },  <- Top 2
+               { "id": 1, "point": 500 }    <- Top 3
+           ]
+       }
+    */
+
+    return j.dump();
+}
 void HandleStartGame(int clientFD)
 {
     WriteLog(LogType::Request, clientFD, "START GAME");
 
+    Map = MapEntity();
 
     //if (Lobby.CountTeam() < 3)
     //{
@@ -39,10 +94,10 @@ void HandleStartGame(int clientFD)
     string path = "Datas/Question.ynl"; // relative to project root/executable
     if (!QuestionBank.load_data(path)) {
         WriteLog(LogType::Failure, clientFD, "START GAME : Failed to load question bank", path);
+        return;
     } else {
         WriteLog(LogType::Update, clientFD, "Loaded question bank", path);
     }
-   
     for(int i = 0; i<(int)Map.Spots.size(); i++){
         Map.Spots[i].CurrentQuestion.second = QuestionBank.spot_questions[i];
         Map.Spots[i].CurrentQuestion.first = i;
@@ -88,12 +143,13 @@ void HandleStartGame(int clientFD)
 
                 GamePhase = PHASE_CASTLE_COMBATING;
             }
-            else if (tick == TIME_END_GAME)
+            if (tick == TIME_END_GAME)
             {
-                cout << "End game" << endl;
-
-
-                GamePhase = PHASE_GAME_ENDING;
+                WriteLog(LogType::Update, -1, "END GAME");
+                string jsonData = HandleEndGame();
+                BroadcastToClient(-1, string(RS_UPDATE_END_GAME) + " " + jsonData);
+                StopTickOnServer();
+                GamePhase = PHASE_LOBBY_IDLING;
             }
         },
         []()
@@ -173,8 +229,6 @@ void HandleOccupyCastle(int clientFD, const string& data)
         SendMessage(clientFD, string(RS_OCCUPY_CASTLE_F_CASTLE_OCCUPIED));
         return;
     }
-
-    auto& team = Group.Teams[account.GameTeam];
 
     // if (team.CastleSlot != -1)
     // {
@@ -378,9 +432,10 @@ int ResourceCompare(const TeamEntity& team, unordered_map<ResourceType,int> requ
      /* 0 : Wood, 1 : Rock, 2 : Iron, 3 : Gold*/
     for (const auto& req : require)
     {
-        ResourceType type = req.first;
         int requiredAmount = req.second * amount;
-        int teamQuantity = team.Resources[int(req.first)];
+        int teamQuantity = team.Resources[int(
+            
+        )];
         if (teamQuantity < requiredAmount) return false;
     }
     return true;
@@ -389,10 +444,19 @@ int ResourceCompare(const TeamEntity& team, unordered_map<ResourceType,int> requ
 void UpdateResourcesQuantity(TeamEntity& team, unordered_map<ResourceType,int> cost, int amount){
     for (const auto& c : cost)
     {
-        ResourceType type = c.first;
         int requiredAmount = c.second;
         team.Resources[int(c.first)] -= requiredAmount * amount;
     }
+}
+
+void ResetGame()
+{
+    Group = GroupEntity();
+    Map = MapEntity();
+    QuestionBank = QuestionBankEntity();
+    GamePhase = PHASE_LOBBY_IDLING;
+    BroadcastToClient(-1, string(RS_RESET_GAME), true);
+    BroadcastToClient(-1, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
 }
 
 #endif

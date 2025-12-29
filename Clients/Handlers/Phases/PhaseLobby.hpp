@@ -122,10 +122,55 @@ UnknownCommand:
 
 void HandleLobbyResponse(int clientFD, const string& code, vector<string> split)
 {
-    if (code == RS_UPDATE_ROOM_LIST)
+    if (code == RS_RESET_GAME)
+    {
+        Tick = 0;
+        JoinRequestAmount = 0;
+        TeamInviteRequest = 0;
+        PendingJoinTick = 0;
+        PendingInviteTick = 0;
+        Log = FG_GREEN "";
+        Team = 0;
+        Map = MapRecord();
+        Resource = ResourceRecord();
+        CurrentQuestionSpot = -1;
+        CurrentQuestionIsCastle = false;
+        CurrentQuestion = QuestionEntity();
+        QuestionTimeOut = 30;
+        CurrentPhase = PHASE_LOBBY_JOINING_READY;
+        ShowLobbyView();
+    }
+    else if (code == RS_UPDATE_ROOM_LIST)
     {
         Lobby = LobbyRecord::Deserialize(split[1]);
         ShowLobbyCode(code);
+
+        // Set phase based on current lobby
+        auto member = Lobby.GetMember(Account.ID);
+        if (member.ID != 0)
+        {
+            if (member.IsRoomLeader && member.IsTeamLeader)
+            {
+                CurrentPhase = PHASE_LOBBY_JOINED_RTLEADER;
+            }
+            else if (member.IsRoomLeader)
+            {
+                CurrentPhase = PHASE_LOBBY_JOINED_RLEADER;
+            }
+            else if (member.IsTeamLeader)
+            {
+                CurrentPhase = PHASE_LOBBY_JOINED_TLEADER;
+            }
+            else
+            {
+                CurrentPhase = PHASE_LOBBY_JOINED_MEMBER;
+            }
+        }
+        else
+        {
+            CurrentPhase = PHASE_LOBBY_JOINING_READY;
+        }
+        ShowLobbyView();
     }
     else if (code == RS_JOIN_TEAM_S)
     {
