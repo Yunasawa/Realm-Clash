@@ -182,7 +182,7 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 		WriteLineAt(1, GetGameTitle());
 	}
 
-	if (code == RS_UPDATE_TEAM_RESOURCE)
+	if (code == RS_UPDATE_TEAM_RESOURCE && CurrentPhase != PHASE_GAME_QUESTION_ANSWERING)
 	{
 		Resource = ResourceRecord::Deserialize(data[1]);
 
