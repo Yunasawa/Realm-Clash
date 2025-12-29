@@ -31,6 +31,7 @@
 #define RQ_OCCUPY_ANSWER_SPOT                   "ANSWER_SPOT_QUESTION"
 #define RQ_OCCUPY_CASTLE						"OCCUPY_CASTLE"
 #define RQ_OCCUPY_ANSWER_CASTLE                 "ANSWER_CASTLE_QUESTION"
+#define RQ_RESET_GAME                            "RESET_GAME"
 
 #define RQ_BUY_EQUIPMENT						"BUY_EQUIPMENT"
 
@@ -102,6 +103,8 @@
 // Server - Update responses
 #define RS_UPDATE_ROOM_LIST                     "810"
 #define RS_UPDATE_TEAM_ROLE                     "811"
+#define RS_RESET_GAME                           "819"
+#define RS_GAME_END                             "826"
 
 #define RS_UPDATE_JOIN_REQUEST					"812"
 #define RS_UPDATE_PENDING_JOIN					"813"
@@ -118,6 +121,7 @@
 #define RS_UPDATE_GAME_MAP						"822"
 #define RS_UPDATE_TEAM_RESOURCE					"823"
 #define RS_UPDATE_START_COMBAT					"824"
+#define RS_UPDATE_END_GAME						"825"
 
 #define RS_NETWORK_CONNECTED                    "910"
 
