@@ -112,7 +112,7 @@ string GetCastleLine(int castleID)
 
     auto GetDefenseText = [&]() -> string
         {
-            return " | 0🛡️";
+            return " | " + to_string(Map.Castles[castleID].Defense) + "🛡️";
         };
 
     auto castle = Map.Castles[castleID];
@@ -131,9 +131,10 @@ string GetGameOption()
     else if (CurrentPhase == PHASE_GAME_MAP_COMBATING)
     {
         return
-            "┃ • 1: Open shop                   | • 2 <castle>: Attack castle     ┃\n"
-            "┃ • 3: Show inventory              | • 4 <teamID>: Resource quantity ┃\n";
-    }
+            "┃ • 1 <spot> <type>: Occupy spot   | • 2 <castle>: Attack castle     ┃\n"
+            "┃ • 3: Show inventory              | • 4: Open shop                  ┃\n"
+            "┃ • 5 <castle>: Get defense point  | • 6 <teamID>: Resource quantity ┃\n";
+    }           
 
     return "";
 }
@@ -141,6 +142,12 @@ string GetGameOption()
 void ShowGameView()
 {
 	ClearScreen();
+
+    string line1 = Log.length() > 68 ? Log.substr(0, 68) : Log;
+    string line2 = Log.length() > 68 ? Log.substr(68) : "";
+
+    int padding1 = 68 - line1.length();
+    int padding2 = 68 - line2.length();
 
 	cout 
         << GetGameTitle()
@@ -155,7 +162,8 @@ void ShowGameView()
         "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
             << GetGameOption() <<
         "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
-        "┃ " << BOLD << Log << RESET << string(72 - Log.length(), ' ') << "┃\n"
+        "┃ " << BOLD << line1 << RESET << string(max(0, padding1), ' ') << "┃\n"
+        "┃ " << BOLD << line2 << RESET << string(max(0, padding2), ' ') << "┃\n"
         "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
 }
 

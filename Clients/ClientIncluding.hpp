@@ -11,9 +11,11 @@
 #include "Models/Entities/AccountEntity.hpp"
 #include "Models/Entities/OccupationEntity.hpp"
 #include "Models/Entities/CartEntity.hpp"
-#include "Models/Entities/QuestionEntity.hpp"
+#include "Models/Entities/InGameEntity.hpp"
+
 
 int CurrentPhase = 0;
+int PreviousPhase = 0;
 AccountRecord Account;
 LobbyRecord Lobby;
 int JoinRequestAmount = 0;
@@ -25,10 +27,14 @@ int Team;
 int Tick;
 MapRecord Map;
 ResourceRecord Resource;
+
 int CurrentQuestionSpot = -1;
-bool CurrentQuestionIsCastle = false;
+int CurrentQuestionIsCastle = 0; /*1 : Lâu đài chưa có chủ, 2 : Lâu đài đã có chủ*/
 QuestionEntity CurrentQuestion;
 int QuestionTimeOut = 30;
+ResourceEntity CurrentTargetTeamResource;
+CastleEntity CurrentTargetCastle;
+InventoryEntity OwnInventory;
 
 
 #include "ClientUtilities.hpp"
@@ -38,6 +44,8 @@ int QuestionTimeOut = 30;
 #include "Views/GameView.hpp"
 #include "Views/ShopView.hpp"
 #include "Views/QuestionView.hpp"
+#include "Views/InventoryView.hpp"
+#include "Views/AttackView.hpp"
 
 #include "Handlers/Phases/PhaseWelcome.hpp"
 #include "Handlers/Phases/PhaseLobby.hpp"

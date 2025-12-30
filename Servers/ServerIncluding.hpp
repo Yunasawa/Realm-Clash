@@ -8,6 +8,7 @@ mutex SessionsMutex;
 ofstream LogFile;
 
 unordered_map<int, int> Clients; // Map clientFD to accountID
+unordered_map<int, int> ClientsViewControl; // new ! 
 vector<int> JoinedMembers; // List of accountIDs to determine the order of members joined to game
 int RoomLeader = 0;
 
@@ -32,6 +33,7 @@ int GetValueByKey(unordered_map<int,int>& m, int v)
 #include "Models/Records/AccountRecord.hpp"
 #include "Models/Records/OccupationRecord.hpp"
 #include "Models/Records/CartRecord.hpp"
+#include "Models/Records/WeaponRecord.hpp"
 
 unordered_map<int, AccountEntity> Accounts; // Map accountID to AccountEntity
 unordered_map<int, SessionEntity> Sessions; // Map accountID to SessionEntity
@@ -47,14 +49,13 @@ MapEntity Map;
 
 QuestionBankEntity QuestionBank;
 
-
 QuestionEntity TargetSpotQuestion;
 SpotOccupationRecord SpotRequest;
 QuestionEntity TargetCastleQuestion;
 int CastleRequest;
 
 
-
+#include <random>
 int TIME_PENALTY = 5; /*Phạt câu trả lời sai*/
 
 #include "ServerNetwork.hpp"

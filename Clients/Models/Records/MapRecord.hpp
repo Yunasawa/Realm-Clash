@@ -13,8 +13,9 @@ struct SpotRecord
 
 struct CastleRecord
 {
+    int Id;
     int OwnerTeam = -1;
-    int Defense;
+    int Defense = 0;
 };
 
 struct MapRecord

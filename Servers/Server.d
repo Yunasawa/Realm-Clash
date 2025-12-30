@@ -13,14 +13,13 @@ Servers/Server.o: Servers/Server.cpp \
  Servers/Models/Records/AccountRecord.hpp \
  Servers/Models/Records/OccupationRecord.hpp \
  Servers/Models/Records/CartRecord.hpp \
+ Servers/Models/Records/WeaponRecord.hpp \
  Servers/Models/Entities/LobbyEntity.hpp \
  Servers/Models/Entities/GameEntity.hpp Servers/ServerNetwork.hpp \
  Servers/Utilities/ServerLogger.hpp Servers/Utilities/ServerTimer.hpp \
  Servers/Handlers/Handlers/AccountHandler.hpp \
  Servers/Handlers/Handlers/LobbyHandler.hpp \
  Servers/Handlers/Handlers/GameHandler.hpp \
- Servers/Handlers/Handlers/../../../Commons/CommonIncluding.hpp \
- Servers/Handlers/Handlers/../../Models/Entities/GameEntity.hpp \
  Servers/Handlers/Phases/ProgressPhase.hpp \
  Servers/Handlers/Phases/WelcomePhase.hpp \
  Servers/Handlers/Phases/LobbyPhase.hpp \
@@ -56,6 +55,8 @@ Servers/Models/Records/OccupationRecord.hpp:
 
 Servers/Models/Records/CartRecord.hpp:
 
+Servers/Models/Records/WeaponRecord.hpp:
+
 Servers/Models/Entities/LobbyEntity.hpp:
 
 Servers/Models/Entities/GameEntity.hpp:
@@ -71,10 +72,6 @@ Servers/Handlers/Handlers/AccountHandler.hpp:
 Servers/Handlers/Handlers/LobbyHandler.hpp:
 
 Servers/Handlers/Handlers/GameHandler.hpp:
-
-Servers/Handlers/Handlers/../../../Commons/CommonIncluding.hpp:
-
-Servers/Handlers/Handlers/../../Models/Entities/GameEntity.hpp:
 
 Servers/Handlers/Phases/ProgressPhase.hpp:
 

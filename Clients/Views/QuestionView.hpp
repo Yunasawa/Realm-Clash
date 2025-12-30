@@ -134,7 +134,7 @@
 
 #ifndef VIEW_QUESTION
 #define VIEW_QUESTION
-#include "../Models/Entities/QuestionEntity.hpp"
+#include "../Models/Entities/InGameEntity.hpp"
 #include <thread>
 #include <atomic>
 #include <chrono>
@@ -285,6 +285,8 @@ void StartQuestionCountdown(QuestionEntity CurrentQuestion, int seconds)
 void ShowQuestionLog(QuestionEntity CurrentQuestion, string log)
 {
 	ClearScreen();
+	
+	cout << GetGameTitle();
 	
 	string titleText = "ANSWER QUESTION TO OCCUPY";
 	int padding = (WINDOW_WIDTH - 4 - (int)titleText.size()) / 2;

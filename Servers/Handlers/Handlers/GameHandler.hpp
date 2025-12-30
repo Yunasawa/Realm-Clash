@@ -1,17 +1,6 @@
 #ifndef SERVER_HANDLER_GAME
 #define SERVER_HANDLER_GAME
 
-
-#include "../../../Commons/CommonIncluding.hpp"
-#include "../../Models/Entities/GameEntity.hpp"
-#include <random>
-
-
-extern QuestionBankEntity QuestionBank;
-extern MapEntity Map;
-extern QuestionEntity TargetSpotQuestion;
-extern QuestionEntity TargetCastleQuestion;
-
 void UpdateResourcesQuantity(TeamEntity& team, unordered_map<ResourceType,int> cost, int amount);
 int ResourceCompare(const TeamEntity& team, unordered_map<ResourceType,int> require, int amount);
 pair<int,QuestionEntity> ChangeSpotQuestion(int currentQuestionID);
@@ -227,7 +216,7 @@ void HandleAnswerSpotQuestion(int clientFD, const string& data)
 
         int currentQuestionID = Map.Spots[SpotRequest.Spot].CurrentQuestion.first;
         Map.Spots[SpotRequest.Spot].CurrentQuestion = ChangeSpotQuestion(currentQuestionID);
-        // BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
+        BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
     }
     else if ((result == 0) && (teamAnswer != trueAnswer))
     {
@@ -238,10 +227,9 @@ void HandleAnswerSpotQuestion(int clientFD, const string& data)
         SendMessage(clientFD,string(RS_ANSWER_QUESTION_F_TOO_SLOW));
     }
    
-    BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
 }
 
-void HandleAnswerCastleQuestion(int clientFD, const string& data)
+void HandleAnswerCastleQuestionPhaseCollect(int clientFD, const string& data)
 {
     int teamAnswer = -1;
     try { teamAnswer = stoi(data) - 1; } catch(...) { teamAnswer = -1; }
@@ -262,7 +250,7 @@ void HandleAnswerCastleQuestion(int clientFD, const string& data)
         castle.OwnerTeam = account.GameTeam;
 
         int currentQuestionID = Map.Castles[CastleRequest].CurrentQuestion.first;
-        Map.Castles[CastleRequest].CurrentQuestion = ChangeSpotQuestion(currentQuestionID);
+        Map.Castles[CastleRequest].CurrentQuestion = ChangeCastleQuestion(currentQuestionID);
 
         BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
 
@@ -281,7 +269,7 @@ void HandleBuyWeapon(int clientFD, const CartRecord& cart)
     auto account = Accounts[Clients[clientFD]];
     auto& team = Group.Teams[account.GameTeam];
     
-    Item* item = GetItem((Items)cart.Equipment);
+    Item* item = GetItem((Items)(cart.Equipment));
     int compare = ResourceCompare(team,item->Cost,cart.Amount);
     if (compare == 0)
     {
@@ -342,11 +330,270 @@ void HandleBuyDefense(int clientFD, const CartRecord& cart)
             WriteLog(LogType::Failure, clientFD, "BUY SUCCESS", "");
             SendMessage(clientFD, string(RS_SHOP_EQUIPMENT_S));
 
-            BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);            
+            //BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);            
         }
     }
 
 }
+
+void HandleViewTeamResource(int clientFD, const string& data)
+{
+    auto targetTeamID = stoi(data);
+    if (targetTeamID >= Group.Teams.size())
+    {
+        SendMessage(clientFD, string(RS_TARGET_TEAM_NOT_FOUND));
+        return;
+    }
+
+    auto& targetTeam = Group.Teams[targetTeamID];
+    json j;
+    j["TargetTeamID"] = targetTeamID;
+    j["Wood"] = targetTeam.Resources[0];
+    j["Rock"] = targetTeam.Resources[1];
+    j["Iron"] = targetTeam.Resources[2];
+    j["Gold"] = targetTeam.Resources[3];
+    SendMessage(clientFD, string(RS_TARGET_TEAM_RESOURCE) + " " + j.dump());
+
+}
+
+void HandleViewCastleInformation(int clientFD, const string& data)
+{
+    auto castleID = stoi(data);
+    auto& targetCastle = Map.Castles[castleID];
+    
+    json j;
+    j["id"] = castleID;
+    j["owner_team"] = targetCastle.OwnerTeam;
+    j["defense"] = targetCastle.Defense;
+    SendMessage(clientFD, string(RS_TARGET_CASTLE_INFO) + " " + j.dump());
+}
+
+void HandleViewInventory(int clientFD)
+{
+    auto account = Accounts[Clients[clientFD]];
+    auto& team = Group.Teams[account.GameTeam];
+
+    json j;
+    j["Balista"] = team.Weapons[0];
+    j["Catapult"] = team.Weapons[1];
+    j["Canon"] = team.Weapons[2];
+
+    SendMessage(clientFD, string(RS_OWN_WEAPON_ITEMS) + " " + j.dump());
+}
+
+void HandleAttackCastle(int clientFD, const string& data)
+{
+    CastleRequest = stoi(data);
+
+    auto account = Accounts[Clients[clientFD]];
+    auto teamID = account.GameTeam;
+    auto& team = Group.Teams[teamID];
+
+    auto castle = Map.Castles[CastleRequest];
+
+    if (castle.OwnerTeam == -1)
+    {
+        TargetCastleQuestion = Map.Castles[CastleRequest].CurrentQuestion.second;
+        json j;
+        j["id"] = CastleRequest;
+        j["content"] = TargetCastleQuestion.content;
+        j["answers"] = json::array();
+        for (const auto& a : TargetCastleQuestion.answers) j["answers"].push_back(a);
+        j["difficulty"] = (TargetCastleQuestion.difficulty == Difficulty::EASY) ? string("Easy") : string("Difficult");
+        j["correctAnswer"] = TargetCastleQuestion.correctAnswer;
+
+        SendMessage(clientFD, string(RS_OCCUPY_REQUIRE_ANSWER_QUESTION) + " " + to_string(CastleRequest) + " castle " + j.dump());
+    }
+    
+    else if (castle.OwnerTeam == account.GameTeam)
+    {
+        SendMessage(clientFD, string(RS_ATTACK_CASTLE_F_SELF_ATTACK));
+    }
+    
+    else if (castle.OwnerTeam != account.GameTeam)
+    {   
+        auto it = castle.IsSuccessAnswerQuestion.find(teamID);
+        
+        
+        if (it == castle.IsSuccessAnswerQuestion.end())
+        {
+            TargetCastleQuestion = Map.Castles[CastleRequest].CurrentQuestion.second;
+            json j;
+            j["attacked_castle_id"] = CastleRequest;
+            j["content"] = TargetCastleQuestion.content;
+            j["answers"] = json::array();
+            for (const auto& a : TargetCastleQuestion.answers) j["answers"].push_back(a);
+            j["difficulty"] = (TargetCastleQuestion.difficulty == Difficulty::EASY) ? string("Easy") : string("Difficult");
+            j["correctAnswer"] = TargetCastleQuestion.correctAnswer;
+
+            SendMessage(clientFD, string(RS_ATTACK_CASTLE_REQUIRE_ANSWER_Q) + " " + to_string(CastleRequest) + " castle " + j.dump());
+        }
+        if (castle.IsSuccessAnswerQuestion[teamID] == 1)
+        {
+            json j;
+            j["TargetCastle"] = CastleRequest + 1;
+            j["OwnerTeam"] = castle.OwnerTeam + 1;
+            j["Defense"] = castle.Defense; 
+            j["Balista"] = team.Weapons[0];
+            j["Catapult"] = team.Weapons[1];
+            j["Cannon"] = team.Weapons[2];
+
+            SendMessage(clientFD, string(RS_ATTACK_CASTLE_FULL_PERMISSION) + " " + j.dump());
+        }
+    }
+}
+
+void HandleAnswerCastleQuestionPhaseAttack(int clientFD, const string& data)
+{
+    int teamAnswer = -1;
+    try { teamAnswer = stoi(data) - 1; } catch(...) { teamAnswer = -1; }
+    WriteLog(LogType::Request, clientFD, "OCCUPY CASTLE : Answer question", "Answer:" + data);
+    int trueAnswer = TargetCastleQuestion.correctAnswer;
+
+    auto account = Accounts[Clients[clientFD]];
+    auto& castle = Map.Castles[CastleRequest]; 
+    auto teamID = account.GameTeam;
+    auto& team = Group.Teams[teamID];
+
+
+    if (teamAnswer == trueAnswer)
+    {
+        castle.IsSuccessAnswerQuestion[teamID] = 1;
+        WriteLog(LogType::Success, clientFD, "ANWSER CASTLE QUESTION SUCCESS", "");
+        json j;
+        j["TargetCastle"] = CastleRequest + 1;
+        j["OwnerTeam"] = castle.OwnerTeam + 1;
+        j["Defense"] = castle.Defense; 
+        j["Balista"] = team.Weapons[0];
+        j["Catapult"] = team.Weapons[1];
+        j["Cannon"] = team.Weapons[2];
+        SendMessage(clientFD, string(RS_ATTACK_CASTLE_FULL_PERMISSION) + " " + j.dump());
+    }
+    else
+    {
+        SendMessage(clientFD, string(RS_ANSWER_QUESTION_F_WRONG_ANSWER));
+    }
+}
+
+void HandleUsingWeaponToAttack(int clientFD, const WeaponRecord& weapon)
+{
+    CastleRequest = weapon.Castle;
+    auto account = Accounts[Clients[clientFD]];
+    auto teamID = account.GameTeam;
+    auto& team = Group.Teams[teamID];
+    auto& castle = Map.Castles[CastleRequest];
+
+    int defense = castle.Defense;
+    
+    /*weapon : 0 , 1 , 2*/
+    if (team.Weapons[weapon.Weapon] < weapon.Amount)
+    {
+        SendMessage(clientFD, string(RS_ATTACK_CASTLE_F_NOT_ENOUGH_WEAPON));
+    }
+    
+    else 
+    {
+        int attack;
+        switch(weapon.Weapon){
+            case (int)Items::BALLISTA: attack = weapon.Amount * 1000; break;
+            case (int)Items::CATAPULT: attack = weapon.Amount * 3000; break;
+            case (int)Items::CANNON: attack = weapon.Amount * 8000; break;
+            default: attack = 0; break;
+        }
+        if (attack < defense)
+        {
+            castle.Defense -= attack;
+            team.Weapons[weapon.Weapon] -= weapon.Amount;
+            
+            json j;
+            j["TargetCastle"] = CastleRequest +1;
+            j["OwnerTeam"] = castle.OwnerTeam + 1;
+            j["Defense"] = castle.Defense; 
+            j["Balista"] = team.Weapons[0];
+            j["Catapult"] = team.Weapons[1];
+            j["Cannon"] = team.Weapons[2];
+
+            SendMessage(clientFD, string(RS_UPDATE_ATTACK_VIEW) + " " + j.dump());
+    
+            SendMessage(clientFD, string(RS_ATTACK_CASTLE_F_NOT_ENOUGH_POWER));
+            
+            BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
+        }
+        else 
+        {
+            auto& last_owner = Group.Teams[castle.OwnerTeam];
+            last_owner.CastleSlot.erase(std::remove(last_owner.CastleSlot.begin(), last_owner.CastleSlot.end(), CastleRequest),last_owner.CastleSlot.end());
+
+            team.Weapons[weapon.Weapon] -= weapon.Amount;
+            team.CastleSlot.push_back(CastleRequest);
+            castle.OwnerTeam = teamID;
+            castle.Defense = 0;
+
+            int currentQuestionID = Map.Castles[CastleRequest].CurrentQuestion.first;
+            Map.Castles[CastleRequest].CurrentQuestion = ChangeCastleQuestion(currentQuestionID);
+
+            BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
+        
+            SendMessage(clientFD, string(RS_ATTACK_CASTLE_S));
+
+            SendMessage(clientFD,string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize());
+        }
+
+    }
+
+}
+
+void HandleAllInAttack(int clientFD, const string& data)
+{
+    CastleRequest = stoi(data);
+    auto account = Accounts[Clients[clientFD]];
+    auto teamID = account.GameTeam;
+    auto& team = Group.Teams[teamID];
+    auto& castle = Map.Castles[CastleRequest];
+
+    int defense = castle.Defense;
+    int attack = team.Weapons[0] * 1000 + team.Weapons[1] * 3000 + team.Weapons[2] * 8000;
+    
+    if (attack < defense)
+    {
+        castle.Defense -= attack;
+        team.Weapons.fill(0);
+
+        json j;
+        j["TargetCastle"] = CastleRequest;
+        j["OwnerTeam"] = castle.OwnerTeam + 1;
+        j["Defense"] = castle.Defense; 
+        j["Balista"] = team.Weapons[0];
+        j["Catapult"] = team.Weapons[1];
+        j["Cannon"] = team.Weapons[2];
+
+        SendMessage(clientFD, string(RS_UPDATE_ATTACK_VIEW) + " " + j.dump());
+            
+        SendMessage(clientFD, string(RS_ATTACK_CASTLE_F_NOT_ENOUGH_POWER));
+
+        BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
+    }
+    else if (attack >= defense)
+    {   
+        auto& last_owner = Group.Teams[castle.OwnerTeam];
+        last_owner.CastleSlot.erase(std::remove(last_owner.CastleSlot.begin(), last_owner.CastleSlot.end(), CastleRequest),last_owner.CastleSlot.end());
+
+        team.Weapons.fill(0); /*Remove all weapon*/
+        team.CastleSlot.push_back(CastleRequest);
+        castle.OwnerTeam = teamID;
+        castle.Defense = 0;
+
+        int currentQuestionID = Map.Castles[CastleRequest].CurrentQuestion.first;
+        Map.Castles[CastleRequest].CurrentQuestion = ChangeCastleQuestion(currentQuestionID);
+
+        BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
+        
+        SendMessage(clientFD, string(RS_ATTACK_CASTLE_S));
+
+        SendMessage(clientFD,string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize());
+    }
+}
+
 
 pair<int,QuestionEntity> ChangeSpotQuestion(int currentQuestionID){
     int nums_question = QuestionBank.spot_questions.size();
@@ -394,6 +641,8 @@ void UpdateResourcesQuantity(TeamEntity& team, unordered_map<ResourceType,int> c
         team.Resources[int(c.first)] -= requiredAmount * amount;
     }
 }
+
+
 
 #endif
 

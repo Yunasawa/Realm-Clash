@@ -271,6 +271,7 @@ struct CastleEntity
     pair<int,QuestionEntity> CurrentQuestion;
     unordered_map<int,Clock::time_point> LastWrongAnswer;
     vector<int> EquippedItems;
+    unordered_map<int,int> IsSuccessAnswerQuestion; /*teamID : key, boolean : value*/ 
 };
 
 struct MapEntity
