@@ -149,8 +149,6 @@ static inline std::string repeat_utf8(const std::string &ch, size_t n)
 
 /*
 ┏━ ■ Team 1 ━ U0000001 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 00:00:00 ━┓
-┃                  ANSWER SPOT 1 QUESTION TO OCCUPY                  ┃
-┣━ QUESTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
 ┃ What is the speed of light in a vacuum?                            ┃
 ┃                                                                    ┃
 ┃                                                                    ┃
@@ -204,8 +202,6 @@ string MakeQuestionBlock(const string& question)
 	string wrapped = WrapText(question, inner);
 	stringstream ss;
 
-	ss << "┣━ QUESTION ━" << repeat_utf8("━", 55) << "┫\n";
-
 	vector<string> lines;
 	string line;
 	stringstream wss(wrapped);
@@ -221,16 +217,18 @@ string MakeQuestionBlock(const string& question)
 
 string MakeAnswersBlock(const vector<string>& answers)
 {
-	const int colInner = (WINDOW_WIDTH - 6) / 2;
 	stringstream ss;
-	
-	ss << "┣━ ANSWERS ━" << repeat_utf8("━", 26) << "┳" << repeat_utf8("━", 30) << "┫\n";
+
+	ss << "┣━ ANSWERS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n";
 
 	array<string,4> a;
-	for (int i = 0; i < 4; ++i) a[i] = (i < (int)answers.size()) ? answers[i] : "";
+	for (int i = 0; i < 4; ++i)
+	{
+		a[i] = (i < (int)answers.size()) ? answers[i] : "";
+	}
 
-	ss << "┃ " << left << setw(colInner) << (string("1: ") + a[0]) << " ┃ " << left << setw(colInner) << (string("3: ") + a[2]) << " ┃\n";
-	ss << "┃ " << left << setw(colInner) << (string("2: ") + a[1]) << " ┃ " << left << setw(colInner) << (string("4: ") + a[3]) << " ┃\n";
+	ss << "┃ 1: " << a[0] << string(29 - a[0].size(), ' ') << " | 2: " << a[1] << string(28 - a[1].size(), ' ') << " ┃\n";
+	ss << "┃ 3: " << a[2] << string(29 - a[2].size(), ' ') << " | 4: " << a[3] << string(28 - a[3].size(), ' ') << " ┃\n";
 
 	return ss.str();
 }
@@ -239,20 +237,14 @@ void ShowQuestionView(QuestionEntity CurrentQuestion)
 {
 	ClearScreen();
 
-	string titleText = "ANSWER QUESTION TO OCCUPY";
-	int padding = (WINDOW_WIDTH - 4 - (int)titleText.size()) / 2;
-	cout << "┃ " << string(padding, ' ') << titleText << string(WINDOW_WIDTH - 4 - padding - (int)titleText.size(), ' ') << " ┃\n";
-
+	cout << GetGameTitle();
+	
 	cout << MakeQuestionBlock(CurrentQuestion.content);
 	cout << MakeAnswersBlock(CurrentQuestion.answers);
 
-
-	const int colInner = (WINDOW_WIDTH - 6) / 2;
-	cout << "┣━ OPTION ━" << repeat_utf8("━", 58) << "┫\n";
-	cout << "┃ " << left << setw(colInner) << "• 1 <answerID> : Answer question" << " ┃ " << left << setw(colInner) << "• 2 : Return map view" << " ┃\n";
-
-	
-	cout << "┣━ CONSOLES ━" << repeat_utf8("━", 26) << "┻" << repeat_utf8("━", 29) << "┫\n";
+	cout << "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n";
+	cout <<	"┃ • 1 <answerID> : Answer question ┃ • 2 : Return map view           ┃\n";
+	cout << "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n";
 
 	string prompt = "Please answer in " + to_string((int)timeLeftSeconds.load()) + "s";
 	cout << "┃ " << BOLD << prompt << RESET << string(WINDOW_WIDTH - 4 - (int)prompt.size(), ' ') << " ┃\n";
@@ -292,7 +284,11 @@ void ShowQuestionLog(QuestionEntity CurrentQuestion, string log)
 	int padding = (WINDOW_WIDTH - 4 - (int)titleText.size()) / 2;
 	cout << "┃ " << string(padding, ' ') << titleText << string(WINDOW_WIDTH - 4 - padding - (int)titleText.size(), ' ') << " ┃\n";
 
+
 	cout << MakeQuestionBlock(CurrentQuestion.content);
+	
+	//cout << "┣━ ANSWERS ━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n";
+	
 	cout << MakeAnswersBlock(CurrentQuestion.answers);
 
 

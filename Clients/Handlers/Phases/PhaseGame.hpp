@@ -334,6 +334,18 @@ void HandleGameInput(int clientFD, vector<string> command)
 		{
 			ShowAttackCastleLog(LOG_UNKNOWN_COMMAND);
 		}
+	else if (CurrentPhase == PHASE_GAME_ENDING)
+	{
+		if (code == 1 && command.size() == 1)
+		{
+			CurrentPhase = PHASE_LOBBY_JOINING_READY;
+			Lobby = LobbyRecord();
+			ShowLobbyView();
+			SendMessage(clientFD, RQ_RESET_GAME);
+		}
+		else {
+			goto UnknownCommand;
+		} ;
 	}
 
 	return;
@@ -620,6 +632,17 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
  		}
 	}
 
+	else if (code == RS_GAME_END)
+	{
+		ResultRecord result = ResultRecord::Deserialize(data[1]);
+		CurrentPhase = PHASE_GAME_ENDING;
+		ShowResultView(result);
+	}
+	else if (code == RS_UPDATE_END_GAME)
+	{
+		CurrentPhase = PHASE_GAME_ENDING;
+		ShowResultView(ResultRecord::Deserialize(data[1]));
+	}
 	else if (code == RS_SHOP_EQUIPMENT_F_LACK_RESOURCE )
 	{
 		if (CurrentPhase == PHASE_GAME_SHOPING_WEAPON)

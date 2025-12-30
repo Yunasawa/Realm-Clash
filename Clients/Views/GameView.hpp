@@ -95,7 +95,7 @@ string GetSpotLine(int spotID)
 
 	auto spot = Map.Spots[spotID];
 
-    return "🎪 Spot " + to_string(spotID + 1) + " |  " + 
+    return "🎪 Spot " + to_string(spotID + 1) + " |   " + 
         "W " + GetSpotText(spot.WoodSlot) + "   " +
         "R " + GetSpotText(spot.RockSlot) + "   " +
         "I " + GetSpotText(spot.IronSlot) + "";
@@ -113,6 +113,7 @@ string GetCastleLine(int castleID)
     auto GetDefenseText = [&]() -> string
         {
             return " | " + to_string(Map.Castles[castleID].Defense) + "🛡️";
+
         };
 
     auto castle = Map.Castles[castleID];

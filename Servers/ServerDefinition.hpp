@@ -9,6 +9,7 @@
 
 #define MULTIPLIER_RESOURSE_UPDATE			2
 
+
 #define TIME_START_COMBAT					60
 #define TIME_END_GAME						1200
 

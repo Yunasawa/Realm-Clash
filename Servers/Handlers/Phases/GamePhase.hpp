@@ -3,6 +3,12 @@
 
 void HandleGamePhase(int clientFD, const string& code, const vector<string>& command)
 {
+	if (code == RQ_RESET_GAME)
+	{
+		ResetGame();
+		return;
+	}
+
 	if (GamePhase == PHASE_LOBBY_IDLING)
 	{
 		if (code == RQ_START_GAME)

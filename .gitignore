@@ -93,3 +93,11 @@ $RECYCLE.BIN/
 # VSCode local history / cache
 .history/
 .vscode-test/
+client
+client
+Clients/Client.d
+client
+Clients/Client.d
+Datas/Log.ynl
+server
+Servers/Server.d

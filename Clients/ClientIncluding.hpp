@@ -7,6 +7,7 @@
 #include "Models/Records/LobbyRecord.hpp"
 #include "Models/Records/MapRecord.hpp"
 #include "Models/Records/ResourceRecord.hpp"
+#include "Models/Records/ResultRecord.hpp"
 
 #include "Models/Entities/AccountEntity.hpp"
 #include "Models/Entities/OccupationEntity.hpp"
@@ -46,6 +47,7 @@ InventoryEntity OwnInventory;
 #include "Views/QuestionView.hpp"
 #include "Views/InventoryView.hpp"
 #include "Views/AttackView.hpp"
+#include "Views/ResultView.hpp"
 
 #include "Handlers/Phases/PhaseWelcome.hpp"
 #include "Handlers/Phases/PhaseLobby.hpp"
