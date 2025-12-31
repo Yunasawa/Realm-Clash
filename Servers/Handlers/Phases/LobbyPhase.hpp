@@ -5,23 +5,27 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
 {
     auto account = Accounts[Clients[clientFD]];
 
+    cout << code << endl;
+
     if (code == RQ_UPDATE_LOBBY)
     {
         HandleUpdateLobby(clientFD);
     }
     else if (code == RQ_JOIN_TEAM)
     {
+        cout << "hoho" << endl;
         if (account.LobbyTeam != -1) return;
 
+        cout << "huhu" << endl;
         WriteLog(LogType::Request, clientFD, "JOIN TEAM", "Team: " + command[1]);
         HandleJoinTeam(clientFD, command[1]);
     }
     else if (code == RQ_CANCEL_JOINING)
     {
-		if (account.PendingTeam == -1) return;
+		//if (account.PendingTeam == -1) return;
 
-        WriteLog(LogType::Request, clientFD, "CANCEL JOINING");
-		HandleCancelJoining(clientFD);
+  //      WriteLog(LogType::Request, clientFD, "CANCEL JOINING");
+		//HandleCancelJoining(clientFD);
     }
     else if (code == RQ_ADD_MEMBER)
     {
@@ -51,6 +55,8 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
     }
     else if (code == RQ_ACCEPT_INVITATION)
     {
+        if (account.PendingInvitation == -1) return;
+
 		WriteLog(LogType::Request, clientFD, "ACCEPT INVITATION");
 		HandleAcceptInvitation(clientFD);
     }

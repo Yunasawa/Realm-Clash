@@ -133,7 +133,7 @@ string GetLobbyOption()
     else if (CurrentPhase == PHASE_LOBBY_JOINING_PENDING)
     {
         return
-        "┃ • 1: Cancel joining request                                        ┃\n";
+        "┃                                                                    ┃\n";
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINED_MEMBER)
     {

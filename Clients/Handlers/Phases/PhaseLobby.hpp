@@ -15,29 +15,36 @@ void HandleLobbyInput(int clientFD, vector<string> command)
             if (team > 0 && team < 6)
             {
                 SendMessage(clientFD, string(RQ_JOIN_TEAM) + " " + command[1]);
+                cout << "HEHE" << endl;
             }
             else
             {
                 ShowLobbyLog(LOG_LOBBY_WRONG_TEAM);
             }
+
         }
 		else if (code == 2 && command.size() == 1)
 		{
+            if (TeamInviteRequest == 0) return;
+
 			SendMessage(clientFD, string(RQ_ACCEPT_INVITATION));
 
             TeamInviteRequest = -2;
 
             ShowLobbyCode("");
-		}
+
+            cout << "HOHO" << endl;
+        }
 		else goto UnknownCommand;
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINING_PENDING)
     {
-        if (code == 1 && command.size() == 1)
-        {
-            SendMessage(clientFD, string(RQ_CANCEL_JOINING));
-        }
-        else goto UnknownCommand;
+        //if (code == 1 && command.size() == 1)
+        //{
+        //    SendMessage(clientFD, string(RQ_CANCEL_JOINING));
+        //}
+        //else 
+        goto UnknownCommand;
     }
     else if (CurrentPhase == PHASE_LOBBY_JOINED_MEMBER)
     {
@@ -333,6 +340,14 @@ void HandleLobbyResponse(int clientFD, const string& code, vector<string> split)
     else if (code == RS_UPDATE_KICK_OUT)
     {
 		ShowLobbyLog(FG_YELLOW "You have been kicked out from the team!");
+    }
+    else if (code == RS_CANCEL_JOINING_S)
+    {
+        CurrentPhase = PHASE_LOBBY_JOINING_READY;
+
+        //ShowLobbyLog(FG_GREEN "You cancelled joining request!");
+
+        cout << CurrentPhase << endl;
     }
 }
 
