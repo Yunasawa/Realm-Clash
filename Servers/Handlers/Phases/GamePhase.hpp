@@ -5,6 +5,9 @@ void HandleGamePhase(int clientFD, const string& code, const vector<string>& com
 {
 	if (code == RQ_RESET_GAME)
 	{
+		cout << "HELO WORLD" << endl;
+
+		WriteLog(LogType::Request, -1, "RESET GAME");
 		ResetGame();
 		return;
 	}

@@ -26,8 +26,6 @@ string GetAttackCastleOption()
         "┃ • 3 : Back to map view                                             ┃\n";
 }
 
-
-
 // void ShowAttackCastleView()
 // { 
 //     ClearScreen();
@@ -36,45 +34,52 @@ string GetAttackCastleOption()
 //         << GetGameTitle()
 //         << GetResourceLine() <<
 //         "┣━ LOBBY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┫\n"
-//         "┃ • Balista xY                                ┃   	  _   |~  _      ┃\n"
-//         "┃                                             ┃   	 [_]--'--[_]     ┃\n"
-//         "┃ • Catapult xY                               ┃   	 | | /^\ | |     ┃\n"
+//         "┃ • Balista x" << setw(34) << left << OwnInventory.Balista 
+//         << "┃   	   _   |~  _      ┃\n"
+//         "┃                                             ┃   	  [_]--'--[_]     ┃\n"
+//         "┃ • Catapult x" << setw(33) << left << OwnInventory.Catapult 
+//         << "┃   	  | | /^\\ | |     ┃\n"
 //         "┃                                             ┃      |_|_|I|_|_|     ┃\n"
-//         "┃ • Cannon xY                                 ┃                      ┃\n"
-//         "┃                                             ┃     CASTLE 1  [5]    ┃\n"
-//         "┃                                             ┃      DEF : 10000     ┃\n"
+//         "┃ • Cannon x" << setw(35) << left << OwnInventory.Canon 
+//         << "┃                      ┃\n"
+//         "┃                                             ┃     CASTLE " << CurrentTargetCastle.Id 
+//         << "  [" << CurrentTargetCastle.OwnerTeam << "]    ┃\n"
+//         "┃                                             ┃      DEF : " << setw(10) << left << CurrentTargetCastle.Defense 
+//         << "┃\n"
 //         "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━┫\n"
-//         << GetAttackCastleOption() <<
+//         << GetAttackCastleOption() << 
 //         "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
 //         "┃ " << BOLD << Log << RESET << string(72 - Log.length(), ' ') << "┃\n"
 //         "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
 // }
-void ShowAttackCastleView()
-{ 
+
+
+void ShowAttackCastleView() {
+    
     ClearScreen();
 
-    cout
-        << GetGameTitle()
-        << GetResourceLine() <<
-        "┣━ LOBBY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┫\n"
-        "┃ • Balista x" << setw(30) << left << OwnInventory.Balista 
-        << "┃   	   _   |~  _      ┃\n"
-        "┃                                             ┃   	  [_]--'--[_]     ┃\n"
-        "┃ • Catapult x" << setw(29) << left << OwnInventory.Catapult 
-        << "┃   	  | | /^\ | |     ┃\n"
-        "┃                                             ┃      |_|_|I|_|_|     ┃\n"
-        "┃ • Cannon x" << setw(31) << left << OwnInventory.Canon 
-        << "┃                      ┃\n"
-        "┃                                             ┃     CASTLE " << CurrentTargetCastle.Id 
-        << "  [" << CurrentTargetCastle.OwnerTeam << "]    ┃\n"
-        "┃                                             ┃      DEF : " << setw(10) << left << CurrentTargetCastle.Defense 
-        << "┃\n"
-        "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━┫\n"
-        << GetAttackCastleOption() << 
-        "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
-        "┃ " << BOLD << Log << RESET << string(72 - Log.length(), ' ') << "┃\n"
-        "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
+    cout << GetGameTitle() << GetResourceLine()
+         << "┣━ LOBBY ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━┫\n"
+         << "┃ • Balista x" << left << setw(34) << OwnInventory.Balista 
+         << "┃      _        |~      ┃\n"
+         << "┃                                               ┃   [___]--'--[___]     ┃\n"
+         << "┃ • Catapult x" << left << setw(33) << OwnInventory.Catapult 
+         << "┃   |   |  /^\\ |   |    ┃\n"
+         << "┃                                               ┃   |___|_|I|_|___|     ┃\n"
+         << "┃ • Cannon x" << left << setw(35) << OwnInventory.Canon 
+         << "┃                       ┃\n"
+         << "┃                                               ┃    CASTLE " << CurrentTargetCastle.Id 
+         << " [" << CurrentTargetCastle.OwnerTeam << "]      ┃\n"
+         << "┃                                               ┃    DEF : " << left << setw(12) 
+         << CurrentTargetCastle.Defense << "┃\n"
+         << "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━┫\n"
+         << GetAttackCastleOption()
+         << "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
+         << "┃ " << BOLD << Log << RESET 
+         << string(70 - Log.length(), ' ') << "┃\n"
+         << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
 }
+
 
 void ShowAttackCastleLog(string log)
 {
@@ -82,6 +87,4 @@ void ShowAttackCastleLog(string log)
 
     ShowAttackCastleView();
 }
-
-
 #endif

@@ -39,7 +39,7 @@
 #define RQ_ATTACK_CASTLE                        "ANSWER_QUESTION_AND_ATTACK_CASTLE"
 #define RQ_USING_WEAPON                         "WEAPON_TO_ATTACK"
 #define RQ_USING_ALL_WEAPON                     "ALL_WEAPON_IN_ONCE_ATTACK"  
-#define RQ_RESET_GAME                            "RESET_GAME"
+#define RQ_RESET_GAME                           "RESET_GAME"
 
 
 #define RQ_BUY_EQUIPMENT						"BUY_EQUIPMENT"
@@ -74,31 +74,32 @@
 #define RS_KICK_MEMBER_F_MEMBER_NOT_FOUND		"221"
 #define RS_KICK_MEMBER_F_NOT_IN_TEAM			"222"
 #define RS_KICK_MEMBER_F_CANNOT_KICK_YOURSELF	"223"
+#define RS_CANCEL_JOINING_S						"224"
 
 #define RS_START_GAME_S							"300"
 #define RS_START_GAME_F_NOT_ENOUGH_TEAMS		"301"
 
 #define RS_OCCUPY_SPOT_S						"400"
 #define RS_OCCUPY_SPOT_F_FULL_OF_SLOT			"401"
-#define RS_OCCUPY_SPOT_F_SPOT_OCCUPIED			"401"
-#define RS_OCCUPY_SPOT_F_INVALID_SPOT           "402"
+#define RS_OCCUPY_SPOT_F_SPOT_OCCUPIED			"402"
+#define RS_OCCUPY_SPOT_F_INVALID_SPOT           "403"
 
 #define RS_OCCUPY_CASTLE_S						"410"
 #define RS_OCCUPY_CASTLE_F_CASTLE_OCCUPIED		"411"
 #define RS_OCCUPY_CASTLE_F_SLOT_FULL			"412"
 #define RS_OCCUPY_CASTLE_F_INVALID_CASTLE       "413"
-#define RS_OCCUPY_REQUIRE_ANSWER_QUESTION       "413"
+#define RS_OCCUPY_REQUIRE_ANSWER_QUESTION       "414"
 
 #define RS_REQUEST_QUESTION_S                   "510"
-#define RS_REQUEST_QUESTION_F_SLOT_OCCUPIED     "501"
-#define RS_REQUEST_QUESTION_F_SLOT_LIMIT        "502"
+#define RS_REQUEST_QUESTION_F_SLOT_OCCUPIED     "511"
+#define RS_REQUEST_QUESTION_F_SLOT_LIMIT        "512"
 
-#define RS_ANSWER_QUESTION_SPOT_S               "610"
-#define RS_ANSWER_QUESTION_CASTLE_S             "610"
-#define RS_ANSWER_QUESTION_F_WRONG_ANSWER       "601"
-#define RS_ANSWER_QUESTION_F_TIME_OUT           "602"
-#define RS_ANSWER_QUESTION_F_TIME_PENALTY       "603"
-#define RS_ANSWER_QUESTION_F_TOO_SLOW           "604"
+#define RS_ANSWER_QUESTION_SPOT_S               "601"
+#define RS_ANSWER_QUESTION_CASTLE_S             "602"
+#define RS_ANSWER_QUESTION_F_WRONG_ANSWER       "603"
+#define RS_ANSWER_QUESTION_F_TIME_OUT           "604"
+#define RS_ANSWER_QUESTION_F_TIME_PENALTY       "605"
+#define RS_ANSWER_QUESTION_F_TOO_SLOW           "606"
 
 #define RS_TARGET_TEAM_RESOURCE                 "620"
 #define RS_TARGET_CASTLE_INFO                   "621"
@@ -119,6 +120,9 @@
 #define RS_ATTACK_CASTLE_FULL_PERMISSION        "707"
 
 #define RS_DEBUG                                "708"
+
+#define RS_ATTACKED                             "709"
+#define RS_FULLY_ATTACKED                       "724"
 
 // Server - Update responses
 #define RS_UPDATE_ROOM_LIST                     "810"
@@ -142,7 +146,7 @@
 #define RS_UPDATE_TEAM_RESOURCE					"823"
 #define RS_UPDATE_START_COMBAT					"824"
 #define RS_UPDATE_ATTACK_VIEW                   "825"
-#define RS_UPDATE_END_GAME						"825"
+#define RS_UPDATE_END_GAME						"826"
 
 #define RS_NETWORK_CONNECTED                    "910"
 

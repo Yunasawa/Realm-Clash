@@ -255,6 +255,10 @@ void HandleGameInput(int clientFD, vector<string> command)
 
 			SendMessage(clientFD, string(RQ_BUY_EQUIPMENT) + " " + cart.Serialize());
 		}
+		else if (code == 1 && command.size() == 3)
+		{
+			ShowDefenseShopLog(FG_RED "Please specify castle id (1 <id> <amount> <castle>)");
+		}
 		else if (code == 2 && command.size() == 1)
 		{
 			CurrentPhase = PHASE_GAME_SHOPING_WEAPON;
@@ -349,6 +353,8 @@ void HandleGameInput(int clientFD, vector<string> command)
 		} ;
 	}
 
+	cout << CurrentPhase << endl;
+
 	return;
 
 UnknownCommand:
@@ -386,13 +392,15 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 		PendingJoinTick = 0;
 		PendingInviteTick = 0;
 		Log = FG_GREEN "";
-		Team = 0;
 		Map = MapRecord();
 		Resource = ResourceRecord();
 		CurrentQuestionSpot = -1;
 		CurrentQuestionIsCastle = false;
 		CurrentQuestion = QuestionEntity();
 		QuestionTimeOut = 30;
+		CurrentTargetTeamResource = ResourceEntity();
+		CurrentTargetCastle = CastleEntity();
+		OwnInventory = InventoryEntity();
 		CurrentPhase = PHASE_LOBBY_JOINING_READY;
 		ShowLobbyView();
 	}
@@ -413,8 +421,30 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 		}	
 	}
 
+	else if (code == RS_UPDATE_END_GAME)
+	{
+		try
+		{
+			auto result = ResultRecord::Deserialize(data[1]);
+			CurrentPhase = PHASE_GAME_ENDING;
+			ShowResultView(result);
+		}
+		catch (...)
+		{
+			ResultRecord emptyResult;
+			CurrentPhase = PHASE_GAME_ENDING;
+			ShowResultView(emptyResult);
+		}
+	}
 	else if (code == RS_UPDATE_ATTACK_VIEW)
 	{
+		if (CurrentPhase == PHASE_GAME_ENDING)
+			return;
+
+		if (CurrentPhase == PHASE_LOBBY_JOINING_READY || CurrentPhase == PHASE_LOBBY_JOINING_PENDING ||
+			(CurrentPhase >= PHASE_LOBBY_JOINED_MEMBER && CurrentPhase <= PHASE_LOBBY_JOINED_RTLEADER))
+			return;
+
 		json j = json::parse(data[1]);
 
 		CurrentTargetCastle.Id = j.value("TargetCastle", 0);
@@ -611,7 +641,7 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 		CurrentTargetCastle.Defense = j.value("Defense", 0);
 		OwnInventory.Balista = j.value("Balista", 0);
 		OwnInventory.Catapult = j.value("Catapult", 0);
-		OwnInventory.Canon = j.value("Canon", 0);
+		OwnInventory.Canon = j.value("Cannon", 0);
 
 		ShowAttackCastleView();
 	}
@@ -652,15 +682,20 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 
 	else if (code == RS_GAME_END)
 	{
-		ResultRecord result = ResultRecord::Deserialize(data[1]);
-		CurrentPhase = PHASE_GAME_ENDING;
-		ShowResultView(result);
+		try
+		{
+			auto result = ResultRecord::Deserialize(data[1]);
+			CurrentPhase = PHASE_GAME_ENDING;
+			ShowResultView(result);
+		}
+		catch (...)
+		{
+			ResultRecord emptyResult;
+			CurrentPhase = PHASE_GAME_ENDING;
+			ShowResultView(emptyResult);
+		}
 	}
-	else if (code == RS_UPDATE_END_GAME)
-	{
-		CurrentPhase = PHASE_GAME_ENDING;
-		ShowResultView(ResultRecord::Deserialize(data[1]));
-	}
+
 	else if (code == RS_SHOP_EQUIPMENT_F_LACK_RESOURCE )
 	{
 		if (CurrentPhase == PHASE_GAME_SHOPING_WEAPON)
@@ -702,6 +737,32 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 	else if (code == RS_DEBUG)
 	{
 		ShowAttackCastleLog(FG_RED "Not thing happens!");
+	}
+
+	else if (code == RS_ATTACKED)
+	{
+		switch(CurrentPhase)
+		{
+			case PHASE_GAME_MAP_COMBATING : ShowGameLog(FG_RED "Your occupied castle now is attacked!"); break;
+			case PHASE_GAME_QUESTION_ANSWERING : ShowQuestionLog(CurrentQuestion, FG_RED "Your occupied castle now is attacked!"); break;
+			case PHASE_GAME_SHOPING_DEFENSE : ShowDefenseShopLog(FG_RED "Your occupied castle now is attacked!"); break;
+			case PHASE_GAME_SHOPING_WEAPON : ShowAttackShopLog(FG_RED "Your occupied castle now is attacked!"); break;
+			case PHASE_GAME_VIEW_INVENTORY : ShowInventoryLog(FG_RED "Your occupied castle now is attacked!"); break;
+			case PHASE_GAME_CASTLE_ATTACKING : ShowAttackCastleLog(FG_RED "Your occupied castle now is attacked!"); break;
+		}
+	}
+
+	else if (code == RS_FULLY_ATTACKED)
+	{
+		switch(CurrentPhase)
+		{
+			case PHASE_GAME_MAP_COMBATING : ShowGameLog(FG_RED "Your castle has been taken by another team"); break;
+			case PHASE_GAME_QUESTION_ANSWERING : ShowQuestionLog(CurrentQuestion, FG_RED "Your castle has been taken by another team"); break;
+			case PHASE_GAME_SHOPING_DEFENSE : ShowDefenseShopLog(FG_RED "Your castle has been taken by another team"); break;
+			case PHASE_GAME_SHOPING_WEAPON : ShowAttackShopLog(FG_RED "Your castle has been taken by another team"); break;
+			case PHASE_GAME_VIEW_INVENTORY : ShowInventoryLog(FG_RED "Your castle has been taken by another team"); break;
+			case PHASE_GAME_CASTLE_ATTACKING : ShowAttackCastleLog(FG_RED "Your castle has been taken by another team"); break;
+		}
 	}
 }
 #endif

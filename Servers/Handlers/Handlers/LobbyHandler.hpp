@@ -101,7 +101,35 @@ void HandleJoinTeam(int clientFD, const string& data)
 
 void HandleCancelJoining(int clientFD)
 {
+    auto accountID = Clients[clientFD];
+    auto& account = Accounts[accountID];
 
+    auto teamID = account.PendingTeam;
+
+    account.PendingTeam = -1;
+    account.LobbyTeam = -1;
+
+    lock_guard<mutex> lock(SessionsMutex);
+
+    auto& team = Lobby.Teams[teamID];
+    auto teamLeaderFD = GetValueByKey(Clients, team.Members[0].ID);
+
+    team.JoinRequests.erase(
+        remove(team.JoinRequests.begin(), team.JoinRequests.end(), accountID),
+        team.JoinRequests.end()
+    );
+
+    Lobby.RemoveMember(teamID, accountID);
+
+    WriteLog(LogType::Success, clientFD, "CANCEL JOINING");
+    SendMessage(clientFD, string(RS_CANCEL_JOINING_S));
+
+    SendMessage(teamLeaderFD, string(RS_UPDATE_JOIN_REQUEST) + " " + to_string(team.JoinRequests.size()));
+    WriteLog(LogType::Success, teamLeaderFD, "UPDATE JOIN REQUEST", "Request: " + to_string(team.JoinRequests.size()));
+
+    BroadcastToClient(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+    
+    StopTickOnClient(clientFD);
 }
 
 AccountEntity* FindAccountByName(const string& myName)
