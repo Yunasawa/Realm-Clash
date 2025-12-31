@@ -32,8 +32,6 @@ void HandleLobbyInput(int clientFD, vector<string> command)
             TeamInviteRequest = -2;
 
             ShowLobbyCode("");
-
-            cout << "HOHO" << endl;
         }
 		else goto UnknownCommand;
     }

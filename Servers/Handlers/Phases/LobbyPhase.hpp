@@ -5,8 +5,6 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
 {
     auto account = Accounts[Clients[clientFD]];
 
-    cout << code << endl;
-
     if (code == RQ_UPDATE_LOBBY)
     {
         HandleUpdateLobby(clientFD);

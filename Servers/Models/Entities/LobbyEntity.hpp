@@ -16,8 +16,8 @@ struct LobbyMemberEntity
 
 struct LobbyTeamEntity
 {
-    array<LobbyMemberEntity, 3> Members;
     vector<int> JoinRequests;
+    array<LobbyMemberEntity, 3> Members;
 
     int CountMember(bool includingRequest = false) const
     {
