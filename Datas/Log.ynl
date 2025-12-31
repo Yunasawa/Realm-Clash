@@ -1,47 +1,21 @@
         TIME        ┃ ID ┃ ➖ ┃                               ACTION                                   ┃                 DATA                   
 ━━━━━━━━━━━━━━━━━━━━╋━━━━╋━➖━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-31/12/2025 02:45:29 ┃  5 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: a, Password: b
-31/12/2025 02:45:29 ┃  5 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 1, Name: U0000001
-31/12/2025 02:45:29 ┃  5 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
-31/12/2025 02:45:29 ┃  5 ┃ ➕ ┃ SUCCESS | JOIN TEAM                                                    ┃ Team 0: [(1,0,U0000001,1,1),(0,0,,0,0),(0,0,,0,0)], Team 1: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 2: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 3: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 4: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)]
-31/12/2025 02:45:30 ┃  5 ┃ ❓ ┃ REQUEST | START GAME                                                   ┃ 
-31/12/2025 02:45:30 ┃  5 ┃ ❌ ┃ UPDATE  | Loaded question bank                                         ┃ Datas/Question.ynl
-31/12/2025 02:45:30 ┃  5 ┃ ➕ ┃ SUCCESS | START GAME                                                   ┃ 
-31/12/2025 02:45:30 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:31 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:32 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:32 ┃  5 ┃ ❓ ┃ REQUEST | OCCUPY SPOT                                                  ┃ Spot: 0, Resource: 0
-31/12/2025 02:45:32 ┃  5 ┃ ❓ ┃ REQUEST | OCCUPY SLOT : Answer the question                            ┃ Spot: 0, Resource: 0
-31/12/2025 02:45:32 ┃  5 ┃ ❌ ┃ UPDATE  | DEBUG                                                        ┃ [OccupySpot] spot_questions.size=200 request.Spot=0
-31/12/2025 02:45:33 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:34 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:35 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:36 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:37 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:38 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:39 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:40 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:41 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
-31/12/2025 02:45:41 ┃  5 ┃ ❓ ┃ REQUEST | OCCUPY SLOT : Answer question                                ┃ Answer:1
-31/12/2025 02:45:41 ┃  5 ┃ ➕ ┃ SUCCESS | OCCUPY SLOT SUCCESS                                          ┃ 
-31/12/2025 02:45:42 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[60,0,0,0]]
-31/12/2025 02:45:43 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[120,0,0,0]]
-31/12/2025 02:45:44 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[180,0,0,0]]
-31/12/2025 02:45:45 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[240,0,0,0]]
-31/12/2025 02:45:45 ┃  5 ┃ ❓ ┃ REQUEST | OCCUPY SPOT                                                  ┃ Spot: 0, Resource: 0
-31/12/2025 02:45:45 ┃  5 ┃ ➖ ┃ FAILURE | OCCUPY SLOT : Slot occupied                                  ┃ Spot: 0, Resource: 0
-31/12/2025 02:45:46 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[300,0,0,0]]
-31/12/2025 02:45:47 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[360,0,0,0]]
-31/12/2025 02:45:47 ┃  5 ┃ ❓ ┃ REQUEST | OCCUPY SPOT                                                  ┃ Spot: 0, Resource: 1
-31/12/2025 02:45:47 ┃  5 ┃ ❓ ┃ REQUEST | OCCUPY SLOT : Answer the question                            ┃ Spot: 0, Resource: 1
-31/12/2025 02:45:47 ┃  5 ┃ ❌ ┃ UPDATE  | DEBUG                                                        ┃ [OccupySpot] spot_questions.size=200 request.Spot=0
-31/12/2025 02:45:48 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[420,0,0,0]]
-31/12/2025 02:45:49 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[480,0,0,0]]
-31/12/2025 02:45:50 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[540,0,0,0]]
-31/12/2025 02:45:51 ┃  5 ┃ ❓ ┃ REQUEST | OCCUPY SLOT : Answer question                                ┃ Answer:1
-31/12/2025 02:45:51 ┃  5 ┃ ➕ ┃ SUCCESS | OCCUPY SLOT SUCCESS                                          ┃ 
-31/12/2025 02:45:51 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[600,30,0,0]]
-31/12/2025 02:45:52 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[660,60,0,0]]
-31/12/2025 02:45:53 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[720,90,0,0]]
-31/12/2025 02:45:54 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[780,120,0,0]]
-31/12/2025 02:45:54 ┃  5 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 
+31/12/2025 04:23:09 ┃  5 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: a, Password: b
+31/12/2025 04:23:09 ┃  5 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 1, Name: U0000001
+31/12/2025 04:23:10 ┃  5 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
+31/12/2025 04:23:10 ┃  5 ┃ ➕ ┃ SUCCESS | JOIN TEAM                                                    ┃ Team 0: [(1,0,U0000001,1,1),(0,0,,0,0),(0,0,,0,0)], Team 1: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 2: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 3: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 4: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)]
+31/12/2025 04:23:12 ┃  6 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: b, Password: c
+31/12/2025 04:23:12 ┃  6 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 2, Name: U0000002
+31/12/2025 04:23:12 ┃  6 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
+31/12/2025 04:23:12 ┃  5 ┃ ➕ ┃ SUCCESS | UPDATE JOIN REQUEST                                          ┃ Request: 1
+31/12/2025 04:23:14 ┃  5 ┃ ❓ ┃ REQUEST | ACCEPT PARTICIPATION                                         ┃ 
+31/12/2025 04:23:14 ┃  5 ┃ ➕ ┃ SUCCESS | ACCEPT PARTICIPATION                                         ┃ Request: 1
+31/12/2025 04:23:14 ┃  6 ┃ ➕ ┃ SUCCESS | UPDATE TEAM ROLE                                             ┃ 
+31/12/2025 04:23:17 ┃  5 ┃ ❓ ┃ REQUEST | KICK MEMBER                                                  ┃ Member: U0000002
+31/12/2025 04:23:17 ┃  5 ┃ ➕ ┃ SUCCESS | KICK MEMBER                                                  ┃ 
+31/12/2025 04:23:22 ┃  5 ┃ ❓ ┃ REQUEST | KICK MEMBER                                                  ┃ Member: U0000002
+31/12/2025 04:23:22 ┃  5 ┃ ➖ ┃ FAILURE | KICK MEMBER : Member not in your team                        ┃ Name: U0000002
+31/12/2025 04:23:26 ┃  5 ┃ ❓ ┃ REQUEST | KICK MEMBER                                                  ┃ Member: U0000001
+31/12/2025 04:23:26 ┃  5 ┃ ➖ ┃ FAILURE | KICK MEMBER : Cannot kick yourself                           ┃ Name: U0000001
+31/12/2025 04:23:31 ┃  6 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 
+31/12/2025 04:23:31 ┃  5 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 

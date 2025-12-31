@@ -378,11 +378,28 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 		ShowGameLog(LOG_NONE);
 	}
 	
+	if (code == RS_RESET_GAME)
+	{
+		Tick = 0;
+		JoinRequestAmount = 0;
+		TeamInviteRequest = 0;
+		PendingJoinTick = 0;
+		PendingInviteTick = 0;
+		Log = FG_GREEN "";
+		Team = 0;
+		Map = MapRecord();
+		Resource = ResourceRecord();
+		CurrentQuestionSpot = -1;
+		CurrentQuestionIsCastle = false;
+		CurrentQuestion = QuestionEntity();
+		QuestionTimeOut = 30;
+		CurrentPhase = PHASE_LOBBY_JOINING_READY;
+		ShowLobbyView();
+	}
 	else if (code == RS_START_GAME_F_NOT_ENOUGH_TEAMS)
 	{
 		ShowLobbyLog(FG_RED "Start game failed: Not enough teams!");
 	}
-	
 	else if (code == RS_UPDATE_GAME_MAP)
 	{
 		// Map = MapRecord::Deserialize(data[1]);

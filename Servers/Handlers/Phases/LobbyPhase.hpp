@@ -3,7 +3,7 @@
 
 void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& command)
 {
-    auto account = Accounts[Clients[clientFD]]; /*key = clientFD, value = accountID*/
+    auto account = Accounts[Clients[clientFD]];
 
     if (code == RQ_UPDATE_LOBBY)
     {
@@ -18,7 +18,7 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
     }
     else if (code == RQ_CANCEL_JOINING)
     {
-        /*Chưa xử lí việc client muốn gia nhập 1 team rồi lại thôi*/
+        
     }
     else if (code == RQ_ADD_MEMBER)
     {
@@ -50,6 +50,11 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
     {
 		WriteLog(LogType::Request, clientFD, "ACCEPT INVITATION");
 		HandleAcceptInvitation(clientFD);
+    }
+    else if (code == RQ_KICK_MEMBER)
+    {
+        WriteLog(LogType::Request, clientFD, "KICK MEMBER", "Member: " + command[1]);
+        HandleKickMember(clientFD, command[1]);
     }
 }
 

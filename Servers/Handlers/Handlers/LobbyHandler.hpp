@@ -6,7 +6,7 @@ void HandleUpdateLobby(int clientFD)
     SendMessage(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize());
 }
 
-void HandleJoinTeam(int clientFD, string data)
+void HandleJoinTeam(int clientFD, const string& data)
 {
     auto teamID = atoi(data.c_str()) - 1;
 	auto& team = Lobby.Teams[teamID];
@@ -22,9 +22,9 @@ void HandleJoinTeam(int clientFD, string data)
     {
 		auto& account = Accounts[Clients[clientFD]];
 
-        if (memberCount == 0) /*Xử lí khi vào 1 team chưa có bất kì client nào*/
+        if (memberCount == 0)
         {
-            if (RoomLeader == 0) /*Kiểm tra xem đã tồn tại chủ room chưa, nếu không client đầu tiên sẽ mặc định là chủ room*/
+            if (RoomLeader == 0)
             {
 				RoomLeader = account.ID;
 				account.IsRoomLeader = true;
@@ -109,7 +109,7 @@ AccountEntity* FindAccountByName(const string& myName)
     return nullptr;
 }
 
-void HandleAddMember(int clientFD, string name)
+void HandleAddMember(int clientFD, const string& name)
 {
     if (auto* account = FindAccountByName(name))
     {
@@ -172,8 +172,6 @@ void HandleExitTeam(int clientFD)
 
     auto [roomLeader, teamLeader] = Lobby.RemoveMember(account.LobbyTeam, account.ID);
     JoinedMembers.erase(remove(JoinedMembers.begin(), JoinedMembers.end(), account.ID), JoinedMembers.end());
-
-	//cout << "Member 0:" << Accounts[JoinedMembers[0]] << endl;
 
     SendMessage(clientFD, string(RS_EXIT_TEAM_S) + " " + Lobby.Serialize());
     WriteLog(LogType::Success, clientFD, "EXIT TEAM");
@@ -255,7 +253,7 @@ void HandleAcceptParticipation(int clientFD)
     }
 }
 
-void HandleInviteMember(int clientFD, string name)
+void HandleInviteMember(int clientFD, const string& name)
 {
     auto& inviter = Accounts[Clients[clientFD]];
     auto& team = Lobby.Teams[inviter.LobbyTeam];
@@ -317,6 +315,49 @@ void HandleInviteMember(int clientFD, string name)
             WriteLog(LogType::Failure, clientFD, "INVITE MEMBER : Member not found", "Name: " + name);
             SendMessage(clientFD, string(RS_INVITE_MEMBER_F_MEMBER_NOT_FOUND));
         }
+    }
+}
+
+void HandleKickMember(int clientFD, const string& name)
+{
+    auto& kicker = Accounts[Clients[clientFD]];
+    
+    if (kicker.IsTeamLeader == false)
+    {
+        return;
+    }
+
+    if (auto* account = FindAccountByName(name))
+    {
+		if (kicker.ID == account->ID)
+		{
+			WriteLog(LogType::Failure, clientFD, "KICK MEMBER : Cannot kick yourself", "Name: " + name);
+			SendMessage(clientFD, string(RS_KICK_MEMBER_F_CANNOT_KICK_YOURSELF));
+			return;
+		}
+
+		if (account->LobbyTeam != kicker.LobbyTeam)
+		{
+			WriteLog(LogType::Failure, clientFD, "KICK MEMBER : Member not in your team", "Name: " + name);
+			SendMessage(clientFD, string(RS_KICK_MEMBER_F_NOT_IN_TEAM));
+			return;
+		}
+
+        Lobby.RemoveMember(account->LobbyTeam, account->ID);
+        JoinedMembers.erase(remove(JoinedMembers.begin(), JoinedMembers.end(), account->ID), JoinedMembers.end());
+
+        WriteLog(LogType::Success, clientFD, "KICK MEMBER");
+        SendMessage(clientFD, string(RS_KICK_MEMBER_S));
+
+        auto kickedMemberFD = GetValueByKey(Clients, account->ID);
+		SendMessage(kickedMemberFD, string(RS_UPDATE_KICK_OUT));
+
+        BroadcastToClient(clientFD, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
+    }
+    else
+    {
+        WriteLog(LogType::Failure, clientFD, "KICK MEMBER : Member not found", "Name: " + name);
+        SendMessage(clientFD, string(RS_KICK_MEMBER_F_MEMBER_NOT_FOUND));
     }
 }
 

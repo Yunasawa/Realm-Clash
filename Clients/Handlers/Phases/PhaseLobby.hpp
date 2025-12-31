@@ -120,30 +120,11 @@ UnknownCommand:
 
 void HandleLobbyResponse(int clientFD, const string& code, vector<string> split)
 {
-    if (code == RS_RESET_GAME)
-    {
-        Tick = 0;
-        JoinRequestAmount = 0;
-        TeamInviteRequest = 0;
-        PendingJoinTick = 0;
-        PendingInviteTick = 0;
-        Log = FG_GREEN "";
-        Team = 0;
-        Map = MapRecord();
-        Resource = ResourceRecord();
-        CurrentQuestionSpot = -1;
-        CurrentQuestionIsCastle = false;
-        CurrentQuestion = QuestionEntity();
-        QuestionTimeOut = 30;
-        CurrentPhase = PHASE_LOBBY_JOINING_READY;
-        ShowLobbyView();
-    }
-    else if (code == RS_UPDATE_ROOM_LIST)
+    if (code == RS_UPDATE_ROOM_LIST)
     {
         Lobby = LobbyRecord::Deserialize(split[1]);
         ShowLobbyCode(code);
 
-        // Set phase based on current lobby
         auto member = Lobby.GetMember(Account.ID);
         if (member.ID != 0)
         {
@@ -332,6 +313,26 @@ void HandleLobbyResponse(int clientFD, const string& code, vector<string> split)
     else if (code == RS_INVITE_MEMBER_S)
     {
         ShowLobbyLog(FG_GREEN "Member accepted invitation!");
+    }
+    else if (code == RS_KICK_MEMBER_S)
+    {
+        ShowLobbyLog(FG_GREEN "You kicked a member!");
+    }
+	else if (code == RS_KICK_MEMBER_F_MEMBER_NOT_FOUND)
+	{
+		ShowLobbyLog(FG_RED "Member not found!");
+	}
+    else if (code == RS_KICK_MEMBER_F_NOT_IN_TEAM)
+	{
+		ShowLobbyLog(FG_RED "Member not in your team!");
+	}
+    else if (code == RS_KICK_MEMBER_F_CANNOT_KICK_YOURSELF)
+	{
+		ShowLobbyLog(FG_RED "Can not kick yourself!");
+	}
+    else if (code == RS_UPDATE_KICK_OUT)
+    {
+		ShowLobbyLog(FG_YELLOW "You have been kicked out from the team!");
     }
 }
 
