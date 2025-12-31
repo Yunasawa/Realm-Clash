@@ -112,7 +112,8 @@ string GetCastleLine(int castleID)
 
     auto GetDefenseText = [&]() -> string
         {
-            return " | " + to_string(Map.Castles[castleID].Defense) + "🛡️";
+            auto defense = to_string(Map.Castles[castleID].Defense);
+            return " | " +  string(6 - defense.size(), ' ') + defense + "🛡️";
 
         };
 
@@ -144,11 +145,9 @@ void ShowGameView()
 {
 	ClearScreen();
 
-    string line1 = Log.length() > 68 ? Log.substr(0, 68) : Log;
-    string line2 = Log.length() > 68 ? Log.substr(68) : "";
+    string log = Log;
 
-    int padding1 = 68 - line1.length();
-    int padding2 = 68 - line2.length();
+    int padding = 72 - log.length();
 
 	cout 
         << GetGameTitle()
@@ -163,8 +162,7 @@ void ShowGameView()
         "┣━ OPTION ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
             << GetGameOption() <<
         "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n"
-        "┃ " << BOLD << line1 << RESET << string(max(0, padding1), ' ') << "┃\n"
-        "┃ " << BOLD << line2 << RESET << string(max(0, padding2), ' ') << "┃\n"
+        "┃ " << BOLD << log << RESET << string(max(0, padding), ' ') << "┃\n"
         "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
 }
 

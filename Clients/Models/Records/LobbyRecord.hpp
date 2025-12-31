@@ -5,21 +5,21 @@ struct MemberRecord
 {
     int ID;
     string Name;
-    bool IsRequestPending; /*Chờ xác nhận được accept hay không ?*/
+    bool IsRequestPending;
     bool IsTeamLeader;
     bool IsRoomLeader;
 };
 
 struct TeamRecord
 {
-    array<MemberRecord, 3> Members; /*Mỗi team tối đa 3 thành viên */
+    array<MemberRecord, 3> Members;
 };
 
 struct LobbyRecord
 {
-    array<TeamRecord, 5> Teams; /*Mỗi phòng tối đa 5 team */
+    array<TeamRecord, 5> Teams;
 
-    static LobbyRecord Deserialize(const string& data) /*Convert json -> struct LobbyRecord*/
+    static LobbyRecord Deserialize(const string& data)
     {
         json j = json::parse(data);
 
@@ -78,7 +78,7 @@ struct LobbyRecord
             }
         }
 
-        return MemberRecord{}; /*Nếu duyệt LobbyRecord hiện tại mà không tồn tại -> giá trị khởi tạo mặc định*/
+        return MemberRecord{};
     }
 };
 
