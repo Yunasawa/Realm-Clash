@@ -39,7 +39,7 @@
 #define RQ_ATTACK_CASTLE                        "ANSWER_QUESTION_AND_ATTACK_CASTLE"
 #define RQ_USING_WEAPON                         "WEAPON_TO_ATTACK"
 #define RQ_USING_ALL_WEAPON                     "ALL_WEAPON_IN_ONCE_ATTACK"  
-#define RQ_RESET_GAME                            "RESET_GAME"
+#define RQ_RESET_GAME                           "RESET_GAME"
 
 
 #define RQ_BUY_EQUIPMENT						"BUY_EQUIPMENT"
@@ -142,8 +142,8 @@
 #define RS_UPDATE_GAME_MAP						"822"
 #define RS_UPDATE_TEAM_RESOURCE					"823"
 #define RS_UPDATE_START_COMBAT					"824"
-#define RS_UPDATE_ATTACK_VIEW                   "827"
-#define RS_UPDATE_END_GAME						"825"
+#define RS_UPDATE_ATTACK_VIEW                   "825"
+#define RS_UPDATE_END_GAME						"826"
 
 #define RS_NETWORK_CONNECTED                    "910"
 
