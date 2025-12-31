@@ -247,8 +247,6 @@ int HandleAnswerCastle(Castle* castle, Team* team, int teamAnswer){
         else{
             castle->lastWrongAnswer[team->ID] = now;
             SendMsg(team,string(RS_ANSWER_QUESTION_F_WRONG_ANSWER));
-            WriteLog(LogType::Failure, clientFD, "OCCUPY SLOT FAIL : Wrong answer", "");
-            BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
         }
     }
 }
