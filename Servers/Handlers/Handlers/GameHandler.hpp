@@ -694,7 +694,7 @@ void UpdateResourcesQuantity(TeamEntity& team, unordered_map<ResourceType,int> c
 
 void ResetGame()
 {
-    //Group = GroupEntity();
+    Group = GroupEntity();
     Map = MapEntity();
     QuestionBank = QuestionBankEntity();
     GamePhase = PHASE_LOBBY_IDLING;

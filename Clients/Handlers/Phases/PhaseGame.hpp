@@ -390,13 +390,15 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 		PendingJoinTick = 0;
 		PendingInviteTick = 0;
 		Log = FG_GREEN "";
-		Team = 0;
 		Map = MapRecord();
 		Resource = ResourceRecord();
 		CurrentQuestionSpot = -1;
 		CurrentQuestionIsCastle = false;
 		CurrentQuestion = QuestionEntity();
 		QuestionTimeOut = 30;
+		CurrentTargetTeamResource = ResourceEntity();
+		CurrentTargetCastle = CastleEntity();
+		OwnInventory = InventoryEntity();
 		CurrentPhase = PHASE_LOBBY_JOINING_READY;
 		ShowLobbyView();
 	}
@@ -434,9 +436,11 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 	}
 	else if (code == RS_UPDATE_ATTACK_VIEW)
 	{
+		if (CurrentPhase == PHASE_GAME_ENDING)
+			return;
+
 		if (CurrentPhase == PHASE_LOBBY_JOINING_READY || CurrentPhase == PHASE_LOBBY_JOINING_PENDING ||
-			(CurrentPhase >= PHASE_LOBBY_JOINED_MEMBER && CurrentPhase <= PHASE_LOBBY_JOINED_RTLEADER) ||
-			CurrentPhase == PHASE_GAME_ENDING)
+			(CurrentPhase >= PHASE_LOBBY_JOINED_MEMBER && CurrentPhase <= PHASE_LOBBY_JOINED_RTLEADER))
 			return;
 
 		json j = json::parse(data[1]);
