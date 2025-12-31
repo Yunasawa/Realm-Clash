@@ -11,7 +11,7 @@
 
 
 #define TIME_START_COMBAT					60
-#define TIME_END_GAME						1200
+#define TIME_END_GAME						100
 
 #define PHASE_LOBBY_IDLING					0
 #define PHASE_RESOURCE_COLLECTING			1

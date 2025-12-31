@@ -35,7 +35,7 @@
 #define PHASE_GAME_SHOPING_DEFENSE				204
 #define PHASE_GAME_VIEW_INVENTORY               205
 #define PHASE_GAME_CASTLE_ATTACKING				206
-#define PHASE_GAME_ENDING						206
+#define PHASE_GAME_ENDING						207
 
 
 #endif
