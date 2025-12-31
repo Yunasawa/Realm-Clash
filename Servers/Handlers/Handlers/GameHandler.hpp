@@ -325,19 +325,19 @@ void HandleBuyWeapon(int clientFD, const CartRecord& cart)
     
     Item* item = GetItem((Items)(cart.Equipment));
     int compare = ResourceCompare(team,item->Cost,cart.Amount);
-    if (compare == 0)
-    {
-        delete item;
-        WriteLog(LogType::Failure, clientFD, "LACK RESOUCRE", "");
-        SendMessage(clientFD, string(RS_SHOP_EQUIPMENT_F_LACK_RESOURCE));
-    }
-    else
+    if (compare)
     {
         team.Weapons[cart.Equipment] += cart.Amount;
         UpdateResourcesQuantity(team,item->Cost,cart.Amount);
         delete item; 
-        WriteLog(LogType::Failure, clientFD, "BUY SUCCESS", "");
+        WriteLog(LogType::Success, clientFD, "BUY SUCCESS", "");
         SendMessage(clientFD, string(RS_SHOP_EQUIPMENT_S));
+    }
+    else
+    {
+        delete item;
+        WriteLog(LogType::Failure, clientFD, "LACK RESOURCE", "");
+        SendMessage(clientFD, string(RS_SHOP_EQUIPMENT_F_LACK_RESOURCE));
     }
 }
 
@@ -368,10 +368,10 @@ void HandleBuyDefense(int clientFD, const CartRecord& cart)
     else if (targetCastle.OwnerTeam == account.GameTeam)
     {
         /*Không đủ tài nguyên để mua lượng vật phẩm*/
-        if (compare == 0)
+        if (!compare)
         {
             delete item;
-            WriteLog(LogType::Failure, clientFD, "LACK RESOUCRE", "");
+            WriteLog(LogType::Failure, clientFD, "LACK RESOURCE", "");
             SendMessage(clientFD, string(RS_SHOP_EQUIPMENT_F_LACK_RESOURCE));
         }
         /*Đủ tài nguyên để mua*/
@@ -381,7 +381,7 @@ void HandleBuyDefense(int clientFD, const CartRecord& cart)
             for (int i = 0; i < cart.Amount; i++) targetCastle.EquippedItems.push_back(int(item->ItemType));
             UpdateResourcesQuantity(team,item->Cost,cart.Amount);
             delete item;
-            WriteLog(LogType::Failure, clientFD, "BUY SUCCESS", "");
+            WriteLog(LogType::Success, clientFD, "BUY SUCCESS", "");
             SendMessage(clientFD, string(RS_SHOP_EQUIPMENT_S));
 
             //BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);            
@@ -682,9 +682,7 @@ int ResourceCompare(const TeamEntity& team, unordered_map<ResourceType,int> requ
     for (const auto& req : require)
     {
         int requiredAmount = req.second * amount;
-        int teamQuantity = team.Resources[int(
-            
-        )];
+        int teamQuantity = team.Resources[int(req.first)];
         if (teamQuantity < requiredAmount) return false;
     }
     return true;
