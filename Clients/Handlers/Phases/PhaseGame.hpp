@@ -645,7 +645,7 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 		OwnInventory.Catapult = j.value("Catapult", 0);
 		OwnInventory.Canon = j.value("Cannon", 0);
 
-		ShowAttackCastleView();
+		ShowAttackCastleLog(FG_GREEN "Destroy this castle!");
 	}
 
 	else if (code == RS_ATTACK_CASTLE_S)
