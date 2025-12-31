@@ -13,10 +13,8 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
     }
     else if (code == RQ_JOIN_TEAM)
     {
-        cout << "hoho" << endl;
         if (account.LobbyTeam != -1) return;
 
-        cout << "huhu" << endl;
         WriteLog(LogType::Request, clientFD, "JOIN TEAM", "Team: " + command[1]);
         HandleJoinTeam(clientFD, command[1]);
     }

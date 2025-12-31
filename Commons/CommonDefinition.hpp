@@ -81,25 +81,25 @@
 
 #define RS_OCCUPY_SPOT_S						"400"
 #define RS_OCCUPY_SPOT_F_FULL_OF_SLOT			"401"
-#define RS_OCCUPY_SPOT_F_SPOT_OCCUPIED			"401"
-#define RS_OCCUPY_SPOT_F_INVALID_SPOT           "402"
+#define RS_OCCUPY_SPOT_F_SPOT_OCCUPIED			"402"
+#define RS_OCCUPY_SPOT_F_INVALID_SPOT           "403"
 
 #define RS_OCCUPY_CASTLE_S						"410"
 #define RS_OCCUPY_CASTLE_F_CASTLE_OCCUPIED		"411"
 #define RS_OCCUPY_CASTLE_F_SLOT_FULL			"412"
 #define RS_OCCUPY_CASTLE_F_INVALID_CASTLE       "413"
-#define RS_OCCUPY_REQUIRE_ANSWER_QUESTION       "413"
+#define RS_OCCUPY_REQUIRE_ANSWER_QUESTION       "414"
 
 #define RS_REQUEST_QUESTION_S                   "510"
-#define RS_REQUEST_QUESTION_F_SLOT_OCCUPIED     "501"
-#define RS_REQUEST_QUESTION_F_SLOT_LIMIT        "502"
+#define RS_REQUEST_QUESTION_F_SLOT_OCCUPIED     "511"
+#define RS_REQUEST_QUESTION_F_SLOT_LIMIT        "512"
 
-#define RS_ANSWER_QUESTION_SPOT_S               "610"
-#define RS_ANSWER_QUESTION_CASTLE_S             "610"
-#define RS_ANSWER_QUESTION_F_WRONG_ANSWER       "601"
-#define RS_ANSWER_QUESTION_F_TIME_OUT           "602"
-#define RS_ANSWER_QUESTION_F_TIME_PENALTY       "603"
-#define RS_ANSWER_QUESTION_F_TOO_SLOW           "604"
+#define RS_ANSWER_QUESTION_SPOT_S               "601"
+#define RS_ANSWER_QUESTION_CASTLE_S             "602"
+#define RS_ANSWER_QUESTION_F_WRONG_ANSWER       "603"
+#define RS_ANSWER_QUESTION_F_TIME_OUT           "604"
+#define RS_ANSWER_QUESTION_F_TIME_PENALTY       "605"
+#define RS_ANSWER_QUESTION_F_TOO_SLOW           "606"
 
 #define RS_TARGET_TEAM_RESOURCE                 "620"
 #define RS_TARGET_CASTLE_INFO                   "621"
@@ -120,6 +120,9 @@
 #define RS_ATTACK_CASTLE_FULL_PERMISSION        "707"
 
 #define RS_DEBUG                                "708"
+
+#define RS_ATTACKED                             "709"
+#define RS_FULLY_ATTACKED                       "724"
 
 // Server - Update responses
 #define RS_UPDATE_ROOM_LIST                     "810"

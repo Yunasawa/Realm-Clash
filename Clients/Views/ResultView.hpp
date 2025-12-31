@@ -62,3 +62,5 @@ void ShowResultView(const ResultRecord& record)
     cout << "┗" << repeat_utf8("━", WINDOW_WIDTH - 2) << "┛\n";
 }
 #endif
+
+

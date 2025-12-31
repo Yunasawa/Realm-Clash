@@ -67,10 +67,11 @@ void StartTickOnServer(
 
             while (ServerTicking.load())
             {
+                this_thread::sleep_for(chrono::seconds(1));
+                
                 if (onTick) onTick(tick);
 
                 tick++;
-                this_thread::sleep_for(chrono::seconds(1));
             }
 
             if (onEnd) onEnd();
