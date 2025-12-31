@@ -99,6 +99,11 @@ void HandleJoinTeam(int clientFD, const string& data)
     }
 }
 
+void HandleCancelJoining(int clientFD)
+{
+
+}
+
 AccountEntity* FindAccountByName(const string& myName)
 {
     for (auto& [id, acc] : Accounts)

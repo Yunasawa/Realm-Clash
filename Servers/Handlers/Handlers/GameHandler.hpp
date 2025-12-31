@@ -120,7 +120,7 @@ void HandleStartGame(int clientFD)
 
             BroadcastToClient(-1, string(RS_UPDATE_GAME_TICK) + " " + to_string(tick));
 
-            if (tick >= TIME_END_GAME)
+            if (tick == TIME_END_GAME)
             {
                 WriteLog(LogType::Update, -1, "END GAME");
                 string jsonData = HandleEndGame();
@@ -128,7 +128,7 @@ void HandleStartGame(int clientFD)
                 StopTickOnServer();
                 GamePhase = PHASE_LOBBY_IDLING;
             }
-            else if (tick >= TIME_START_COMBAT)
+            else if (tick == TIME_START_COMBAT)
             {
                 WriteLog(LogType::Update, -1, "START COMBAT");
                 BroadcastToClient(-1, string(RS_UPDATE_START_COMBAT));

@@ -18,7 +18,10 @@ void HandleLobbyPhase(int clientFD, const string& code, const vector<string>& co
     }
     else if (code == RQ_CANCEL_JOINING)
     {
-        
+		if (account.PendingTeam == -1) return;
+
+        WriteLog(LogType::Request, clientFD, "CANCEL JOINING");
+		HandleCancelJoining(clientFD);
     }
     else if (code == RQ_ADD_MEMBER)
     {

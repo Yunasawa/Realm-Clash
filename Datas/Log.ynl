@@ -1,21 +1,17 @@
         TIME        ┃ ID ┃ ➖ ┃                               ACTION                                   ┃                 DATA                   
 ━━━━━━━━━━━━━━━━━━━━╋━━━━╋━➖━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-31/12/2025 04:23:09 ┃  5 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: a, Password: b
-31/12/2025 04:23:09 ┃  5 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 1, Name: U0000001
-31/12/2025 04:23:10 ┃  5 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
-31/12/2025 04:23:10 ┃  5 ┃ ➕ ┃ SUCCESS | JOIN TEAM                                                    ┃ Team 0: [(1,0,U0000001,1,1),(0,0,,0,0),(0,0,,0,0)], Team 1: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 2: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 3: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 4: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)]
-31/12/2025 04:23:12 ┃  6 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: b, Password: c
-31/12/2025 04:23:12 ┃  6 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 2, Name: U0000002
-31/12/2025 04:23:12 ┃  6 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
-31/12/2025 04:23:12 ┃  5 ┃ ➕ ┃ SUCCESS | UPDATE JOIN REQUEST                                          ┃ Request: 1
-31/12/2025 04:23:14 ┃  5 ┃ ❓ ┃ REQUEST | ACCEPT PARTICIPATION                                         ┃ 
-31/12/2025 04:23:14 ┃  5 ┃ ➕ ┃ SUCCESS | ACCEPT PARTICIPATION                                         ┃ Request: 1
-31/12/2025 04:23:14 ┃  6 ┃ ➕ ┃ SUCCESS | UPDATE TEAM ROLE                                             ┃ 
-31/12/2025 04:23:17 ┃  5 ┃ ❓ ┃ REQUEST | KICK MEMBER                                                  ┃ Member: U0000002
-31/12/2025 04:23:17 ┃  5 ┃ ➕ ┃ SUCCESS | KICK MEMBER                                                  ┃ 
-31/12/2025 04:23:22 ┃  5 ┃ ❓ ┃ REQUEST | KICK MEMBER                                                  ┃ Member: U0000002
-31/12/2025 04:23:22 ┃  5 ┃ ➖ ┃ FAILURE | KICK MEMBER : Member not in your team                        ┃ Name: U0000002
-31/12/2025 04:23:26 ┃  5 ┃ ❓ ┃ REQUEST | KICK MEMBER                                                  ┃ Member: U0000001
-31/12/2025 04:23:26 ┃  5 ┃ ➖ ┃ FAILURE | KICK MEMBER : Cannot kick yourself                           ┃ Name: U0000001
-31/12/2025 04:23:31 ┃  6 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 
-31/12/2025 04:23:31 ┃  5 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 
+31/12/2025 05:11:13 ┃  5 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: a, Password: b
+31/12/2025 05:11:13 ┃  5 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 1, Name: U0000001
+31/12/2025 05:11:14 ┃  5 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
+31/12/2025 05:11:14 ┃  5 ┃ ➕ ┃ SUCCESS | JOIN TEAM                                                    ┃ Team 0: [(1,0,U0000001,1,1),(0,0,,0,0),(0,0,,0,0)], Team 1: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 2: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 3: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 4: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)]
+31/12/2025 05:11:17 ┃  5 ┃ ❓ ┃ REQUEST | START GAME                                                   ┃ 
+31/12/2025 05:11:17 ┃  5 ┃ ❌ ┃ UPDATE  | Loaded question bank                                         ┃ Datas/Question.ynl
+31/12/2025 05:11:17 ┃  5 ┃ ➕ ┃ SUCCESS | START GAME                                                   ┃ 
+31/12/2025 05:11:17 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 05:11:18 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 05:11:19 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 05:11:19 ┃ -1 ┃ ❌ ┃ UPDATE  | START COMBAT                                                 ┃ 
+31/12/2025 05:11:20 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 05:11:21 ┃  5 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 
+31/12/2025 05:11:21 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 05:11:22 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
