@@ -1,15 +1,18 @@
         TIME        ┃ ID ┃ ➖ ┃                               ACTION                                   ┃                 DATA                   
 ━━━━━━━━━━━━━━━━━━━━╋━━━━╋━➖━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-31/12/2025 06:16:04 ┃  5 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: a, Password: b
-31/12/2025 06:16:04 ┃  5 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 1, Name: U0000001
-31/12/2025 06:16:05 ┃  5 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
-31/12/2025 06:16:05 ┃  5 ┃ ➕ ┃ SUCCESS | JOIN TEAM                                                    ┃ Team 0: [(1,0,U0000001,1,1),(0,0,,0,0),(0,0,,0,0)], Team 1: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 2: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 3: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 4: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)]
-31/12/2025 06:16:07 ┃  6 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: b, Password: c
-31/12/2025 06:16:07 ┃  6 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 2, Name: U0000002
-31/12/2025 06:16:07 ┃  6 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
-31/12/2025 06:16:07 ┃  5 ┃ ➕ ┃ SUCCESS | UPDATE JOIN REQUEST                                          ┃ Request: 1
-31/12/2025 06:16:16 ┃  5 ┃ ❓ ┃ REQUEST | ACCEPT PARTICIPATION                                         ┃ 
-31/12/2025 06:16:16 ┃  5 ┃ ➕ ┃ SUCCESS | ACCEPT PARTICIPATION                                         ┃ Request: 1
-31/12/2025 06:16:16 ┃  6 ┃ ➕ ┃ SUCCESS | UPDATE TEAM ROLE                                             ┃ 
-31/12/2025 06:16:19 ┃  6 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 
-31/12/2025 06:16:19 ┃  5 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 
+31/12/2025 07:26:02 ┃  5 ┃ ❓ ┃ REQUEST | LOG IN                                                       ┃ Email: a, Password: b
+31/12/2025 07:26:02 ┃  5 ┃ ➕ ┃ SUCCESS | LOG IN                                                       ┃ ID: 1, Name: U0000001
+31/12/2025 07:26:02 ┃  5 ┃ ❓ ┃ REQUEST | JOIN TEAM                                                    ┃ Team: 1
+31/12/2025 07:26:02 ┃  5 ┃ ➕ ┃ SUCCESS | JOIN TEAM                                                    ┃ Team 0: [(1,0,U0000001,1,1),(0,0,,0,0),(0,0,,0,0)], Team 1: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 2: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 3: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)], Team 4: [(0,0,,0,0),(0,0,,0,0),(0,0,,0,0)]
+31/12/2025 07:26:03 ┃  5 ┃ ❓ ┃ REQUEST | START GAME                                                   ┃ 
+31/12/2025 07:26:03 ┃  5 ┃ ❌ ┃ UPDATE  | Loaded question bank                                         ┃ Datas/Question.ynl
+31/12/2025 07:26:03 ┃  5 ┃ ➕ ┃ SUCCESS | START GAME                                                   ┃ 
+31/12/2025 07:26:03 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 07:26:04 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 07:26:05 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 07:26:05 ┃ -1 ┃ ❌ ┃ UPDATE  | START COMBAT                                                 ┃ 
+31/12/2025 07:26:06 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 07:26:07 ┃ -1 ┃ ❌ ┃ UPDATE  | UPDATE RESOURCE                                              ┃ [[0,0,0,0]]
+31/12/2025 07:26:07 ┃ -1 ┃ ❌ ┃ UPDATE  | END GAME                                                     ┃ 
+31/12/2025 07:26:07 ┃ -1 ┃ ❓ ┃ REQUEST | RESET GAME                                                   ┃ 
+31/12/2025 07:26:08 ┃  5 ┃ ➕ ┃ SUCCESS | QUIT GAME                                                    ┃ 

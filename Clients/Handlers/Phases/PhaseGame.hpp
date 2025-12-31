@@ -349,6 +349,8 @@ void HandleGameInput(int clientFD, vector<string> command)
 		} ;
 	}
 
+	cout << CurrentPhase << endl;
+
 	return;
 
 UnknownCommand:
