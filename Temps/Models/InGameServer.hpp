@@ -242,11 +242,13 @@ int HandleAnswerCastle(Castle* castle, Team* team, int teamAnswer){
             }
             ChangeQuestion(questionBank,castleCurrentQuestionID);
             return true;
-            SendMsg(team,string(RS_ANSWER_QUESTION_S)); /*Now they can attack this castle*/
+            SendMsg(team,string(RS_ANSWER_QUESTION_S));
         }
         else{
             castle->lastWrongAnswer[team->ID] = now;
             SendMsg(team,string(RS_ANSWER_QUESTION_F_WRONG_ANSWER));
+            WriteLog(LogType::Failure, clientFD, "OCCUPY SLOT FAIL : Wrong answer", "");
+            BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
         }
     }
 }

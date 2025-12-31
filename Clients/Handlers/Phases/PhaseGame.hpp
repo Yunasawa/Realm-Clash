@@ -520,7 +520,9 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 	
 	else if (code == RS_ANSWER_QUESTION_F_WRONG_ANSWER)
 	{
+		CurrentPhase = PreviousPhase;
 		ShowQuestionLog(CurrentQuestion,FG_RED "Wrong answer");
+		ShowGameLog(FG_RED "Wrong answer!");
 	} 
 	
 	else if (code == RS_OCCUPY_SPOT_F_SPOT_OCCUPIED)
