@@ -10,8 +10,8 @@
 #define MULTIPLIER_RESOURSE_UPDATE			2
 
 
-#define TIME_START_COMBAT					60
-#define TIME_END_GAME						1200
+#define TIME_START_COMBAT					20
+#define TIME_END_GAME						40
 
 #define PHASE_LOBBY_IDLING					0
 #define PHASE_RESOURCE_COLLECTING			1

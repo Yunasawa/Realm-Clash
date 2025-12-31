@@ -142,7 +142,7 @@
 #define RS_UPDATE_GAME_MAP						"822"
 #define RS_UPDATE_TEAM_RESOURCE					"823"
 #define RS_UPDATE_START_COMBAT					"824"
-#define RS_UPDATE_ATTACK_VIEW                   "825"
+#define RS_UPDATE_ATTACK_VIEW                   "827"
 #define RS_UPDATE_END_GAME						"825"
 
 #define RS_NETWORK_CONNECTED                    "910"
