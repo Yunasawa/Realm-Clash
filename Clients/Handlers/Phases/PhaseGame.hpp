@@ -311,20 +311,20 @@ void HandleGameInput(int clientFD, vector<string> command)
 	}
 	else if (CurrentPhase == PHASE_GAME_CASTLE_ATTACKING)
 	{
-		if (code == 1 && command.size() == 3) 
+		if (code == 1 && command.size() == 3)
 		{
-			int castle = CurrentTargetCastle.Id -1;
+			int castle = CurrentTargetCastle.Id - 1;
 			int weapon = stoi(command[1]);
 			int amount = stoi(command[2]);
-			auto Weapon = WeaponEntity{castle,weapon - 1,amount };
+			auto Weapon = WeaponEntity{ castle,weapon - 1,amount };
 
 			SendMessage(clientFD, string(RQ_USING_WEAPON) + " " + Weapon.Serialize());
 		}
-		else if (code == 2 && command.size() == 1) 
+		else if (code == 2 && command.size() == 1)
 		{
-			SendMessage(clientFD, string(RQ_USING_ALL_WEAPON) + " " + to_string(CurrentTargetCastle.Id -1));
+			SendMessage(clientFD, string(RQ_USING_ALL_WEAPON) + " " + to_string(CurrentTargetCastle.Id - 1));
 		}
-		else if (code == 3 && command.size() == 1) 
+		else if (code == 3 && command.size() == 1)
 		{
 			CurrentPhase = PHASE_GAME_MAP_COMBATING;
 
@@ -334,6 +334,7 @@ void HandleGameInput(int clientFD, vector<string> command)
 		{
 			ShowAttackCastleLog(LOG_UNKNOWN_COMMAND);
 		}
+	}
 	else if (CurrentPhase == PHASE_GAME_ENDING)
 	{
 		if (code == 1 && command.size() == 1)

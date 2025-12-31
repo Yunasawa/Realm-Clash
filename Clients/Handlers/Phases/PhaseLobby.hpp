@@ -20,9 +20,7 @@ void HandleLobbyInput(int clientFD, vector<string> command)
             {
                 ShowLobbyLog(LOG_LOBBY_WRONG_TEAM);
             }
-        } /*Mặc định khi đăng nhập server sẽ chỉ hiện 1 room gồm đúng 5 team từ 1-5 
-            để người chơi tham gia, không có tạo room mới, team mới.
-            */
+        }
 		else if (code == 2 && command.size() == 1)
 		{
 			SendMessage(clientFD, string(RQ_ACCEPT_INVITATION));

@@ -33,7 +33,7 @@ string HandleEndGame()
 {
     vector<pair<int, int>> allResults;
     
-    for (int id = 0; id < Group.Teams.size(); ++id) {
+    for (int id = 0; id < (int)Group.Teams.size(); ++id) {
         allResults.push_back(GetResult(id));
     }
 
@@ -92,7 +92,8 @@ void HandleStartGame(int clientFD)
     }
 
 
-    for(int i =0; i<(int)Map.Castles.size(); i++){
+    for(int i =0; i<(int)Map.Castles.size(); i++)
+    {
         Map.Castles[i].CurrentQuestion.first = i;
         Map.Castles[i].CurrentQuestion.second =QuestionBank.castle_questions[i];
     }
@@ -388,7 +389,7 @@ void HandleBuyDefense(int clientFD, const CartRecord& cart)
 void HandleViewTeamResource(int clientFD, const string& data)
 {
     auto targetTeamID = stoi(data);
-    if (targetTeamID >= Group.Teams.size())
+    if (targetTeamID >= (int)Group.Teams.size())
     {
         SendMessage(clientFD, string(RS_TARGET_TEAM_NOT_FOUND));
         return;
@@ -691,9 +692,6 @@ void UpdateResourcesQuantity(TeamEntity& team, unordered_map<ResourceType,int> c
     }
 }
 
-<<<<<<< HEAD
-
-=======
 void ResetGame()
 {
     //Group = GroupEntity();
@@ -703,7 +701,6 @@ void ResetGame()
     BroadcastToClient(-1, string(RS_RESET_GAME), true);
     BroadcastToClient(-1, string(RS_UPDATE_ROOM_LIST) + " " + Lobby.Serialize(), true);
 }
->>>>>>> 5dc04507fc448ed694cec28c3f820229fb057701
 
 #endif
 

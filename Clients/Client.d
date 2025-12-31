@@ -24,6 +24,9 @@ Clients/Client.o: Clients/Client.cpp \
  Clients/Views/QuestionView.hpp \
  Clients/Views/../Models/Entities/InGameEntity.hpp \
  Clients/Views/InventoryView.hpp Clients/Views/AttackView.hpp \
+ Clients/Views/ResultView.hpp \
+ Clients/Views/../Models/Records/ResultRecord.hpp \
+ Clients/Views/../ClientDefinition.hpp \
  Clients/Handlers/Phases/PhaseWelcome.hpp \
  Clients/Handlers/Phases/PhaseLobby.hpp \
  Clients/Handlers/Phases/PhaseGame.hpp
@@ -48,24 +51,19 @@ Clients/Models/Records/ResultRecord.hpp:
 Clients/Models/Entities/AccountEntity.hpp:
 Clients/Models/Entities/OccupationEntity.hpp:
 Clients/Models/Entities/CartEntity.hpp:
-
 Clients/Models/Entities/InGameEntity.hpp:
-
 Clients/ClientUtilities.hpp:
 Clients/Views/LobbyView.hpp:
 Clients/Views/WelcomeView.hpp:
 Clients/Views/GameView.hpp:
 Clients/Views/ShopView.hpp:
 Clients/Views/QuestionView.hpp:
-
-
 Clients/Views/../Models/Entities/InGameEntity.hpp:
-
 Clients/Views/InventoryView.hpp:
-
 Clients/Views/AttackView.hpp:
-
+Clients/Views/ResultView.hpp:
+Clients/Views/../Models/Records/ResultRecord.hpp:
+Clients/Views/../ClientDefinition.hpp:
 Clients/Handlers/Phases/PhaseWelcome.hpp:
 Clients/Handlers/Phases/PhaseLobby.hpp:
 Clients/Handlers/Phases/PhaseGame.hpp:
-
