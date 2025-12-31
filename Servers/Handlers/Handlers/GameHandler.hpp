@@ -271,6 +271,8 @@ void HandleAnswerSpotQuestion(int clientFD, const string& data)
     else if ((result == 0) && (teamAnswer != trueAnswer))
     {
         SendMessage(clientFD, string(RS_ANSWER_QUESTION_F_WRONG_ANSWER));
+        WriteLog(LogType::Failure, clientFD, "OCCUPY SLOT FAIL : Wrong answer", "");
+        BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
     }
     else if (result != 0)
     {
@@ -308,6 +310,8 @@ void HandleAnswerCastleQuestionPhaseCollect(int clientFD, const string& data)
     else
     {
         SendMessage(clientFD, string(RS_ANSWER_QUESTION_F_WRONG_ANSWER));
+        WriteLog(LogType::Failure, clientFD, "OCCUPY SLOT FAIL : Wrong answer", "");
+        BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
     }
 }
 
@@ -522,6 +526,8 @@ void HandleAnswerCastleQuestionPhaseAttack(int clientFD, const string& data)
     else
     {
         SendMessage(clientFD, string(RS_ANSWER_QUESTION_F_WRONG_ANSWER));
+        WriteLog(LogType::Failure, clientFD, "OCCUPY SLOT FAIL : Wrong answer", "");
+        BroadcastToClient(clientFD, string(RS_UPDATE_GAME_MAP) + " " + Map.Serialize(), true);
     }
 }
 
