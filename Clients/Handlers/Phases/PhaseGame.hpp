@@ -255,6 +255,10 @@ void HandleGameInput(int clientFD, vector<string> command)
 
 			SendMessage(clientFD, string(RQ_BUY_EQUIPMENT) + " " + cart.Serialize());
 		}
+		else if (code == 1 && command.size() == 3)
+		{
+			ShowDefenseShopLog(FG_RED "Please specify castle id (1 <id> <amount> <castle>)");
+		}
 		else if (code == 2 && command.size() == 1)
 		{
 			CurrentPhase = PHASE_GAME_SHOPING_WEAPON;
@@ -415,8 +419,28 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 		}	
 	}
 
+	else if (code == RS_UPDATE_END_GAME)
+	{
+		try
+		{
+			auto result = ResultRecord::Deserialize(data[1]);
+			CurrentPhase = PHASE_GAME_ENDING;
+			ShowResultView(result);
+		}
+		catch (...)
+		{
+			ResultRecord emptyResult;
+			CurrentPhase = PHASE_GAME_ENDING;
+			ShowResultView(emptyResult);
+		}
+	}
 	else if (code == RS_UPDATE_ATTACK_VIEW)
 	{
+		if (CurrentPhase == PHASE_LOBBY_JOINING_READY || CurrentPhase == PHASE_LOBBY_JOINING_PENDING ||
+			(CurrentPhase >= PHASE_LOBBY_JOINED_MEMBER && CurrentPhase <= PHASE_LOBBY_JOINED_RTLEADER) ||
+			CurrentPhase == PHASE_GAME_ENDING)
+			return;
+
 		json j = json::parse(data[1]);
 
 		CurrentTargetCastle.Id = j.value("TargetCastle", 0);
@@ -654,15 +678,20 @@ void HandleGameResponse(int clientFD, const string& code, vector<string> data)
 
 	else if (code == RS_GAME_END)
 	{
-		ResultRecord result = ResultRecord::Deserialize(data[1]);
-		CurrentPhase = PHASE_GAME_ENDING;
-		ShowResultView(result);
+		try
+		{
+			auto result = ResultRecord::Deserialize(data[1]);
+			CurrentPhase = PHASE_GAME_ENDING;
+			ShowResultView(result);
+		}
+		catch (...)
+		{
+			ResultRecord emptyResult;
+			CurrentPhase = PHASE_GAME_ENDING;
+			ShowResultView(emptyResult);
+		}
 	}
-	else if (code == RS_UPDATE_END_GAME)
-	{
-		CurrentPhase = PHASE_GAME_ENDING;
-		ShowResultView(ResultRecord::Deserialize(data[1]));
-	}
+
 	else if (code == RS_SHOP_EQUIPMENT_F_LACK_RESOURCE )
 	{
 		if (CurrentPhase == PHASE_GAME_SHOPING_WEAPON)

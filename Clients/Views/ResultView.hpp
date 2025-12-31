@@ -58,7 +58,7 @@ void ShowResultView(const ResultRecord& record)
     cout << "┃ • 1: Back to main menu                                             ┃\n";
     cout << "┣━ CONSOLES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫\n";
     string log = FG_GREEN "Game Finished. Waiting for next game...";
-    cout << "┃ " << BOLD << log << RESET << string(inner - log.length() - 2, ' ') << " ┃\n";
+    cout << "┃ " << BOLD << log << RESET << string(inner - log.length() - 5, ' ') << " ┃\n";
     cout << "┗" << repeat_utf8("━", WINDOW_WIDTH - 2) << "┛\n";
 }
 #endif
